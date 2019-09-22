@@ -1,27 +1,10 @@
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const admin = require('firebase-admin')
+'use strict'
 
-const server = express()
+// [START import]
+const functions = require('firebase-functions')
+const app = require('./server/server')
 
-const firebase = admin
-  .initializeApp(
-    {
-      credential: admin.credential.cert(
-        require('../.firebase/service-account.json')
-      ),
-      databaseURL: 'https://your-name-here.firebaseio.com'
-    },
-    'server'
-  )
-  .firestore()
-
-server.use(cors())
-server.use(bodyParser.json())
-server.use((req, _res, next) => {
-  req.firebaseServer = firebase
-  next()
-})
-
-module.exports = server
+// [START export]
+// Export the express app as an HTTP Cloud Functions
+exports.api = functions.https.onRequest(app)
+// [END export]
