@@ -54,6 +54,9 @@ Thumbs.db
 *.key
 *.pem
 
+
+admin-key.json
+
 # -------------------------
 # BEGIN Whitelisted Files
 # -------------------------
