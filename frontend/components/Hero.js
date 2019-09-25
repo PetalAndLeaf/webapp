@@ -5,7 +5,7 @@ import Logo from './Logo'
 
 const Container = styled(motion.div)`
   width: 100%;
-  max-width: 640px;
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
 `

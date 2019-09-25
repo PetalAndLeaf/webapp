@@ -16,13 +16,18 @@ class MyDocument extends Document {
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
-            href="https://fonts.googleapis.com/css?family=Lato:400,700|Oswald&display=swap"
+            href="https://fonts.googleapis.com/css?family=Lato:400,700|Quicksand&display=swap"
             rel="stylesheet"
           ></link>
         </Head>
         <body>
           <Main />
           <NextScript />
+          <style>{`
+           html {
+            scroll-behavior: smooth;
+           }
+          `}</style>
         </body>
       </html>
     )

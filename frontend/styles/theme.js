@@ -23,7 +23,7 @@ export const styles = {
   typography: {
     fontFamily: 'Lato, Helvetica, Arial, sans-serif',
     h3: {
-      fontFamily: "'Oswald', Helvetica, Arial, sans-serif"
+      fontFamily: "'Quicksand', Helvetica, Arial, sans-serif"
       // fontWeight: 400
     },
     body2: {

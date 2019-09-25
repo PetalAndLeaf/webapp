@@ -3,7 +3,7 @@ import SplitLayout from '../layout/SplitLayout'
 import Hero from '../components/Hero'
 import ProuductCard from '../components/ProductCard'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Firebase from '../fire'
 
 const ProductList = styled(motion.div)`
@@ -11,6 +11,7 @@ const ProductList = styled(motion.div)`
   margin-left: auto;
   margin-right: auto;
   padding: 32px;
+  padding-top: 96px;
 `
 const listVariants = {
   visible: {
@@ -31,9 +32,11 @@ export default function Index({ products }) {
   return (
     <SplitLayout Left={Hero}>
       <ProductList variants={listVariants}>
-        {products.map((product, i) => {
-          return <ProuductCard key={product + i} data={product} custom={i} />
-        })}
+        <AnimatePresence>
+          {products.map((product, i) => {
+            return <ProuductCard key={product + i} data={product} custom={i} />
+          })}
+        </AnimatePresence>
       </ProductList>
     </SplitLayout>
   )

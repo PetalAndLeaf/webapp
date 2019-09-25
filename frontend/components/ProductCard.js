@@ -31,6 +31,7 @@ export default function ProuductCard({ data, ...props }) {
       backgroundColor={backgroundColor}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
       transition={{ duraton: 1, delay: 1 }}
       {...props}
     >

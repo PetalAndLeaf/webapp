@@ -9,10 +9,15 @@ const Container = styled.header`
   /* border-bottom: 1px solid ${styles.palette.divider}; */
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: rgba(256,256,256,0.9);
   padding-left: 16px;
   padding-right: 16px;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
 `
 export default function Header() {
   const feather = require('feather-icons')
