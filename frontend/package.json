@@ -6,14 +6,26 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export"
   },
   "author": "RJ",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.4.1",
+    "color": "^3.1.2",
+    "feather-icons": "^4.24.1",
+    "firebase": "^6.6.2",
+    "framer-motion": "^1.6.7",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^9.0.5",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-color-extractor": "^1.1.2",
+    "react-dom": "^16.9.0",
+    "react-inlinesvg": "^1.1.6",
+    "styled-components": "^4.3.2"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.8.0"
   }
 }

@@ -1,37 +1,62 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import MuiLink from '@material-ui/core/Link';
-import ProTip from '../src/ProTip';
-import Link from '../src/Link';
+import React from 'react'
+import SplitLayout from '../layout/SplitLayout'
+import Hero from '../components/Hero'
+import ProuductCard from '../components/ProductCard'
+import styled from 'styled-components'
+import { motion, AnimatePresence } from 'framer-motion'
+import Firebase from '../fire'
 
-function Copyright() {
+const ProductList = styled(motion.div)`
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+  padding-top: 96px;
+`
+const listVariants = {
+  visible: {
+    opacity: 1,
+    transition: {
+      when: 'beforeChildren',
+      staggerChildren: 0.3
+    }
+  },
+  hidden: {
+    opacity: 0,
+    transition: {
+      when: 'afterChildren'
+    }
+  }
+}
+export default function Index({ products }) {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <MuiLink color="inherit" href="https://material-ui.com/">
-        Your Website
-      </MuiLink>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+    <SplitLayout Left={Hero}>
+      <ProductList variants={listVariants}>
+        <AnimatePresence>
+          {products.map((product, i) => {
+            return <ProuductCard key={product + i} data={product} custom={i} />
+          })}
+        </AnimatePresence>
+      </ProductList>
+    </SplitLayout>
+  )
 }
 
-export default function Index() {
-  return (
-    <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
-        </Typography>
-        <Link href="/about" color="secondary">
-          Go to the about page
-        </Link>
-        <ProTip />
-        <Copyright />
-      </Box>
-    </Container>
-  );
+Index.getInitialProps = async function() {
+  try {
+    const db = Firebase.firestore()
+    const QuerySnapshot = await db
+      .collection('products')
+      .orderBy('order')
+      .get()
+    const products = []
+    QuerySnapshot.forEach(product => {
+      products.push({ ...product.data(), id: product.id })
+    })
+    return {
+      products: products
+    }
+  } catch (err) {
+    console.log('Error: ', err)
+  }
 }
