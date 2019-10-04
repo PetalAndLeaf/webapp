@@ -16,7 +16,7 @@ class MyDocument extends Document {
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
-            href="https://fonts.googleapis.com/css?family=Lato:400,700|Quicksand&display=swap"
+            href="https://fonts.googleapis.com/css?family=Lato:400,700|Quicksand:400,600&display=swap"
             rel="stylesheet"
           ></link>
         </Head>
@@ -24,8 +24,15 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
           <style>{`
+          * {
+            box-sizing: border-box;
+          }
            html {
             scroll-behavior: smooth;
+          
+           }
+           a {
+             text-decoration: none;
            }
           `}</style>
         </body>

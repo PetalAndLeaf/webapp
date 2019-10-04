@@ -9,6 +9,7 @@ const Container = styled(motion.div)`
   width: 100%;
   border-radius: 20px;
   background-color: ${props => props.backgroundColor};
+  /* background-color: #ECE8DC; */
   overflow: hidden;
 
   &:not(:last-child) {

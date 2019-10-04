@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
+import AppContext from '../context/AppContext'
 
 const Main = styled.main`
   max-width: 100%;
@@ -14,17 +16,23 @@ const Aside = styled.aside`
   height: 100%;
   overflow-y: hidden;
   /* background-color: #d9d9d9; */
-  padding: 160px 64px 0;
+  padding: 160px 72px 0;
 `
-export default function SplitLayout({ Left, children }) {
+export default function SplitLayout({
+  Left,
+  footerLinks,
+  headerConfig = { hide: true },
+  children
+}) {
   return (
     <Main>
       <Aside>
         <Left />
       </Aside>
       <div>
-        <Header />
+        {!headerConfig.hide && <Header config={headerConfig} />}
         {children}
+        <Footer links={footerLinks} />
       </div>
     </Main>
   )
