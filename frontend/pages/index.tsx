@@ -54,7 +54,7 @@ export default function Index({ products, footer, siteConfig }: propsValue) {
 Index.getInitialProps = async function() {
   try {
     const db = await loadDB()
-    Promise.all([])
+
     const ProductsQuerySnapshot = await db
       .collection('products')
       .orderBy('order')
@@ -64,6 +64,7 @@ Index.getInitialProps = async function() {
       .collection('footer')
       .doc('EN')
       .get()
+    const footer = FooterRef.data()
 
     const siteConfigRef = await db
       .collection('configs')
@@ -74,7 +75,7 @@ Index.getInitialProps = async function() {
     ProductsQuerySnapshot.forEach((product: any) => {
       products.push({ ...product.data(), id: product.id })
     })
-    const footer = FooterRef.data()
+
     const siteConfig = siteConfigRef.data()
     return {
       products: products,

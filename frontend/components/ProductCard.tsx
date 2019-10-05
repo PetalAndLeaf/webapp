@@ -31,7 +31,7 @@ export default function ProuductCard({ data, moreProps }: propsValue) {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      transition={{ duraton: 1, delay: 1 }}
+      transition={{ duraton: 1, delay: 0.5 }}
       {...moreProps}
     >
       <CardImage data={data.images} />

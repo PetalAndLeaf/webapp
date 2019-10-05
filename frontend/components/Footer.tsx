@@ -37,7 +37,11 @@ export default function Footer() {
   const links: any[] = footer ? footer.links : []
   const date = new Date()
   return (
-    <Container>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1 }}
+    >
       <LinkGroup>
         {links.map((l, i) => {
           return (

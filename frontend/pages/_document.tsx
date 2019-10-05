@@ -58,17 +58,20 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <style>{`
-          * {
-            box-sizing: border-box;
-          }
-           html {
-            scroll-behavior: smooth;
-
-           }
-           a {
-             text-decoration: none;
-           }
+          <style jsx global>{`
+            * {
+              box-sizing: border-box;
+            }
+            html {
+              scroll-behavior: smooth;
+            }
+            a {
+              text-decoration: none;
+            }
+            .icon {
+              width: 20px;
+              height: 20px;
+            }
           `}</style>
         </body>
       </html>

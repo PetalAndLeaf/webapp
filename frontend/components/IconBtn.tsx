@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import SVG from 'react-inlinesvg'
 import { styles } from '../styles/theme'
+import FeatherIcon from './FeatherIcon'
 
 const Root = styled.button`
   width: 40px;
@@ -27,13 +27,9 @@ interface propsValue {
 }
 
 export default function IconBtn({ onClick, icon, moreProps }: propsValue) {
-  const feather = require('feather-icons')
   return (
     <Root onClick={onClick} {...moreProps}>
-      <SVG
-        src={feather.icons[icon].toSvg()}
-        style={{ width: 20, height: 20 }}
-      />
+      <FeatherIcon icon={icon} />
     </Root>
   )
 }
