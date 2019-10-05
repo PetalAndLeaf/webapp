@@ -3,8 +3,8 @@ import SplitLayout from '../layout/SplitLayout'
 import ProuductCard from '../components/ProductCard'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
-import Firebase from '../fire'
 import AppContext from '../context/AppContext'
+import loadDB from '../lib/fire'
 
 const ProductList = styled(motion.div)`
   max-width: 960px;
@@ -53,7 +53,7 @@ export default function Index({ products, footer, siteConfig }: propsValue) {
 
 Index.getInitialProps = async function() {
   try {
-    const db = Firebase.firestore()
+    const db = await loadDB()
     const ProductsQuerySnapshot = await db
       .collection('products')
       .orderBy('order')
