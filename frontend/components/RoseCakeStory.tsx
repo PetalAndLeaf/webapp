@@ -18,7 +18,7 @@ const HeroImage = styled.img`
   max-height: 480px;
 `
 const HighlightsContainer = styled.div`
-  max-width: 1440px;
+  max-width: 1280px;
   display: flex;
   justify-content: space-between;
   margin-right: auto;

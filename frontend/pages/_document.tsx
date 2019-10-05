@@ -10,31 +10,6 @@ import { ServerStyleSheets } from '@material-ui/styles'
 import theme from '../styles/theme'
 
 class MyDocument extends Document {
-  // static async getInitialProps(ctx: DocumentContext) {
-  //   const sheet = new ServerStyleSheet()
-  //   const originalRenderPage = ctx.renderPage
-
-  //   try {
-  //     ctx.renderPage = () =>
-  //       originalRenderPage({
-  //         enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
-  //       })
-
-  //     const initialProps = await Document.getInitialProps(ctx)
-  //     return {
-  //       ...initialProps,
-  //       styles: (
-  //         <>
-  //           {initialProps.styles}
-  //           {sheet.getStyleElement()}
-  //         </>
-  //       )
-  //     }
-  //   } finally {
-  //     sheet.seal()
-  //   }
-  // }
-
   static async getInitialProps(ctx: DocumentContext) {
     const styledComponentsSheet = new ServerStyleSheet()
     const materialSheets = new ServerStyleSheets()
@@ -66,18 +41,18 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <html lang='en'>
+      <html lang="en">
         <Head>
-          <meta charSet='utf-8' />
+          <meta charSet="utf-8" />
           <meta
-            name='viewport'
-            content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no'
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
           {/* PWA primary color */}
-          <meta name='theme-color' content={theme.palette.primary.main} />
+          <meta name="theme-color" content={theme.palette.primary.main} />
           <link
-            href='https://fonts.googleapis.com/css?family=Lato:400,700|Quicksand:400,600&display=swap'
-            rel='stylesheet'
+            href="https://fonts.googleapis.com/css?family=Lato:400,700|Quicksand:400,600&display=swap"
+            rel="stylesheet"
           ></link>
         </Head>
         <body>
