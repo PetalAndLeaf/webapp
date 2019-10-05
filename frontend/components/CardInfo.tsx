@@ -21,9 +21,9 @@ interface propsValue {
 export default function CardInfo({ data }: propsValue) {
   return (
     <Container>
-      <Typography variant='h3'>{data.name}</Typography>
+      <Typography variant="h3">{data.name}</Typography>
       {data.tags && (
-        <Typography variant='caption'>
+        <Typography variant="caption">
           {data.tags.map((t: any, i: number) => {
             if (i === 0) {
               return t
@@ -34,14 +34,12 @@ export default function CardInfo({ data }: propsValue) {
         </Typography>
       )}
 
-      <Typography variant='body2' style={{ marginTop: 32, marginBottom: 32 }}>
+      <Typography variant="body2" style={{ marginTop: 32, marginBottom: 32 }}>
         {data.description}
       </Typography>
-      {data.storyID && (
-        <Link href='/p/[id]' as={`/p/${data.id}`}>
-          <a>Read the story</a>
-        </Link>
-      )}
+      <Link href="/p/[id]" as={`/p/${data.id}`}>
+        <a>Read the story</a>
+      </Link>
     </Container>
   )
 }

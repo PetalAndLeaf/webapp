@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import IconBtn from './IconBtn'
+import AppContext from '../context/AppContext'
+import Router from 'next/router'
+import Link from 'next/link'
 
 const Container = styled.header`
   width: 100%;
@@ -19,12 +22,32 @@ const Container = styled.header`
   right: 0;
   z-index: 99;
 `
-export default function Header() {
+const Logo = styled.img`
+  height: 40px;
+  width: auto;
+  cursor: pointer;
+`
+interface propsValue {
+  type: string
+}
+export default function Header({ type }: propsValue) {
+  const { siteConfig } = useContext(AppContext)
   return (
     <Container>
-      <div></div>
       <div>
-        <IconBtn icon='shopping-bag' />
+        {type !== 'home' && (
+          <Link href="/">
+            <Logo src="../static/logo.svg" />
+          </Link>
+        )}
+      </div>
+      <div>
+        {siteConfig !== undefined && siteConfig.isCheckoutAvailable && (
+          <IconBtn icon="shopping-bag" />
+        )}
+        {type !== 'home' && (
+          <IconBtn icon="x" onClick={() => Router.push('/')} />
+        )}
       </div>
     </Container>
   )

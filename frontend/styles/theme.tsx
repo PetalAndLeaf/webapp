@@ -17,14 +17,15 @@ export const styles = {
     },
     divider: '#D6D3C9',
     text: {
-      primary: '#201F1E'
+      primary: '#201F1E',
+      secondary: '#5F5F5F'
     }
   },
   typography: {
     fontFamily: 'Lato, Helvetica, Arial, sans-serif',
     h3: {
-      fontFamily: "'Quicksand', Helvetica, Arial, sans-serif"
-      // fontWeight: 400
+      fontFamily: "'Quicksand', Helvetica, Arial, sans-serif",
+      fontWeight: 600
     },
     body2: {
       fontWeight: 400

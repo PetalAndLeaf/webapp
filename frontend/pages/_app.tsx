@@ -4,8 +4,31 @@ import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
+import AppContext from '../context/AppContext'
 
 export default class MyApp extends App {
+  state = {
+    siteConfig: {
+      isCheckoutAvailable: false,
+      language: 'EN'
+    },
+    footer: {
+      links: []
+    }
+  }
+
+  setSiteConfig = (config: object) => {
+    this.setState({
+      siteConfig: config
+    })
+  }
+
+  setFooter = (footer: object) => {
+    this.setState({
+      footer: footer
+    })
+  }
+
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
@@ -25,7 +48,16 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          <AppContext.Provider
+            value={{
+              siteConfig: this.state.siteConfig,
+              setSiteConfig: this.setSiteConfig,
+              footer: this.state.footer,
+              setFooter: this.setFooter
+            }}
+          >
+            <Component {...pageProps} />
+          </AppContext.Provider>
         </ThemeProvider>
       </React.Fragment>
     )

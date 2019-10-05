@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import SplitLayout from '../layout/SplitLayout'
 import ProuductCard from '../components/ProductCard'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
 import Firebase from '../fire'
+import AppContext from '../context/AppContext'
 
 const ProductList = styled(motion.div)`
   max-width: 960px;
@@ -29,10 +30,18 @@ const listVariants: Variants = {
 }
 interface propsValue {
   products: any[]
+  footer: object
+  siteConfig: any
 }
-export default function Index({ products }: propsValue) {
+export default function Index({ products, footer, siteConfig }: propsValue) {
+  const { setSiteConfig, setFooter } = useContext(AppContext)
+
+  useEffect(() => {
+    setSiteConfig && setSiteConfig(siteConfig)
+    setFooter && setFooter(footer)
+  }, [])
   return (
-    <SplitLayout>
+    <SplitLayout hideHeader={siteConfig.hideHomeHeader}>
       <ProductList variants={listVariants}>
         {products.map((product, i) => {
           return <ProuductCard key={product + i} data={product} />
@@ -45,16 +54,31 @@ export default function Index({ products }: propsValue) {
 Index.getInitialProps = async function() {
   try {
     const db = Firebase.firestore()
-    const QuerySnapshot = await db
+    const ProductsQuerySnapshot = await db
       .collection('products')
       .orderBy('order')
       .get()
+
+    const FooterRef = await db
+      .collection('footer')
+      .doc('EN')
+      .get()
+
+    const siteConfigRef = await db
+      .collection('configs')
+      .doc('site')
+      .get()
+
     const products: any[] = []
-    QuerySnapshot.forEach(product => {
+    ProductsQuerySnapshot.forEach((product: any) => {
       products.push({ ...product.data(), id: product.id })
     })
+    const footer = FooterRef.data()
+    const siteConfig = siteConfigRef.data()
     return {
-      products: products
+      products: products,
+      footer: footer,
+      siteConfig: siteConfig
     }
   } catch (err) {
     console.log('Error: ', err)
