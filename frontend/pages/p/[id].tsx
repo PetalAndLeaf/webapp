@@ -6,6 +6,8 @@ import CardImage from '../../components/CardImage'
 import { motion, Variants } from 'framer-motion'
 import { useEffect, useContext } from 'react'
 import AppContext from '../../context/AppContext'
+import { useRouter } from 'next/router'
+import RoseCakeStory from '../../components/RoseCakeStory'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -24,7 +26,7 @@ const Container = styled(motion.div)`
 
 const ContainerVariants: Variants = {
   hidden: {
-    y: 100,
+    y: 50,
     opacity: 0
   },
   visible: {
@@ -63,6 +65,7 @@ export default function Product({
   footer,
   siteConfig
 }: propsValue) {
+  const router = useRouter()
   const { setSiteConfig, setFooter } = useContext(AppContext)
   useEffect(() => {
     setSiteConfig && setSiteConfig(siteConfig)
@@ -72,19 +75,28 @@ export default function Product({
     <PageNotFound />
   ) : (
     <FullWidthLayout>
-      <Container variants={ContainerVariants} animate='open' initial='closed'>
-        <div style={{ width: '60%' }}>
-          <CardImage data={product.images} />
-          <motion.div
-            style={{ padding: 32 }}
-            animate={{ opacity: 1 }}
-            initial={{ opacity: 0 }}
-            transition={{ transition: 1, delay: 0.5 }}
-          >
-            <h1>{story.hero.title}</h1>
-            <p>{story.hero.subtitle}</p>
-          </motion.div>
-        </div>
+      <Container
+        variants={ContainerVariants}
+        animate="visible"
+        initial="hidden"
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
+        {router.query.id === 'rose-cake' ? (
+          <RoseCakeStory product={product} story={story} />
+        ) : (
+          <div style={{ width: '60%' }}>
+            <CardImage data={product.images} />
+            <motion.div
+              style={{ padding: 32 }}
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+              transition={{ transition: 1, delay: 0.5 }}
+            >
+              <h1>{story.hero.title}</h1>
+              <p>{story.hero.subtitle}</p>
+            </motion.div>
+          </div>
+        )}
       </Container>
     </FullWidthLayout>
   )
