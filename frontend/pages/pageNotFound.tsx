@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { Typography } from '@material-ui/core'
-import Link from '../components/Link'
+import Link from 'next/link'
 
 const Container = styled(motion.div)`
   width: 100%;
@@ -19,13 +19,15 @@ export default function PageNotFound() {
       animate={{ opacity: 1 }}
       transition={{ duraton: 2, delay: 1, ease: 'linear' }}
     >
-      <Typography variant="h3" style={{ marginBottom: 32 }}>
+      <Typography variant='h3' style={{ marginBottom: 32 }}>
         404
       </Typography>
-      <Typography variant="body2" style={{ marginBottom: 32 }}>
+      <Typography variant='body2' style={{ marginBottom: 32 }}>
         Page not found
       </Typography>
-      <Link href="/">Back home</Link>
+      <Link href='/'>
+        <a>Back home</a>
+      </Link>
     </Container>
   )
 }

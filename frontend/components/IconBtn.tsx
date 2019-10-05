@@ -20,14 +20,16 @@ const Root = styled.button`
   }
 `
 
-export default function IconBtn({
-  onClick = () => console.log('clicked'),
-  icon,
-  ...props
-}) {
+interface propsValue {
+  onClick?: () => {}
+  icon: string
+  moreProps?: any[]
+}
+
+export default function IconBtn({ onClick, icon, moreProps }: propsValue) {
   const feather = require('feather-icons')
   return (
-    <Root onClick={onClick} {...props}>
+    <Root onClick={onClick} {...moreProps}>
       <SVG
         src={feather.icons[icon].toSvg()}
         style={{ width: 20, height: 20 }}

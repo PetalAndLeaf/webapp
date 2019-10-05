@@ -12,7 +12,10 @@ const Container = styled(motion.div)`
 const Image = styled(motion.img)`
   width: 100%;
 `
-export default function CardImage({ data }) {
+interface propsValue {
+  data: string[]
+}
+export default function CardImage({ data }: propsValue) {
   return (
     <Container>
       <Image src={`/static/${data[0]}`} alt={data[0]} />

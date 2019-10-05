@@ -12,7 +12,7 @@ const Container = styled(motion.div)`
 export default function Hero() {
   return (
     <Container>
-      <Logo width="100%" />
+      <Logo width='100%' />
       {/* <Typography variant="body2">
         Bring fragrance and freshness to your table
       </Typography> */}

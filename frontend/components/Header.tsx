@@ -20,12 +20,11 @@ const Container = styled.header`
   z-index: 99;
 `
 export default function Header() {
-  const feather = require('feather-icons')
   return (
     <Container>
       <div></div>
       <div>
-        <IconBtn icon="shopping-bag" />
+        <IconBtn icon='shopping-bag' />
       </div>
     </Container>
   )

@@ -1,9 +1,8 @@
 import React from 'react'
 import SplitLayout from '../layout/SplitLayout'
-import Hero from '../components/Hero'
 import ProuductCard from '../components/ProductCard'
 import styled from 'styled-components'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import Firebase from '../fire'
 
 const ProductList = styled(motion.div)`
@@ -13,7 +12,7 @@ const ProductList = styled(motion.div)`
   padding: 32px;
   padding-top: 96px;
 `
-const listVariants = {
+const listVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
@@ -28,15 +27,16 @@ const listVariants = {
     }
   }
 }
-export default function Index({ products }) {
+interface propsValue {
+  products: any[]
+}
+export default function Index({ products }: propsValue) {
   return (
-    <SplitLayout Left={Hero}>
+    <SplitLayout>
       <ProductList variants={listVariants}>
-        <AnimatePresence>
-          {products.map((product, i) => {
-            return <ProuductCard key={product + i} data={product} custom={i} />
-          })}
-        </AnimatePresence>
+        {products.map((product, i) => {
+          return <ProuductCard key={product + i} data={product} />
+        })}
       </ProductList>
     </SplitLayout>
   )
@@ -49,7 +49,7 @@ Index.getInitialProps = async function() {
       .collection('products')
       .orderBy('order')
       .get()
-    const products = []
+    const products: any[] = []
     QuerySnapshot.forEach(product => {
       products.push({ ...product.data(), id: product.id })
     })

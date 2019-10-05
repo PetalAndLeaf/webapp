@@ -3,7 +3,7 @@ import PageNotFound from '../pageNotFound'
 import Firebase from '../../fire'
 import styled from 'styled-components'
 import CardImage from '../../components/CardImage'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 
 const Container = styled(motion.div)`
   max-width: 1440px;
@@ -19,7 +19,7 @@ const Container = styled(motion.div)`
   display: flex;
 `
 
-const ContainerVariants = {
+const ContainerVariants: Variants = {
   hidden: {
     y: 100,
     opacity: 0
@@ -48,17 +48,24 @@ const ContainerVariants = {
     }
   }
 }
-export default function Product({ data }) {
+interface propsValue {
+  data: {
+    product: {
+      images: string[]
+      name: string
+    }
+    story: {
+      title: string
+      body: string
+    }
+  }
+}
+export default function Product({ data }: propsValue) {
   return data === null ? (
     <PageNotFound />
   ) : (
     <FullWidthLayout>
-      <Container
-        variants={ContainerVariants}
-        animate="open"
-        initial="closed"
-        // transition={{ duration: 1, ease: 'easeInOut' }}
-      >
+      <Container variants={ContainerVariants} animate='open' initial='closed'>
         <div style={{ width: '60%' }}>
           <CardImage data={data.product.images} />
           <motion.div
@@ -77,26 +84,19 @@ export default function Product({ data }) {
   )
 }
 
-Product.getInitialProps = async function(context) {
+Product.getInitialProps = async function(context: any) {
   try {
     const { id } = context.query
     const db = Firebase.firestore()
-    const StoryQuerySnapshot = await db
-      .collection('stories')
-      .where('productID', '==', id)
-      .get()
+
     const productRef = await db
       .collection('products')
       .doc(id)
       .get()
-    const stories = []
-    StoryQuerySnapshot.forEach(story => {
-      stories.push({ ...story.data(), id: story.id })
-    })
     const product = productRef.data()
+    console.log(product)
     return {
-      data:
-        stories.length === 0 ? null : { story: stories[0], product: product }
+      data: product
     }
   } catch (err) {
     console.log('Error: ', err)
