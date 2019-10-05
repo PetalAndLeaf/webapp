@@ -1,6 +1,6 @@
 import FullWidthLayout from '../../layout/FullWidthLayout'
 import PageNotFound from '../pageNotFound'
-import Firebase from '../../fire'
+import loadDB from '../../lib/fire'
 import styled from 'styled-components'
 import CardImage from '../../components/CardImage'
 import { motion, Variants } from 'framer-motion'
@@ -72,7 +72,7 @@ export default function Product({
     <PageNotFound />
   ) : (
     <FullWidthLayout>
-      <Container variants={ContainerVariants} animate="open" initial="closed">
+      <Container variants={ContainerVariants} animate='open' initial='closed'>
         <div style={{ width: '60%' }}>
           <CardImage data={product.images} />
           <motion.div
@@ -93,7 +93,7 @@ export default function Product({
 Product.getInitialProps = async function(context: any) {
   try {
     const { id } = context.query
-    const db = Firebase.firestore()
+    const db = await loadDB()
 
     const productRef = await db.doc(`products/${id}`).get()
 
