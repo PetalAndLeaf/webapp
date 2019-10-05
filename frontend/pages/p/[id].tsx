@@ -65,7 +65,7 @@ export default function Product({ data }: propsValue) {
     <PageNotFound />
   ) : (
     <FullWidthLayout>
-      <Container variants={ContainerVariants} animate='open' initial='closed'>
+      <Container variants={ContainerVariants} animate="open" initial="closed">
         <div style={{ width: '60%' }}>
           <CardImage data={data.product.images} />
           <motion.div
@@ -94,7 +94,6 @@ Product.getInitialProps = async function(context: any) {
       .doc(id)
       .get()
     const product = productRef.data()
-    console.log(product)
     return {
       data: product
     }
