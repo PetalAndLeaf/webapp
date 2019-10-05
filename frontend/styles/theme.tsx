@@ -27,6 +27,10 @@ export const styles = {
       fontFamily: "'Quicksand', Helvetica, Arial, sans-serif",
       fontWeight: 600
     },
+    h4: {
+      fontFamily: "'Quicksand', Helvetica, Arial, sans-serif",
+      fontWeight: 600
+    },
     body2: {
       fontWeight: 400
     },

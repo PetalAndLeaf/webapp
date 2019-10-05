@@ -22,6 +22,7 @@ const Container = styled(motion.div)`
   box-sizing: border-box;
   display: flex;
   min-height: 100vh;
+  padding-bottom: 200px;
 `
 
 const ContainerVariants: Variants = {
