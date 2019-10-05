@@ -8,13 +8,13 @@ import Link from 'next/link'
 
 const Container = styled.header`
   width: 100%;
-  height: 72px;
+  height: 80px;
   /* border-bottom: 1px solid ${styles.palette.divider}; */
   display: flex;
   align-items: center;
   background-color: rgba(256,256,256,0.9);
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 48px;
+  padding-right: 48px;
   justify-content: space-between;
   position: fixed;
   top: 0;
