@@ -58,15 +58,16 @@ const IngradientsContainer = styled.div`
   margin-bottom: 72px; */
   margin-top: 96px;
   margin-bottom: 72px;
-  width: 100%;
+  max-width: 1280px;
   text-align: center;
+
+  margin-right: auto;
+  margin-left: auto;
 `
 
 const IngradientsListContainer = styled(Grid)`
   margin-top: 144px;
-  max-width: 1440px;
-  margin-right: auto;
-  margin-left: auto;
+  width: 100%;
 `
 const DividerDeco = styled.div`
   width: 60px;
@@ -157,7 +158,7 @@ export default function RoseCakeStory({ story }: propsValue) {
                 <img
                   src={`/static/${ing.image}`}
                   alt={ing.image}
-                  style={{ height: 120 }}
+                  style={{ height: 200 }}
                 />
                 <Typography variant="body1">{ing.name}</Typography>
               </Grid>

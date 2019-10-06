@@ -1,6 +1,5 @@
 import FullWidthLayout from '../../layout/FullWidthLayout'
 import PageNotFound from '../pageNotFound'
-import loadDB from '../../lib/fire'
 import styled from 'styled-components'
 import CardImage from '../../components/CardImage'
 import { motion, Variants } from 'framer-motion'
@@ -8,6 +7,12 @@ import { useEffect, useContext } from 'react'
 import AppContext from '../../context/AppContext'
 import { useRouter } from 'next/router'
 import RoseCakeStory from '../../components/RoseCakeStory'
+import {
+  fetchProduct,
+  fetchProductStory,
+  fetchFooter,
+  fetchSiteConfig
+} from '../../lib/dataFetch'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -67,10 +72,13 @@ export default function Product({
   siteConfig
 }: propsValue) {
   const router = useRouter()
-  const { setSiteConfig, setFooter } = useContext(AppContext)
+  const { setSiteConfig, setFooter, count, setCount } = useContext(AppContext)
   useEffect(() => {
     setSiteConfig && setSiteConfig(siteConfig)
     setFooter && setFooter(footer)
+
+    console.log(`hey id! ${count} i'm here sleepy ==============`)
+    setCount && setCount()
   }, [])
   return product === null ? (
     <PageNotFound />
@@ -106,26 +114,11 @@ export default function Product({
 Product.getInitialProps = async function(context: any) {
   try {
     const { id } = context.query
-    const db = await loadDB()
 
-    const productRef = await db.doc(`products/${id}`).get()
-
-    const productStoryRef = await db.doc(`products/${id}/stories/2019EN`).get()
-
-    const FooterRef = await db
-      .collection('footer')
-      .doc('EN')
-      .get()
-
-    const siteConfigRef = await db
-      .collection('configs')
-      .doc('site')
-      .get()
-
-    const product = productRef.data()
-    const story = productStoryRef.data()
-    const footer = FooterRef.data()
-    const siteConfig = siteConfigRef.data()
+    const product = await fetchProduct(id)
+    const story = await fetchProductStory(id)
+    const footer = await fetchFooter()
+    const siteConfig = await fetchSiteConfig()
 
     return {
       product: product,

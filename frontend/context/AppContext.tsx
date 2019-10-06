@@ -10,6 +10,8 @@ interface ContextProps {
     links: any[]
   }
   setFooter: Function
+  count: number
+  setCount: Function
 }
 const AppContext = createContext<Partial<ContextProps>>({})
 

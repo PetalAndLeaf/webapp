@@ -14,7 +14,8 @@ export default class MyApp extends App {
     },
     footer: {
       links: []
-    }
+    },
+    count: 0
   }
 
   setSiteConfig = (config: object) => {
@@ -35,8 +36,16 @@ export default class MyApp extends App {
     if (jssStyles !== null && jssStyles.parentNode !== null) {
       jssStyles.parentNode.removeChild(jssStyles)
     }
+
+    console.log(`_app`)
+    this.setCount()
   }
 
+  setCount = () => {
+    this.setState({
+      count: this.state.count + 1
+    })
+  }
   render() {
     const { Component, pageProps } = this.props
 
@@ -53,7 +62,9 @@ export default class MyApp extends App {
               siteConfig: this.state.siteConfig,
               setSiteConfig: this.setSiteConfig,
               footer: this.state.footer,
-              setFooter: this.setFooter
+              setFooter: this.setFooter,
+              count: this.state.count,
+              setCount: this.setCount
             }}
           >
             <Component {...pageProps} />
