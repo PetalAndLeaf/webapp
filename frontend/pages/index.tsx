@@ -1,15 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import SplitLayout from '../layout/SplitLayout'
 import ProuductCard from '../components/ProductCard'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
-import AppContext from '../context/AppContext'
+import GlobalContext from '../context/GlobalContext'
 
-import {
-  fetchFooter,
-  fetchSiteConfig,
-  fetchProductList
-} from '../lib/dataFetch'
+import { fetchProductList } from '../lib/dataFetch'
 
 const ProductList = styled(motion.div)`
   max-width: 960px;
@@ -35,20 +31,11 @@ const listVariants: Variants = {
 }
 interface propsValue {
   productList: any[]
-  footer: object
-  siteConfig: any
 }
-export default function Index({ productList, footer, siteConfig }: propsValue) {
-  const { setSiteConfig, setFooter, count, setCount } = useContext(AppContext)
-  useEffect(() => {
-    setSiteConfig && setSiteConfig(siteConfig)
-    setFooter && setFooter(footer)
-    console.log(`hey index! ${count} i'm here sleepy ==============`)
-    setCount && setCount()
-  }, [])
-
+export default function Index({ productList }: propsValue) {
+  const { siteConfig } = useContext(GlobalContext)
   return (
-    <SplitLayout hideHeader={siteConfig.hideHomeHeader}>
+    <SplitLayout hideHeader={siteConfig ? siteConfig.hideHomeHeader : false}>
       <ProductList variants={listVariants}>
         {productList.map((product, i) => {
           return <ProuductCard key={product + i} data={product} />
@@ -61,12 +48,9 @@ export default function Index({ productList, footer, siteConfig }: propsValue) {
 Index.getInitialProps = async function() {
   try {
     const productList = await fetchProductList()
-    const footer = await fetchFooter()
-    const siteConfig = await fetchSiteConfig()
+    console.log('index fetching')
     return {
-      productList: productList,
-      footer: footer,
-      siteConfig: siteConfig
+      productList: productList
     }
   } catch (err) {
     console.log('Error: ', err)

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import IconBtn from './IconBtn'
-import AppContext from '../context/AppContext'
+import GlobalContext from '../context/GlobalContext'
 import Router from 'next/router'
 import Link from 'next/link'
 
@@ -31,7 +31,7 @@ interface propsValue {
   type: string
 }
 export default function Header({ type }: propsValue) {
-  const { siteConfig } = useContext(AppContext)
+  const { siteConfig } = useContext(GlobalContext)
   return (
     <Container>
       <div>

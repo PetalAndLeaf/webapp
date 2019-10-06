@@ -1,21 +1,35 @@
 import React from 'react'
-import App from 'next/app'
+import App, { AppContext } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
-import AppContext from '../context/AppContext'
+import GlobalContext from '../context/GlobalContext'
+import { fetchSiteConfig, fetchFooter } from '../lib/dataFetch'
 
 export default class MyApp extends App {
+  static async getInitialProps({ Component, ctx }: AppContext) {
+    let pageProps: any
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
+    }
+    if (typeof window === 'undefined') {
+      try {
+        const siteConfig = await fetchSiteConfig()
+        console.log('_app: fetching siteConfig from db')
+        const footer = await fetchFooter()
+        pageProps.siteConfig = siteConfig
+        pageProps.footer = footer
+      } catch (error) {
+        console.log('Error fetch global config' + error)
+      }
+    }
+
+    return { pageProps }
+  }
   state = {
-    siteConfig: {
-      isCheckoutAvailable: false,
-      language: 'EN'
-    },
-    footer: {
-      links: []
-    },
-    count: 0
+    siteConfig: {},
+    footer: {}
   }
 
   setSiteConfig = (config: object) => {
@@ -30,7 +44,7 @@ export default class MyApp extends App {
     })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles !== null && jssStyles.parentNode !== null) {
@@ -38,14 +52,13 @@ export default class MyApp extends App {
     }
 
     console.log(`_app`)
-    this.setCount()
-  }
 
-  setCount = () => {
     this.setState({
-      count: this.state.count + 1
+      siteConfig: this.props.pageProps.siteConfig,
+      footer: this.props.pageProps.footer
     })
   }
+
   render() {
     const { Component, pageProps } = this.props
 
@@ -57,18 +70,16 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <AppContext.Provider
+          <GlobalContext.Provider
             value={{
               siteConfig: this.state.siteConfig,
               setSiteConfig: this.setSiteConfig,
               footer: this.state.footer,
-              setFooter: this.setFooter,
-              count: this.state.count,
-              setCount: this.setCount
+              setFooter: this.setFooter
             }}
           >
             <Component {...pageProps} />
-          </AppContext.Provider>
+          </GlobalContext.Provider>
         </ThemeProvider>
       </React.Fragment>
     )

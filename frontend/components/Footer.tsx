@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { styles } from '../styles/theme'
 import { Typography } from '@material-ui/core'
-import AppContext from '../context/AppContext'
+import GlobalContext from '../context/GlobalContext'
 
 const Container = styled(motion.div)`
   /* width: 100%; */
@@ -33,8 +33,8 @@ const LinkGroup = styled.div`
 `
 
 export default function Footer() {
-  const { footer } = useContext(AppContext)
-  const links: any[] = footer ? footer.links : []
+  const { footer } = useContext(GlobalContext)
+  const links: any[] = footer && footer.links ? footer.links : []
   const date = new Date()
   return (
     <Container

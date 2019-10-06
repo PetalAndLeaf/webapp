@@ -3,16 +3,9 @@ import PageNotFound from '../pageNotFound'
 import styled from 'styled-components'
 import CardImage from '../../components/CardImage'
 import { motion, Variants } from 'framer-motion'
-import { useEffect, useContext } from 'react'
-import AppContext from '../../context/AppContext'
 import { useRouter } from 'next/router'
 import RoseCakeStory from '../../components/RoseCakeStory'
-import {
-  fetchProduct,
-  fetchProductStory,
-  fetchFooter,
-  fetchSiteConfig
-} from '../../lib/dataFetch'
+import { fetchProduct, fetchProductStory } from '../../lib/dataFetch'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -62,24 +55,9 @@ const ContainerVariants: Variants = {
 interface propsValue {
   product: any
   story: any
-  footer: object
-  siteConfig: object
 }
-export default function Product({
-  product,
-  story,
-  footer,
-  siteConfig
-}: propsValue) {
+export default function Product({ product, story }: propsValue) {
   const router = useRouter()
-  const { setSiteConfig, setFooter, count, setCount } = useContext(AppContext)
-  useEffect(() => {
-    setSiteConfig && setSiteConfig(siteConfig)
-    setFooter && setFooter(footer)
-
-    console.log(`hey id! ${count} i'm here sleepy ==============`)
-    setCount && setCount()
-  }, [])
   return product === null ? (
     <PageNotFound />
   ) : (
@@ -114,17 +92,13 @@ export default function Product({
 Product.getInitialProps = async function(context: any) {
   try {
     const { id } = context.query
-
     const product = await fetchProduct(id)
     const story = await fetchProductStory(id)
-    const footer = await fetchFooter()
-    const siteConfig = await fetchSiteConfig()
 
+    console.log('product fetching')
     return {
       product: product,
-      story: story,
-      footer: footer,
-      siteConfig: siteConfig
+      story: story
     }
   } catch (err) {
     console.log('Error: ', err)
