@@ -3,6 +3,7 @@ import App, { AppContext } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { StripeProvider } from 'react-stripe-elements'
 import theme from '../styles/theme'
 import GlobalContext from '../context/GlobalContext'
 import { fetchSiteConfig, fetchFooter } from '../lib/dataFetch'
@@ -24,14 +25,15 @@ export default class MyApp extends App {
         console.log('Error fetch global config' + error)
       }
     }
-
     return { pageProps }
   }
+
   state = {
     siteConfig: {},
     footer: {},
     cartOpen: false,
-    cartItem: ['Rose cake']
+    cartItem: ['Rose cake'],
+    stripe: null
   }
 
   setSiteConfig = (config: object) => {
@@ -64,12 +66,15 @@ export default class MyApp extends App {
       jssStyles.parentNode.removeChild(jssStyles)
     }
 
-    console.log(`_app`)
-
     this.setState({
       siteConfig: this.props.pageProps.siteConfig,
-      footer: this.props.pageProps.footer
+      footer: this.props.pageProps.footer,
+      stripe: (window as any).Stripe(
+        'pk_test_QfQzDbJELK5gRsHplgEPSiCC00N6OZr9fZ'
+      )
     })
+
+    console.log(`_app`)
   }
 
   render() {
@@ -95,7 +100,9 @@ export default class MyApp extends App {
               setCartItems: this.setCartItems
             }}
           >
-            <Component {...pageProps} />
+            <StripeProvider stripe={this.state.stripe}>
+              <Component {...pageProps} />
+            </StripeProvider>
           </GlobalContext.Provider>
         </ThemeProvider>
       </React.Fragment>
