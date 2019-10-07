@@ -4,6 +4,9 @@ import { motion, Variants } from 'framer-motion'
 import { Typography } from '@material-ui/core'
 import IconBtn from './IconBtn'
 import GlobalContext from '../context/GlobalContext'
+import { Elements } from 'react-stripe-elements'
+import CheckoutForm from './CheckoutForm'
+// import CheckoutForm from "./CheckoutForm";
 
 const Mask = styled(motion.div)`
   width: 100%;
@@ -80,6 +83,9 @@ export default function CartSidebar() {
             style: { position: 'absolute', right: 8, top: 8 }
           }}
         />
+        <Elements>
+          <CheckoutForm />
+        </Elements>
       </Sidebar>
     </>
   )
