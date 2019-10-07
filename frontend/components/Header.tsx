@@ -5,6 +5,9 @@ import IconBtn from './IconBtn'
 import GlobalContext from '../context/GlobalContext'
 import Router from 'next/router'
 import Link from 'next/link'
+import CartSidebar from './CartSidebar'
+import { AnimatePresence } from 'framer-motion'
+import CartBtn from './CartBtn'
 
 const Container = styled.header`
   width: 100%;
@@ -31,7 +34,7 @@ interface propsValue {
   type: string
 }
 export default function Header({ type }: propsValue) {
-  const { siteConfig } = useContext(GlobalContext)
+  const { siteConfig, cartOpen } = useContext(GlobalContext)
   return (
     <Container>
       <div>
@@ -43,12 +46,13 @@ export default function Header({ type }: propsValue) {
       </div>
       <div>
         {siteConfig !== undefined && siteConfig.isCheckoutAvailable && (
-          <IconBtn icon="shopping-bag" />
+          <CartBtn />
         )}
         {type !== 'home' && (
           <IconBtn icon="x" onClick={() => Router.push('/')} />
         )}
       </div>
+      <AnimatePresence>{cartOpen && <CartSidebar />}</AnimatePresence>
     </Container>
   )
 }

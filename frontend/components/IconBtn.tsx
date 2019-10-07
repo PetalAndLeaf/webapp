@@ -23,7 +23,7 @@ const Root = styled.button`
 interface propsValue {
   onClick?: () => {}
   icon: string
-  moreProps?: any[]
+  moreProps?: any
 }
 
 export default function IconBtn({ onClick, icon, moreProps }: propsValue) {

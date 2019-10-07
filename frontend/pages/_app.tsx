@@ -29,7 +29,9 @@ export default class MyApp extends App {
   }
   state = {
     siteConfig: {},
-    footer: {}
+    footer: {},
+    cartOpen: false,
+    cartItem: ['Rose cake']
   }
 
   setSiteConfig = (config: object) => {
@@ -41,6 +43,17 @@ export default class MyApp extends App {
   setFooter = (footer: object) => {
     this.setState({
       footer: footer
+    })
+  }
+
+  setCartOpen = (cartState: boolean) => {
+    this.setState({
+      cartOpen: cartState
+    })
+  }
+  setCartItems = (items: any[]) => {
+    this.setState({
+      cartItem: items
     })
   }
 
@@ -75,7 +88,11 @@ export default class MyApp extends App {
               siteConfig: this.state.siteConfig,
               setSiteConfig: this.setSiteConfig,
               footer: this.state.footer,
-              setFooter: this.setFooter
+              setFooter: this.setFooter,
+              cartOpen: this.state.cartOpen,
+              setCartOpen: this.setCartOpen,
+              cartItems: this.state.cartItem,
+              setCartItems: this.setCartItems
             }}
           >
             <Component {...pageProps} />
