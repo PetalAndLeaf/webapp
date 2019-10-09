@@ -12,6 +12,7 @@
   "dependencies": {
     "@material-ui/core": "^4.5.0",
     "color": "^3.1.2",
+    "dotenv-webpack": "^1.7.0",
     "firebase": "^7.1.0",
     "framer-motion": "^1.6.8",
     "next": "^9.0.7",

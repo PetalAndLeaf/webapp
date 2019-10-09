@@ -3,13 +3,13 @@ export default async function loadDB() {
   require('firebase/firestore')
 
   const firebaseConfig = {
-    apiKey: 'AIzaSyA_ZHNg93gYd8usmaanHBbYv3tz0O1BOzc',
-    authDomain: 'petalleafweb.firebaseapp.com',
-    databaseURL: 'https://petalleafweb.firebaseio.com',
-    projectId: 'petalleafweb',
-    storageBucket: 'petalleafweb.appspot.com',
-    messagingSenderId: '361247471331',
-    appId: '1:361247471331:web:9abe95b69c7e28df0177d6'
+    apiKey: process.env.FB_KEY,
+    authDomain: process.env.FB_AUTHDOMAIN,
+    databaseURL: process.env.FB_DBURL,
+    projectId: process.env.FB_PROJID,
+    storageBucket: process.env.FB_STORAGE,
+    messagingSenderId: process.env.FB_MSGID,
+    appId: process.env.FB_APPID
   }
 
   try {
