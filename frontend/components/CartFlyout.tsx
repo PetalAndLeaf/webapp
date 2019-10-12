@@ -4,8 +4,9 @@ import { motion, Variants, AnimatePresence } from 'framer-motion'
 import { Typography } from '@material-ui/core'
 import { styles } from '../styles/theme'
 import RoundedBtn from './RoundedBtn'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import CartItem from './CartItem'
+import { closeFlyout, toggleSidebar } from '../store/cart/action'
 
 const Root = styled(motion.div)`
   width: 360px;
@@ -66,8 +67,14 @@ const Bottom = styled.div`
 `
 
 export default function CartFlyout() {
+  const dispatch = useDispatch()
   const items = useSelector((state: any) => state.cart.items)
   const isEmpty = items.length === 0
+
+  const handleCheckoutBtnClick = () => {
+    dispatch(closeFlyout())
+    dispatch(toggleSidebar())
+  }
   return (
     <Root
       variants={rootVariants}
@@ -110,7 +117,9 @@ export default function CartFlyout() {
             >
               Free one-day shipping when your order is over $45
             </Typography>
-            <RoundedBtn btype="large">Continue to check out</RoundedBtn>
+            <RoundedBtn btype="large" onClick={handleCheckoutBtnClick}>
+              Continue to check out
+            </RoundedBtn>
           </Bottom>
         </>
       )}
