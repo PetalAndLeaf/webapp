@@ -5,8 +5,7 @@ import { Typography } from '@material-ui/core'
 import { styles } from '../styles/theme'
 import RoundedBtn from './RoundedBtn'
 import { useSelector } from 'react-redux'
-// import { useDispatch } from 'react-redux'
-// import { closeFlyout } from '../store/cart/action'
+import CartItem from './CartItem'
 
 const Root = styled(motion.div)`
   width: 360px;
@@ -14,7 +13,7 @@ const Root = styled(motion.div)`
   min-height: 160px;
   max-height: 480px;
   background-color: #ffffff;
-  box-shadow: 0 15px 32px -10px rgba(29, 28, 27, 0.3);
+  box-shadow: 0 15px 46px -10px rgba(29, 28, 27, 0.3);
   position: absolute;
   right: 0;
   top: 40px;
@@ -50,11 +49,16 @@ const Header = styled.div`
   display: flex;
   align-items: center;
 `
+const ItemList = styled.div`
+  overflow-y: scroll;
+`
+
 const Bottom = styled.div`
   height: auto;
   border-top: 1px solid ${styles.palette.divider};
   padding: 16px;
   display: flex;
+  flex: 1;
   flex-direction: column;
 `
 
@@ -84,6 +88,11 @@ export default function CartFlyout() {
           <Header>
             <Typography variant="h5">Your bag</Typography>
           </Header>
+          <ItemList>
+            {items.map((item: any, i: number) => {
+              return <CartItem data={item} key={item + i} />
+            })}
+          </ItemList>
           <Bottom>
             <Typography
               variant="caption"

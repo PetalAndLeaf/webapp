@@ -8,7 +8,10 @@ import {
   X,
   ShoppingBag,
   Instagram,
-  Facebook
+  Facebook,
+  Plus,
+  Minus,
+  Trash2
 } from 'react-feather'
 
 interface propsValue {
@@ -37,6 +40,12 @@ export default function FeatherIcon({ icon, style }: propsValue) {
         return <Facebook className="icon" style={style} />
       case 'shoppingbag':
         return <ShoppingBag className="icon" style={style} />
+      case 'plus':
+        return <Plus className="icon" style={style} />
+      case 'minus':
+        return <Minus className="icon" style={style} />
+      case 'delete':
+        return <Trash2 className="icon" style={style} />
       default:
         return <Smile className="icon" style={style} />
     }

@@ -32,6 +32,7 @@ interface propsValue {
   onClick?: Function
   icon: string
   btype?: string
+  style?: any
   moreProps?: any
 }
 
@@ -39,10 +40,11 @@ export default function IconBtn({
   onClick,
   icon,
   btype = '',
+  style,
   moreProps
 }: propsValue) {
   return (
-    <Root onClick={onClick} btype={btype} {...moreProps}>
+    <Root onClick={onClick} btype={btype} {...moreProps} style={style}>
       <FeatherIcon icon={icon} />
     </Root>
   )
