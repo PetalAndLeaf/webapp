@@ -38,6 +38,11 @@ export const styles = {
       fontWeight: 600,
       fontSize: 18
     },
+    h6: {
+      fontFamily: "'Quicksand', Helvetica, Arial, sans-serif",
+      fontWeight: 600,
+      fontSize: 14
+    },
     body2: {
       fontWeight: 400
     },
