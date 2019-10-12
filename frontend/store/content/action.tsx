@@ -1,3 +1,6 @@
+import { Dispatch, Action } from 'redux'
+import { ThunkAction } from 'redux-thunk'
+import { AppState } from '../store'
 import {
   SET_CONFIG,
   SET_FOOTER,
@@ -12,11 +15,10 @@ import {
   fetchProduct,
   fetchProductStory
 } from '../../lib/db'
-import { Dispatch, Action } from 'redux'
-import { ThunkAction } from 'redux-thunk'
-import { AppState } from '../store'
 
-export function setConfig(): ThunkAction<void, AppState, null, Action<string>> {
+/**************************************************************/
+
+export function setConfig() {
   return async (dispatch: Dispatch) => {
     try {
       return dispatch({
