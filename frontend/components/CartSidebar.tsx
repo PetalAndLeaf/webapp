@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
 import { Typography } from '@material-ui/core'
 import IconBtn from './IconBtn'
-import GlobalContext from '../context/GlobalContext'
 import { Elements } from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
 // import CheckoutForm from "./CheckoutForm";
@@ -34,7 +33,7 @@ const sidebarVariants: Variants = {
     x: 0,
     transition: {
       delay: 0.1,
-      duration: 0.6,
+      duration: 0.4,
       ease: 'easeOut'
     }
   },
@@ -60,7 +59,6 @@ const maskVariants: Variants = {
   }
 }
 export default function CartSidebar() {
-  const { setCartOpen } = useContext(GlobalContext)
   return (
     <>
       <Mask
@@ -78,7 +76,7 @@ export default function CartSidebar() {
         <Typography variant="h4">Cart</Typography>
         <IconBtn
           icon="x"
-          onClick={() => setCartOpen && setCartOpen(false)}
+          // onClick={() => setCartOpen && setCartOpen(false)}
           moreProps={{
             style: { position: 'absolute', right: 8, top: 8 }
           }}
