@@ -5,7 +5,6 @@ export interface contentState {
   productList: any
   product: any
   story: any
-  loading: boolean
 }
 
 /**************************************************************/
@@ -19,17 +18,8 @@ export interface SetConfigAction {
 
 export interface Footer {}
 export const SET_FOOTER = 'SET_FOOTER'
-export const GETTING_FOOTER = 'GettingFooter'
-export const GOT_FOOTER = 'GotFooter'
 export interface SetFooterAction {
   type: typeof SET_FOOTER
-  data: Footer
-}
-export interface GettingFooterAction {
-  type: typeof GETTING_FOOTER
-}
-export interface GotFooterAction {
-  type: typeof GOT_FOOTER
   data: Footer
 }
 
@@ -55,11 +45,7 @@ export interface getProductStoryAction {
 }
 
 /**************************************************************/
-export type SysActionTypes =
-  | SetConfigAction
-  | SetFooterAction
-  | GettingFooterAction
-  | GotFooterAction
+export type SysActionTypes = SetConfigAction | SetFooterAction
 export type ProductActionTypes =
   | GetProductlistAction
   | getProductAction

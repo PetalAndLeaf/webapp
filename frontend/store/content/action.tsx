@@ -12,18 +12,16 @@ import {
   fetchProduct,
   fetchProductStory
 } from '../../lib/db'
-import { Dispatch, Action, ActionCreator } from 'redux'
+import { Dispatch, Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '../store'
 
 export function setConfig(): ThunkAction<void, AppState, null, Action<string>> {
   return async (dispatch: Dispatch) => {
     try {
-      const siteConfig = await fetchSiteConfig()
-      console.log('fetch config ' + siteConfig)
       return dispatch({
         type: SET_CONFIG,
-        data: siteConfig
+        data: await fetchSiteConfig()
       })
     } catch (error) {
       console.log('Error fetch global config' + error)
@@ -34,33 +32,16 @@ export function setConfig(): ThunkAction<void, AppState, null, Action<string>> {
   }
 }
 
-export function setFooter(): ActionCreator<any> {
+export function setFooter(): ThunkAction<void, AppState, null, Action<string>> {
   return async (dispatch: Dispatch) => {
     try {
-      const footer = await fetchFooter()
-      console.log('fetch footer: ' + footer)
       return dispatch({
         type: SET_FOOTER,
-        data: footer
+        data: await fetchFooter()
       })
     } catch (error) {
       console.log('Error fetch footer' + error)
     }
-  }
-}
-
-export const getFooterActionCreator: ActionCreator<any> = () => {
-  return async (dispatch: Dispatch) => {
-    const gettingFooterAction: any = {
-      type: 'GettingFooter'
-    }
-    dispatch(gettingFooterAction)
-    const footer = await fetchFooter()
-    const gotFooterAction: any = {
-      data: footer,
-      type: 'GotFooter'
-    }
-    return dispatch(gotFooterAction)
   }
 }
 
@@ -71,7 +52,6 @@ export function getProductList(): ThunkAction<
   Action<string>
 > {
   return async (dispatch: Dispatch) => {
-    console.log('fetch prodcutlist')
     try {
       return dispatch({
         type: GET_PRODUCTLIST,
@@ -87,7 +67,6 @@ export function getProduct(
   id: any
 ): ThunkAction<void, AppState, null, Action<string>> {
   return async (dispatch: Dispatch) => {
-    console.log('fetch product ' + id)
     try {
       return dispatch({
         type: GET_PRODCUT,
@@ -104,7 +83,6 @@ export function getProductStory(
 ): ThunkAction<void, AppState, null, Action<string>> {
   return async (dispatch: Dispatch) => {
     try {
-      console.log('fetch story ' + id)
       return dispatch({
         type: GET_PRODUCTSTORY,
         data: await fetchProductStory(id)

@@ -39,9 +39,7 @@ class MyApp extends App<AppProps> {
     this.setState({
       siteConfig: this.props.pageProps.siteConfig,
       footer: this.props.pageProps.footer,
-      stripe: (window as any).Stripe(
-        'pk_test_QfQzDbJELK5gRsHplgEPSiCC00N6OZr9fZ'
-      )
+      stripe: (window as any).Stripe(process.env.STRIPE_API)
     })
   }
 

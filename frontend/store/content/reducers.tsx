@@ -5,9 +5,7 @@ import {
   contentState,
   GET_PRODUCTLIST,
   GET_PRODCUT,
-  GET_PRODUCTSTORY,
-  GETTING_FOOTER,
-  GOT_FOOTER
+  GET_PRODUCTSTORY
 } from './types'
 
 const initial: contentState = {
@@ -15,8 +13,7 @@ const initial: contentState = {
   footer: {},
   productList: null,
   product: null,
-  story: null,
-  loading: true
+  story: null
 }
 
 export function contentReducer(
@@ -24,19 +21,6 @@ export function contentReducer(
   action: contentActionTypes
 ): contentState {
   switch (action.type) {
-    case GETTING_FOOTER: {
-      return {
-        ...state,
-        loading: true
-      }
-    }
-    case GOT_FOOTER: {
-      return {
-        ...state,
-        loading: false,
-        footer: action.data
-      }
-    }
     case SET_CONFIG: {
       return {
         ...state,
