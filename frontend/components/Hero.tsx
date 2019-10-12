@@ -2,24 +2,33 @@ import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import Logo from './Logo'
-import { Typography } from '@material-ui/core'
+import { Typography, Box } from '@material-ui/core'
+import IconBtn from './IconBtn'
 
 const Container = styled(motion.div)`
   width: 100%;
-  max-width: 480px;
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto;
+`
+
+const Socials = styled.div`
+  display: flex;
+  margin-top: 32px;
 `
 export default function Hero() {
   return (
     <Container>
       <Logo width="100%" />
       <Typography variant="body2" style={{ marginTop: 32 }}>
-        Nulla sunt ex sint fugiat quis enim mollit ipsum. Adipisicing irure
-        reprehenderit officia ullamco eu ipsum amet consequat. Est nostrud
-        proident nostrud esse quis est minim duis nisi nulla aute labore
-        cupidatat dolor.
+        Cupidatat exercitation officia veniam ex commodo culpa incididunt. Et
+        pariatur culpa sint consequat deserunt consequat duis fugiat velit.
       </Typography>
+      <Socials>
+        <IconBtn icon="instagram" btype="solid" />
+        <Box width={16} />
+        <IconBtn icon="facebook" btype="solid" />
+      </Socials>
     </Container>
   )
 }

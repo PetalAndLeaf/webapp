@@ -5,11 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { sessionReducer } from './session/reducers'
 import { userReducer } from './user/reducers'
 import { contentReducer } from './content/reducers'
+import { cartReducer } from './cart/reducer'
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   user: userReducer,
-  content: contentReducer
+  content: contentReducer,
+  cart: cartReducer
 })
 
 export type AppState = ReturnType<typeof rootReducer>

@@ -13,14 +13,14 @@ const Container = styled(motion.div)`
   margin-left: 48px;
   margin-right: 48px;
   margin-top: 32px;
-  padding-top: 32px;
+  padding-top: 24px;
   padding-bottom: 32px;
 `
 
 const LinkGroup = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   & a {
     display: block;
     margin-left: 16px;
@@ -47,14 +47,23 @@ export default function Footer() {
           return (
             <Fragment key={l + i}>
               {i !== 0 && '   |'}
-              <a href={l.url} target='_blank'>
-                <Typography variant='button'>{l.name}</Typography>
+              <a href={l.url} target="_blank">
+                <Typography
+                  variant="button"
+                  style={{
+                    textTransform: 'none',
+                    fontWeight: 400,
+                    color: styles.palette.text.primary
+                  }}
+                >
+                  {l.name}
+                </Typography>
               </a>
             </Fragment>
           )
         })}
       </LinkGroup>
-      <Typography variant='caption'>
+      <Typography variant="caption" color="textSecondary">
         {`© ${date.getFullYear()} Petal And Leaf LLC. All rights reserved.`}
       </Typography>
     </Container>

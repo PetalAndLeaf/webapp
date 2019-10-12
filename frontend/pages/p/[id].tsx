@@ -20,7 +20,7 @@ const Container = styled(motion.div)`
   margin-left: 48px;
   margin-right: 48px;
   margin-bottom: 72px;
-  margin-top: 96px;
+  margin-top: 112px;
   background-color: #e6e7e1;
   border-radius: 20px;
   overflow: hidden;
@@ -70,8 +70,8 @@ export default function Product() {
     <FullWidthLayout>
       <Container
         variants={ContainerVariants}
-        animate='visible'
-        initial='hidden'
+        animate="visible"
+        initial="hidden"
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         {id === 'rose-cake' ? (

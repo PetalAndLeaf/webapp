@@ -5,6 +5,8 @@ import { Typography } from '@material-ui/core'
 import IconBtn from './IconBtn'
 import { Elements } from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
+import { useDispatch } from 'react-redux'
+import { toggleSidebar } from '../store/cart/action'
 // import CheckoutForm from "./CheckoutForm";
 
 const Mask = styled(motion.div)`
@@ -18,7 +20,7 @@ const Mask = styled(motion.div)`
   z-index: 98;
 `
 const Sidebar = styled(motion.div)`
-  width: 320px;
+  width: 360px;
   height: 100vh;
   background-color: #ffffff;
   position: absolute;
@@ -59,6 +61,7 @@ const maskVariants: Variants = {
   }
 }
 export default function CartSidebar() {
+  const dispatch = useDispatch()
   return (
     <>
       <Mask
@@ -76,7 +79,7 @@ export default function CartSidebar() {
         <Typography variant="h4">Cart</Typography>
         <IconBtn
           icon="x"
-          // onClick={() => setCartOpen && setCartOpen(false)}
+          onClick={() => dispatch(toggleSidebar())}
           moreProps={{
             style: { position: 'absolute', right: 8, top: 8 }
           }}

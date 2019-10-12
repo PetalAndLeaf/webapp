@@ -6,12 +6,20 @@ import FeatherIcon from './FeatherIcon'
 const Root = styled.button`
   width: 40px;
   height: 40px;
-  background: transparent;
+  background: ${(props: any) =>
+    props.btype === 'solid' ? styles.palette.primary.main : 'transparent'};
   cursor: pointer;
   border-radius: 50%;
   border: none;
   outline: none;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background: ${(props: any) =>
+      props.btype === 'solid' ? styles.palette.text.primary : 'transparent'};
+  }
   svg {
     transition: color 0.2s ease-in-out;
   }
@@ -21,14 +29,20 @@ const Root = styled.button`
 `
 
 interface propsValue {
-  onClick?: () => {}
+  onClick?: Function
   icon: string
+  btype?: string
   moreProps?: any
 }
 
-export default function IconBtn({ onClick, icon, moreProps }: propsValue) {
+export default function IconBtn({
+  onClick,
+  icon,
+  btype = '',
+  moreProps
+}: propsValue) {
   return (
-    <Root onClick={onClick} {...moreProps}>
+    <Root onClick={onClick} btype={btype} {...moreProps}>
       <FeatherIcon icon={icon} />
     </Root>
   )

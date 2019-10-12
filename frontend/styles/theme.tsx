@@ -4,10 +4,11 @@ import { red } from '@material-ui/core/colors'
 export const styles = {
   palette: {
     primary: {
-      main: '#F2673B'
+      // main: '#F2673B'
+      main: '#FED450'
     },
     secondary: {
-      main: '#8ADCBA'
+      main: '#F4D1C5'
     },
     error: {
       main: red.A400
@@ -29,13 +30,20 @@ export const styles = {
     },
     h4: {
       fontFamily: "'Quicksand', Helvetica, Arial, sans-serif",
-      fontWeight: 600
+      fontWeight: 600,
+      fontSize: 24
+    },
+    h5: {
+      fontFamily: "'Quicksand', Helvetica, Arial, sans-serif",
+      fontWeight: 600,
+      fontSize: 18
     },
     body2: {
       fontWeight: 400
     },
     button: {
-      fontWeight: 700
+      fontFamily: "'Fira Code', 'Quicksand', Helvetica, Arial, sans-serif",
+      fontWeight: 600
     }
   }
 }

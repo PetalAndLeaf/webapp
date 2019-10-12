@@ -34,7 +34,14 @@ export default function SplitLayout({
       <Aside>
         <Hero />
       </Aside>
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: '100vh'
+        }}
+      >
         {!hideHeader && <Header type={headerType} />}
         {children}
         <Footer />

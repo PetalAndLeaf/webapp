@@ -4,18 +4,18 @@ import { styles } from '../styles/theme'
 import IconBtn from './IconBtn'
 import Router from 'next/router'
 import Link from 'next/link'
-// import CartSidebar from './CartSidebar'
-// import { AnimatePresence } from 'framer-motion'
-// import CartBtn from './CartBtn'
-// import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import CartSidebar from './CartSidebar'
+import { AnimatePresence } from 'framer-motion'
+import CartBtn from './CartBtn'
 
 const Container = styled.header`
   width: 100%;
-  height: 80px;
+  height: 96px;
   /* border-bottom: 1px solid ${styles.palette.divider}; */
   display: flex;
   align-items: center;
-  background-color: rgba(256,256,256,0.9);
+  background-color: rgba(256,256,256,1);
   padding-left: 48px;
   padding-right: 48px;
   justify-content: space-between;
@@ -34,23 +34,24 @@ interface propsValue {
   type: string
 }
 export default function Header({ type }: propsValue) {
-  // const siteConfig = useSelector((state: any) => state.siteConfig)
+  const isSidebarOpen = useSelector((state: any) => state.cart.isSidebarOpen)
+  const siteConfig = useSelector((state: any) => state.content.siteConfig)
   return (
     <Container>
       <div>
         {type !== 'home' && (
-          <Link href='/'>
-            <Logo src='../static/logo.svg' />
+          <Link href="/">
+            <Logo src="../static/logo.svg" />
           </Link>
         )}
       </div>
       <div>
-        {/* {siteConfig.isCheckoutAvailable && <CartBtn />} */}
+        {siteConfig.isCheckoutAvailable && <CartBtn />}
         {type !== 'home' && (
-          <IconBtn icon='x' onClick={() => Router.push('/')} />
+          <IconBtn icon="x" onClick={() => Router.push('/')} />
         )}
       </div>
-      {/* <AnimatePresence>{cartOpen && <CartSidebar />}</AnimatePresence> */}
+      <AnimatePresence>{isSidebarOpen && <CartSidebar />}</AnimatePresence>
     </Container>
   )
 }

@@ -6,8 +6,8 @@ import CardInfo from './CardInfo'
 
 const Container = styled(motion.div)`
   width: 100%;
-  border-radius: 20px;
-  background-color: #f9f9f9;
+  /* border-radius: 20px; */
+  background: transparent;
   overflow: hidden;
 
   &:not(:last-child) {

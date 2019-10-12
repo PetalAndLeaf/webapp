@@ -7,11 +7,12 @@ import { useSelector } from 'react-redux'
 import { setConfig, setFooter, getProductList } from '../store/content/action'
 
 const ProductList = styled(motion.div)`
-  max-width: 960px;
+  max-width: 880px;
   margin-left: auto;
   margin-right: auto;
   padding: 32px;
   padding-top: 96px;
+  flex: 1;
 `
 const listVariants: Variants = {
   visible: {

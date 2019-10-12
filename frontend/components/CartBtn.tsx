@@ -1,17 +1,25 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
-import GlobalContext from '../context/GlobalContext'
 import FeatherIcon from './FeatherIcon'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleSidebar, openFlyout, closeFlyout } from '../store/cart/action'
+import { AnimatePresence } from 'framer-motion'
+import CartFlyout from './CartFlyout'
 
-const Root = styled.button`
+const Root = styled.div`
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  position: relative;
+`
+const BtnWrap = styled.button`
   width: 40px;
   height: 40px;
   background: transparent;
   cursor: pointer;
   border: none;
   outline: none;
-  position: relative;
   svg {
     transition: color 0.2s ease-in-out;
   }
@@ -25,7 +33,7 @@ const CartNumber = styled.div`
   height: 20px;
   border-radius: 12px;
   background-color: ${styles.palette.primary.main};
-  color: #fff;
+  color: ${styles.palette.text.primary};
   font-size: 12px;
   text-align: center;
   line-height: 20px;
@@ -36,13 +44,23 @@ const CartNumber = styled.div`
 `
 
 export default function CartBtn() {
-  const { cartItems, setCartOpen, cartOpen } = useContext(GlobalContext)
+  const dispatch = useDispatch()
+  const items = useSelector((state: any) => state.cart.items)
+  const isFlyoutOpen = useSelector((state: any) => state.cart.isFlyoutOpen)
   return (
-    <Root onClick={() => setCartOpen && setCartOpen(!cartOpen)}>
-      <FeatherIcon icon="shoppingbag" />
-      {cartItems && cartItems.length > 0 && (
-        <CartNumber>{cartItems.length}</CartNumber>
-      )}
+    <Root
+      onMouseEnter={() => dispatch(openFlyout())}
+      onMouseLeave={() => dispatch(closeFlyout())}
+    >
+      <BtnWrap
+        onClick={() => {
+          dispatch(toggleSidebar())
+        }}
+      >
+        <FeatherIcon icon="shoppingbag" />
+        {items.length > 0 && <CartNumber>{items.length}</CartNumber>}
+      </BtnWrap>
+      <AnimatePresence>{isFlyoutOpen && <CartFlyout />}</AnimatePresence>
     </Root>
   )
 }

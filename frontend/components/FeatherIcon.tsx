@@ -6,7 +6,9 @@ import {
   Droplet,
   Package,
   X,
-  ShoppingBag
+  ShoppingBag,
+  Instagram,
+  Facebook
 } from 'react-feather'
 
 interface propsValue {
@@ -29,6 +31,10 @@ export default function FeatherIcon({ icon, style }: propsValue) {
         return <Package className="icon" style={style} />
       case 'x':
         return <X className="icon" style={style} />
+      case 'instagram':
+        return <Instagram className="icon" style={style} />
+      case 'facebook':
+        return <Facebook className="icon" style={style} />
       case 'shoppingbag':
         return <ShoppingBag className="icon" style={style} />
       default:
