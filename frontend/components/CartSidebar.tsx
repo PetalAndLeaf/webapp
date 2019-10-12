@@ -34,7 +34,7 @@ const sidebarVariants: Variants = {
     x: 0,
     transition: {
       delay: 0.1,
-      duration: 0.6,
+      duration: 0.4,
       ease: 'easeOut'
     }
   },
