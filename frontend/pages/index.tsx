@@ -1,11 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import SplitLayout from '../layout/SplitLayout'
 import ProuductCard from '../components/ProductCard'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
-import GlobalContext from '../context/GlobalContext'
-
-import { fetchProductList } from '../lib/dataFetch'
+import { useSelector } from 'react-redux'
+import { setConfig, setFooter, getProductList } from '../store/content/action'
 
 const ProductList = styled(motion.div)`
   max-width: 960px;
@@ -29,15 +28,15 @@ const listVariants: Variants = {
     }
   }
 }
-interface propsValue {
-  productList: any[]
-}
-export default function Index({ productList }: propsValue) {
-  const { siteConfig } = useContext(GlobalContext)
+
+function Index() {
+  const siteConfig = useSelector((state: any) => state.content.siteConfig)
+  const productList = useSelector((state: any) => state.content.productList)
+
   return (
-    <SplitLayout hideHeader={siteConfig ? siteConfig.hideHomeHeader : false}>
+    <SplitLayout hideHeader={siteConfig.hideHomeHeader}>
       <ProductList variants={listVariants}>
-        {productList.map((product, i) => {
+        {productList.map((product: any, i: number) => {
           return <ProuductCard key={product + i} data={product} />
         })}
       </ProductList>
@@ -45,14 +44,20 @@ export default function Index({ productList }: propsValue) {
   )
 }
 
-Index.getInitialProps = async function() {
-  try {
-    const productList = await fetchProductList()
-    console.log('index fetching')
-    return {
-      productList: productList
-    }
-  } catch (err) {
-    console.log('Error: ', err)
+Index.getInitialProps = async function(ctx: any) {
+  const { store, isServer } = ctx
+  const currentState = store.getState()
+  if (isServer) {
+    await store.dispatch(setConfig())
+    await store.dispatch(setFooter())
+  }
+  if (currentState.content.productList === null) {
+    await store.dispatch(getProductList())
+  }
+
+  return {
+    isServer
   }
 }
+
+export default Index

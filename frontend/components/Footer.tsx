@@ -1,9 +1,9 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { styles } from '../styles/theme'
 import { Typography } from '@material-ui/core'
-import GlobalContext from '../context/GlobalContext'
+import { useSelector } from 'react-redux'
 
 const Container = styled(motion.div)`
   /* width: 100%; */
@@ -33,8 +33,8 @@ const LinkGroup = styled.div`
 `
 
 export default function Footer() {
-  const { footer } = useContext(GlobalContext)
-  const links: any[] = footer && footer.links ? footer.links : []
+  const footer = useSelector((state: any) => state.content.footer)
+  const links: any[] = footer.links ? footer.links : []
   const date = new Date()
   return (
     <Container
@@ -47,14 +47,14 @@ export default function Footer() {
           return (
             <Fragment key={l + i}>
               {i !== 0 && '   |'}
-              <a href={l.url} target="_blank">
-                <Typography variant="button">{l.name}</Typography>
+              <a href={l.url} target='_blank'>
+                <Typography variant='button'>{l.name}</Typography>
               </a>
             </Fragment>
           )
         })}
       </LinkGroup>
-      <Typography variant="caption">
+      <Typography variant='caption'>
         {`© ${date.getFullYear()} Petal And Leaf LLC. All rights reserved.`}
       </Typography>
     </Container>

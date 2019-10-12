@@ -1,11 +1,18 @@
+import React from 'react'
 import FullWidthLayout from '../../layout/FullWidthLayout'
-import PageNotFound from '../pageNotFound'
+// import PageNotFound from '../pageNotFound'
 import styled from 'styled-components'
 import CardImage from '../../components/CardImage'
 import { motion, Variants } from 'framer-motion'
 import { useRouter } from 'next/router'
 import RoseCakeStory from '../../components/RoseCakeStory'
-import { fetchProduct, fetchProductStory } from '../../lib/dataFetch'
+import {
+  setConfig,
+  setFooter,
+  getProduct,
+  getProductStory
+} from '../../store/content/action'
+import { useSelector } from 'react-redux'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -52,23 +59,22 @@ const ContainerVariants: Variants = {
     }
   }
 }
-interface propsValue {
-  product: any
-  story: any
-}
-export default function Product({ product, story }: propsValue) {
+
+export default function Product() {
   const router = useRouter()
-  return product === null ? (
-    <PageNotFound />
-  ) : (
+  const { id } = router.query
+  const product = useSelector((state: any) => state.content.product)
+  const story = useSelector((state: any) => state.content.story)
+
+  return (
     <FullWidthLayout>
       <Container
         variants={ContainerVariants}
-        animate="visible"
-        initial="hidden"
+        animate='visible'
+        initial='hidden'
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        {router.query.id === 'rose-cake' ? (
+        {id === 'rose-cake' ? (
           <RoseCakeStory product={product} story={story} />
         ) : (
           <div style={{ width: '60%' }}>
@@ -89,18 +95,20 @@ export default function Product({ product, story }: propsValue) {
   )
 }
 
-Product.getInitialProps = async function(context: any) {
-  try {
-    const { id } = context.query
-    const product = await fetchProduct(id)
-    const story = await fetchProductStory(id)
+Product.getInitialProps = async function(ctx: any) {
+  const { store, query, isServer } = ctx
+  const id = query.id
+  const currentState = store.getState()
+  if (isServer) {
+    await store.dispatch(setConfig())
+    await store.dispatch(setFooter())
+  }
+  if (currentState.content.product === null) {
+    await store.dispatch(getProduct(id))
+    await store.dispatch(getProductStory(id))
+  }
 
-    console.log('product fetching')
-    return {
-      product: product,
-      story: story
-    }
-  } catch (err) {
-    console.log('Error: ', err)
+  return {
+    isServer
   }
 }

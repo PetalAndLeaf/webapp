@@ -1,14 +1,12 @@
-import loadDB from './fire'
+import { db } from './fire'
 
 export const fetchDoc = async (path: string) => {
-  const db = await loadDB()
   const docRef = await db.doc(path).get()
   const doc = docRef.data()
-
   return doc
 }
+
 export const fetchDocs = async (collection: string, orderBy: string = '') => {
-  const db = await loadDB()
   const docsQuerySnapshot = await db
     .collection(collection)
     .orderBy(orderBy)
@@ -20,6 +18,7 @@ export const fetchDocs = async (collection: string, orderBy: string = '') => {
   })
   return docs
 }
+
 // Common data shared
 export const fetchSiteConfig = async () => {
   return await fetchDoc('configs/site')
