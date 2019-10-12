@@ -3,7 +3,6 @@ import {
   TOGGLE_FLYOUT,
   OPEN_FLYOUT,
   CLOSE_FLYOUT,
-  REMOVE_ITEM,
   SET_FLYOUT_TIMEOUT,
   CLEAR_FLYOUT_TIMEOUT,
   UPDATE_QUANTITY,
@@ -62,13 +61,6 @@ export function decreaseQuantity(itemID: string) {
     type: UPDATE_QUANTITY,
     itemID: itemID,
     delta: -1
-  }
-}
-// Remove an item from cart
-export function removeItem(itemID: string) {
-  return {
-    type: REMOVE_ITEM,
-    itemID: itemID
   }
 }
 

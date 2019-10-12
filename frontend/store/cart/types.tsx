@@ -4,6 +4,7 @@ export interface cartState {
   isSidebarOpen: boolean
   isFlyoutOpen: boolean
   flyoutTimeout: number | undefined
+  itemlist: Map<string, object>
 }
 
 /**************************************************************/
@@ -39,10 +40,6 @@ export interface ClearFlyoutTimeout {
 export const REMOVE_ITEM = 'REMOVE_ITEM'
 export const SET_QUANTITY = 'SET_QUANTITY'
 export const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
-export interface RemoveItemAction {
-  type: typeof REMOVE_ITEM
-  itemID: string
-}
 export interface SetQuantityAction {
   type: typeof SET_QUANTITY
   itemID: string
@@ -60,7 +57,6 @@ export type cartActionTypes =
   | ToggleFlyoutAction
   | OpenFlyoutAction
   | CloseFlyoutAction
-  | RemoveItemAction
   | SetQuantityAction
   | UpdateQuantity
   | SetFlyoutTimeout

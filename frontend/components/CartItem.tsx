@@ -6,9 +6,9 @@ import { styles } from '../styles/theme'
 import IconBtn from './IconBtn'
 import { useDispatch } from 'react-redux'
 import {
-  removeItem,
   decreaseQuantity,
-  increaseQuantity
+  increaseQuantity,
+  setQuantity
 } from '../store/cart/action'
 import { motion, Variants } from 'framer-motion'
 
@@ -94,32 +94,32 @@ export default function CartItem({ data }: propsValue) {
     <Root
       id={data.sku}
       variants={RootVariants}
-      initial="hiddne"
-      animate="visible"
+      initial='hiddne'
+      animate='visible'
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       positionTransition={true}
     >
       <ImageWrap>
-        <img src="/static/cover-p26.png" alt="item image" />
+        <img src='/static/cover-p26.png' alt='item image' />
       </ImageWrap>
       <InfoWrap>
-        <Typography variant="h6">{data.name}</Typography>
-        <Typography variant="caption">{data.size}</Typography>
+        <Typography variant='h6'>{data.name}</Typography>
+        <Typography variant='caption'>{data.size}</Typography>
         <QuantityWrap>
           <QuantityControl onClick={() => dispatch(decreaseQuantity(data.sku))}>
-            <FeatherIcon icon="minus" />
+            <FeatherIcon icon='minus' />
           </QuantityControl>
           <Quantity>{data.quantity}</Quantity>
           <QuantityControl onClick={() => dispatch(increaseQuantity(data.sku))}>
-            <FeatherIcon icon="plus" />
+            <FeatherIcon icon='plus' />
           </QuantityControl>
         </QuantityWrap>
       </InfoWrap>
       <Price>{`$${data.price * data.quantity}`}</Price>
       <IconBtn
-        icon="delete"
+        icon='delete'
         style={{ position: 'absolute', top: 8, right: 8 }}
-        onClick={() => dispatch(removeItem(data.sku))}
+        onClick={() => dispatch(setQuantity(data.sku, 0))}
       />
     </Root>
   )

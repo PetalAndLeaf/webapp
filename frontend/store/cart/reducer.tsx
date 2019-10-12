@@ -5,10 +5,10 @@ import {
   cartActionTypes,
   OPEN_FLYOUT,
   CLOSE_FLYOUT,
-  REMOVE_ITEM,
   SET_FLYOUT_TIMEOUT,
   CLEAR_FLYOUT_TIMEOUT,
-  UPDATE_QUANTITY
+  UPDATE_QUANTITY,
+  SET_QUANTITY
 } from './types'
 
 const initial: cartState = {
@@ -30,7 +30,8 @@ const initial: cartState = {
     //   quantity: 1,
     //   price: 18
     // },
-  ]
+  ],
+  itemlist: new Map<string, object>()
 }
 
 //TODO: replace with real data
@@ -91,13 +92,26 @@ export function cartReducer(
       }
     }
 
-    case REMOVE_ITEM: {
-      const removeItem = action.itemID
+    case SET_QUANTITY: {
+      const itemID = action.itemID
+      const quantity = action.quantity
       const items = state.items
       const result = items.slice()
+
       items.forEach((item, i) => {
-        if (item.sku === removeItem) {
-          result.splice(i, 1)
+        //find item by id
+        if (item.sku === itemID) {
+          //if quanity is 0, its REMOVE behavior
+          if (quantity === 0) {
+            result.splice(i, 1)
+          } else if (quantity > 0) {
+            //if quanity is posi tive integer, set quantity to the number
+            const updatedItem = { ...item, quantity: quantity }
+            result[i] = updatedItem
+          } else {
+            //if quanity is negative, ingnore
+          }
+          //end looping
           return
         }
       })
@@ -107,25 +121,46 @@ export function cartReducer(
         items: result
       }
     }
+
+    // case REMOVE_ITEM: {
+    //   const removeItem = action.itemID
+    //   const items = state.items
+    //   const result = items.slice()
+    //   items.forEach((item, i) => {
+    //     if (item.sku === removeItem) {
+    //       result.splice(i, 1)
+    //       return
+    //     }
+    //   })
+
+    //   return {
+    //     ...state,
+    //     items: result
+    //   }
+    // }
     case UPDATE_QUANTITY: {
       const itemID = action.itemID
       const delta = action.delta
       const items = state.items
       const result = items.slice()
-
       let index = -1
       items.forEach((item, i) => {
+        //find the item by ID
         if (item.sku === itemID) {
           index = i
+          //if quantity will be <0, remove from array
           if (delta + item.quantity <= 0) {
             result.splice(i, 1)
           } else {
+            //otherwise, change quantity accordingly
             const updatedItem = { ...item, quantity: item.quantity + delta }
             result[i] = updatedItem
           }
           return
         }
       })
+      //if item not exist in array
+      //create and move to head of the array
       if (index === -1 && delta > 0) {
         const item = {
           ...productData[itemID],
@@ -139,6 +174,7 @@ export function cartReducer(
         items: result
       }
     }
+
     default:
       return state
   }
