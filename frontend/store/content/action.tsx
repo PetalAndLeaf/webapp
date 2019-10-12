@@ -24,7 +24,7 @@ export function setConfig(): ThunkAction<void, AppState, null, Action<string>> {
         data: await fetchSiteConfig()
       })
     } catch (error) {
-      console.log('Error fetch global config' + error)
+      console.error('Error fetch global config' + error)
       // dispatch({
       //   type: 'AN_ACTION' // or, better, 'FAILED_ACTION' or something like that
       // });
@@ -40,7 +40,7 @@ export function setFooter(): ThunkAction<void, AppState, null, Action<string>> {
         data: await fetchFooter()
       })
     } catch (error) {
-      console.log('Error fetch footer' + error)
+      console.error('Error fetch footer' + error)
     }
   }
 }
@@ -58,7 +58,7 @@ export function getProductList(): ThunkAction<
         data: await fetchProductList()
       })
     } catch (error) {
-      console.log('Error fetch footer' + error)
+      console.error('Error fetch footer' + error)
     }
   }
 }
@@ -73,7 +73,7 @@ export function getProduct(
         data: await fetchProduct(id)
       })
     } catch (error) {
-      console.log('Error fetch footer' + error)
+      console.error('Error fetch footer' + error)
     }
   }
 }
@@ -88,7 +88,7 @@ export function getProductStory(
         data: await fetchProductStory(id)
       })
     } catch (error) {
-      console.log('Error fetch footer' + error)
+      console.error('Error fetch footer' + error)
     }
   }
 }
