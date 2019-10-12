@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import IconBtn from './IconBtn'
-import GlobalContext from '../context/GlobalContext'
 import Router from 'next/router'
 import Link from 'next/link'
-import CartSidebar from './CartSidebar'
-import { AnimatePresence } from 'framer-motion'
-import CartBtn from './CartBtn'
+// import CartSidebar from './CartSidebar'
+// import { AnimatePresence } from 'framer-motion'
+// import CartBtn from './CartBtn'
+// import { useSelector } from 'react-redux'
 
 const Container = styled.header`
   width: 100%;
@@ -34,25 +34,23 @@ interface propsValue {
   type: string
 }
 export default function Header({ type }: propsValue) {
-  const { siteConfig, cartOpen } = useContext(GlobalContext)
+  // const siteConfig = useSelector((state: any) => state.siteConfig)
   return (
     <Container>
       <div>
         {type !== 'home' && (
-          <Link href="/">
-            <Logo src="../static/logo.svg" />
+          <Link href='/'>
+            <Logo src='../static/logo.svg' />
           </Link>
         )}
       </div>
       <div>
-        {siteConfig !== undefined && siteConfig.isCheckoutAvailable && (
-          <CartBtn />
-        )}
+        {/* {siteConfig.isCheckoutAvailable && <CartBtn />} */}
         {type !== 'home' && (
-          <IconBtn icon="x" onClick={() => Router.push('/')} />
+          <IconBtn icon='x' onClick={() => Router.push('/')} />
         )}
       </div>
-      <AnimatePresence>{cartOpen && <CartSidebar />}</AnimatePresence>
+      {/* <AnimatePresence>{cartOpen && <CartSidebar />}</AnimatePresence> */}
     </Container>
   )
 }
