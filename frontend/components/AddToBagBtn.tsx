@@ -2,8 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import { Typography } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
-import { addItem, openFlyout, closeFlyout } from '../store/cart/action'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  openFlyout,
+  closeFlyout,
+  clearFlyoutTimeout,
+  setFlyoutTimeout,
+  increaseQuantity
+} from '../store/cart/action'
 
 const Root = styled.div`
   display: inline-block;
@@ -68,13 +74,18 @@ const sizes = [
     sku: 'rc50'
   }
 ]
+
 export default function AddToBagBtn() {
   const dispatch = useDispatch()
-
+  const flyoutTimeout = useSelector((state: any) => state.cart.flyoutTimeout)
   const handleAddItem = (sku: string) => {
-    dispatch(addItem(sku))
+    if (flyoutTimeout !== undefined) {
+      dispatch(clearFlyoutTimeout())
+    }
+    dispatch(increaseQuantity(sku))
     dispatch(openFlyout())
-    setTimeout(() => dispatch(closeFlyout()), 2000)
+    const timeout = setTimeout(() => dispatch(closeFlyout()), 2000)
+    dispatch(setFlyoutTimeout(timeout))
   }
   return (
     <Root>

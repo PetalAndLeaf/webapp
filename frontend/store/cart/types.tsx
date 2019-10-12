@@ -3,6 +3,7 @@ export interface cartState {
   items: any[]
   isSidebarOpen: boolean
   isFlyoutOpen: boolean
+  flyoutTimeout: number | undefined
 }
 
 /**************************************************************/
@@ -25,26 +26,32 @@ export interface CloseFlyoutAction {
   type: typeof CLOSE_FLYOUT
 }
 
-// export interface Item {}
-export const ADD_ITEM = 'ADD_ITEM'
-export const REMOVE_ITEM = 'REMOVE_ITEM'
-export const INCREASE_ITEM = 'INCREASE_ITEM'
-export const DECREASE_ITEM = 'DECREASE_ITEM'
-export interface AddItemAction {
-  type: typeof ADD_ITEM
-  item: string
+export const SET_FLYOUT_TIMEOUT = 'SET_FLYOUT_TIMEOUT'
+export const CLEAR_FLYOUT_TIMEOUT = 'CLEAR_FLYOUT_TIMEOUT'
+export interface SetFlyoutTimeout {
+  type: typeof SET_FLYOUT_TIMEOUT
+  timeout: number
 }
+export interface ClearFlyoutTimeout {
+  type: typeof CLEAR_FLYOUT_TIMEOUT
+}
+
+export const REMOVE_ITEM = 'REMOVE_ITEM'
+export const SET_QUANTITY = 'SET_QUANTITY'
+export const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 export interface RemoveItemAction {
   type: typeof REMOVE_ITEM
-  item: string
+  itemID: string
 }
-export interface IncreaseItemAction {
-  type: typeof INCREASE_ITEM
-  item: string
+export interface SetQuantityAction {
+  type: typeof SET_QUANTITY
+  itemID: string
+  quantity: number
 }
-export interface DecreaseItemAction {
-  type: typeof DECREASE_ITEM
-  item: string
+export interface UpdateQuantity {
+  type: typeof UPDATE_QUANTITY
+  itemID: string
+  delta: number
 }
 
 /**************************************************************/
@@ -53,7 +60,8 @@ export type cartActionTypes =
   | ToggleFlyoutAction
   | OpenFlyoutAction
   | CloseFlyoutAction
-  | AddItemAction
   | RemoveItemAction
-  | IncreaseItemAction
-  | DecreaseItemAction
+  | SetQuantityAction
+  | UpdateQuantity
+  | SetFlyoutTimeout
+  | ClearFlyoutTimeout

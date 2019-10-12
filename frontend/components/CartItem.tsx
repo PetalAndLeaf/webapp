@@ -5,15 +5,28 @@ import FeatherIcon from './FeatherIcon'
 import { styles } from '../styles/theme'
 import IconBtn from './IconBtn'
 import { useDispatch } from 'react-redux'
-import { removeItem } from '../store/cart/action'
+import {
+  removeItem,
+  decreaseQuantity,
+  increaseQuantity
+} from '../store/cart/action'
+import { motion, Variants } from 'framer-motion'
 
-const Root = styled.div`
+const Root = styled(motion.li)`
   width: 100%;
   height: 96px;
   padding: 16px;
   display: flex;
   position: relative;
 `
+const RootVariants: Variants = {
+  visible: {
+    opacity: 1
+  },
+  hidden: {
+    opacity: 0
+  }
+}
 const ImageWrap = styled.div`
   width: 64px;
   height: 64px;
@@ -78,7 +91,14 @@ interface propsValue {
 export default function CartItem({ data }: propsValue) {
   const dispatch = useDispatch()
   return (
-    <Root>
+    <Root
+      id={data.sku}
+      variants={RootVariants}
+      initial="hiddne"
+      animate="visible"
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      positionTransition={true}
+    >
       <ImageWrap>
         <img src="/static/cover-p26.png" alt="item image" />
       </ImageWrap>
@@ -86,11 +106,11 @@ export default function CartItem({ data }: propsValue) {
         <Typography variant="h6">{data.name}</Typography>
         <Typography variant="caption">{data.size}</Typography>
         <QuantityWrap>
-          <QuantityControl>
+          <QuantityControl onClick={() => dispatch(decreaseQuantity(data.sku))}>
             <FeatherIcon icon="minus" />
           </QuantityControl>
           <Quantity>{data.quantity}</Quantity>
-          <QuantityControl>
+          <QuantityControl onClick={() => dispatch(increaseQuantity(data.sku))}>
             <FeatherIcon icon="plus" />
           </QuantityControl>
         </QuantityWrap>

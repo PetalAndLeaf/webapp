@@ -5,13 +5,16 @@ import {
   cartActionTypes,
   OPEN_FLYOUT,
   CLOSE_FLYOUT,
-  ADD_ITEM,
-  REMOVE_ITEM
+  REMOVE_ITEM,
+  SET_FLYOUT_TIMEOUT,
+  CLEAR_FLYOUT_TIMEOUT,
+  UPDATE_QUANTITY
 } from './types'
 
 const initial: cartState = {
   isFlyoutOpen: false,
   isSidebarOpen: false,
+  flyoutTimeout: undefined,
   items: [
     // {
     //   sku: 'rc30',
@@ -26,7 +29,7 @@ const initial: cartState = {
     //   size: '50g, 6 counts',
     //   quantity: 1,
     //   price: 18
-    // }
+    // },
   ]
 }
 
@@ -72,34 +75,24 @@ export function cartReducer(
         isFlyoutOpen: false
       }
     }
-    case ADD_ITEM: {
-      const newItem = action.item
-      const items = state.items
-      const result = items.slice()
-      let index = -1
-      items.forEach((item, i) => {
-        if (item.sku === newItem) {
-          index = i
-          const updatedItem = { ...item, quantity: item.quantity + 1 }
-          result[i] = updatedItem
-          return
-        }
-      })
-      if (index === -1) {
-        const item = {
-          ...productData[newItem],
-          sku: newItem,
-          quantity: 1
-        }
-        result.unshift(item)
+    case SET_FLYOUT_TIMEOUT: {
+      return {
+        ...state,
+        flyoutTimeout: action.timeout
+      }
+    }
+    case CLEAR_FLYOUT_TIMEOUT: {
+      if (state.flyoutTimeout !== undefined) {
+        clearTimeout(state.flyoutTimeout)
       }
       return {
         ...state,
-        items: result
+        flyoutTimeout: undefined
       }
     }
+
     case REMOVE_ITEM: {
-      const removeItem = action.item
+      const removeItem = action.itemID
       const items = state.items
       const result = items.slice()
       items.forEach((item, i) => {
@@ -109,6 +102,38 @@ export function cartReducer(
         }
       })
 
+      return {
+        ...state,
+        items: result
+      }
+    }
+    case UPDATE_QUANTITY: {
+      const itemID = action.itemID
+      const delta = action.delta
+      const items = state.items
+      const result = items.slice()
+
+      let index = -1
+      items.forEach((item, i) => {
+        if (item.sku === itemID) {
+          index = i
+          if (delta + item.quantity <= 0) {
+            result.splice(i, 1)
+          } else {
+            const updatedItem = { ...item, quantity: item.quantity + delta }
+            result[i] = updatedItem
+          }
+          return
+        }
+      })
+      if (index === -1 && delta > 0) {
+        const item = {
+          ...productData[itemID],
+          sku: itemID,
+          quantity: delta
+        }
+        result.unshift(item)
+      }
       return {
         ...state,
         items: result

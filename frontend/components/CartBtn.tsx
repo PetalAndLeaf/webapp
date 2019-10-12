@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import FeatherIcon from './FeatherIcon'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleSidebar, openFlyout, closeFlyout } from '../store/cart/action'
+import {
+  toggleSidebar,
+  openFlyout,
+  closeFlyout,
+  clearFlyoutTimeout
+} from '../store/cart/action'
 import { AnimatePresence } from 'framer-motion'
 import CartFlyout from './CartFlyout'
 
@@ -47,9 +52,19 @@ export default function CartBtn() {
   const dispatch = useDispatch()
   const items = useSelector((state: any) => state.cart.items)
   const isFlyoutOpen = useSelector((state: any) => state.cart.isFlyoutOpen)
+  const flyoutTimeout = useSelector((state: any) => state.cart.flyoutTimeout)
+
+  const handleMouseEnter = () => {
+    if (flyoutTimeout !== undefined) {
+      dispatch(clearFlyoutTimeout())
+    }
+    if (!isFlyoutOpen) {
+      dispatch(openFlyout())
+    }
+  }
   return (
     <Root
-      onMouseEnter={() => dispatch(openFlyout())}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => dispatch(closeFlyout())}
     >
       <BtnWrap

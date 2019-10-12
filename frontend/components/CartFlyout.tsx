@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { motion, Variants } from 'framer-motion'
+import { motion, Variants, AnimatePresence } from 'framer-motion'
 import { Typography } from '@material-ui/core'
 import { styles } from '../styles/theme'
 import RoundedBtn from './RoundedBtn'
@@ -44,13 +44,16 @@ const rootVariants: Variants = {
 
 const Header = styled.div`
   height: 64px;
+  min-height: 64px;
   padding-left: 24px;
   padding-right: 24px;
   display: flex;
   align-items: center;
 `
-const ItemList = styled.div`
+const ItemList = styled.ul`
   overflow-y: scroll;
+  padding-left: 0;
+  margin: 0;
 `
 
 const Bottom = styled.div`
@@ -72,7 +75,11 @@ export default function CartFlyout() {
       animate="visible"
       exit="hidden"
       style={{ justifyContent: `${isEmpty ? 'center' : 'space-between'}` }}
-      //   onMouseLeave={() => dispatch(closeFlyout())}
+      layoutTransition={{
+        type: 'spring',
+        damping: 10,
+        stiffness: 100
+      }}
     >
       {items.length === 0 ? (
         <Typography
@@ -88,10 +95,13 @@ export default function CartFlyout() {
           <Header>
             <Typography variant="h5">Your bag</Typography>
           </Header>
+
           <ItemList>
-            {items.map((item: any, i: number) => {
-              return <CartItem data={item} key={item + i} />
-            })}
+            <AnimatePresence initial={false}>
+              {items.map((item: any, i: number) => {
+                return <CartItem data={item} key={item + i} />
+              })}
+            </AnimatePresence>
           </ItemList>
           <Bottom>
             <Typography
