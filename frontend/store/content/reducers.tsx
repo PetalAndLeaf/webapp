@@ -1,4 +1,3 @@
-import { handleActions, combineActions } from 'redux-actions'
 import {
   SET_CONFIG,
   SET_FOOTER,
