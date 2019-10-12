@@ -1,6 +1,6 @@
-import { Dispatch, Action } from 'redux'
-import { ThunkAction } from 'redux-thunk'
-import { AppState } from '../store'
+import { Dispatch } from 'redux'
+import { ThunkAction } from '../typeDef'
+
 import {
   SET_CONFIG,
   SET_FOOTER,
@@ -18,7 +18,7 @@ import {
 
 /**************************************************************/
 
-export function setConfig() {
+export function setConfig(): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       return dispatch({
@@ -27,14 +27,11 @@ export function setConfig() {
       })
     } catch (error) {
       console.error('Error fetch global config' + error)
-      // dispatch({
-      //   type: 'AN_ACTION' // or, better, 'FAILED_ACTION' or something like that
-      // });
     }
   }
 }
 
-export function setFooter(): ThunkAction<void, AppState, null, Action<string>> {
+export function setFooter(): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       return dispatch({
@@ -47,12 +44,7 @@ export function setFooter(): ThunkAction<void, AppState, null, Action<string>> {
   }
 }
 
-export function getProductList(): ThunkAction<
-  void,
-  AppState,
-  null,
-  Action<string>
-> {
+export function getProductList(): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       return dispatch({
@@ -65,9 +57,7 @@ export function getProductList(): ThunkAction<
   }
 }
 
-export function getProduct(
-  id: any
-): ThunkAction<void, AppState, null, Action<string>> {
+export function getProduct(id: any): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       return dispatch({
@@ -80,9 +70,7 @@ export function getProduct(
   }
 }
 
-export function getProductStory(
-  id: any
-): ThunkAction<void, AppState, null, Action<string>> {
+export function getProductStory(id: any): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       return dispatch({

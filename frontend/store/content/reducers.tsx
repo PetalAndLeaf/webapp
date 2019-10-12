@@ -8,7 +8,7 @@ import {
   GET_PRODUCTSTORY
 } from './types'
 
-const initial: contentState = {
+export const initial: contentState = {
   siteConfig: {},
   footer: {},
   productList: null,
