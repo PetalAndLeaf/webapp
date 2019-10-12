@@ -13,7 +13,7 @@ import {
 
 const initial: cartState = {
   isFlyoutOpen: false,
-  isSidebarOpen: false,
+  isSidebarOpen: true,
   flyoutTimeout: undefined,
   items: [
     // {
@@ -30,8 +30,7 @@ const initial: cartState = {
     //   quantity: 1,
     //   price: 18
     // },
-  ],
-  itemlist: new Map<string, object>()
+  ]
 }
 
 //TODO: replace with real data

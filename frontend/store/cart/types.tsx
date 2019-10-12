@@ -4,7 +4,6 @@ export interface cartState {
   isSidebarOpen: boolean
   isFlyoutOpen: boolean
   flyoutTimeout: number | undefined
-  itemlist: Map<string, object>
 }
 
 /**************************************************************/

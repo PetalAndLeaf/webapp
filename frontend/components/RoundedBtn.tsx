@@ -22,7 +22,7 @@ const Root = styled.button`
 `
 
 interface propsValue {
-  onClick?: () => {}
+  onClick?: Function
   btype?: any
   children: any
   className?: any
