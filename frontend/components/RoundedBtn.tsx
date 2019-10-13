@@ -5,8 +5,9 @@ import { Typography } from '@material-ui/core'
 
 const Root = styled.button`
   height: ${(props: any) => (props.btype === 'large' ? '48px' : '36px')};
-  background: ${styles.palette.primary.main};
-  cursor: pointer;
+  background: ${(props: any) =>
+    props.disabled ? styles.palette.grey[400] : styles.palette.primary.main};
+  cursor: ${(props: any) => (props.disabled ? 'not-allowed' : 'pointer')};
   border-radius: ${(props: any) => (props.btype === 'large' ? '24px' : '18px')};
   border: none;
   outline: none;
@@ -15,7 +16,8 @@ const Root = styled.button`
   transition: all 0.2s ease-in-out;
   padding-left: 24px;
   padding-right: 24px;
-  color: ${styles.palette.text.primary};
+  color: ${(props: any) =>
+    props.disabled ? '#fff' : styles.palette.text.primary};
   /* &:hover {
     color: rgba(0, 0, 0, 0.5);
   } */
@@ -26,6 +28,8 @@ interface propsValue {
   btype?: any
   children: any
   className?: any
+  disabled?: boolean
+  style?: any
   moreProps?: any
 }
 
@@ -34,10 +38,19 @@ export default function RoundedBtn({
   btype,
   children,
   className,
+  disabled,
+  style,
   moreProps
 }: propsValue) {
   return (
-    <Root onClick={onClick} btype={btype} className={className} {...moreProps}>
+    <Root
+      onClick={onClick}
+      btype={btype}
+      className={className}
+      {...moreProps}
+      disabled={disabled}
+      style={style}
+    >
       <Typography
         variant="button"
         style={{

@@ -20,6 +20,14 @@ export const styles = {
     text: {
       primary: '#201F1E',
       secondary: '#5F5F5F'
+    },
+    grey: {
+      400: '#bdbdbd',
+      500: '#9e9e9e',
+      50: '#fafafa',
+      100: '#f5f5f5',
+      200: '#eeeeee',
+      300: '#e0e0e0'
     }
   },
   typography: {

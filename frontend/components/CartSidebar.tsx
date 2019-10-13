@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleSidebar } from '../store/cart/action'
 import RoundedBtn from './RoundedBtn'
 import CartItem from './CartItem'
+import Link from 'next/link'
 // import CheckoutForm from "./CheckoutForm";
 
 const Mask = styled(motion.div)`
@@ -103,9 +104,7 @@ export default function CartSidebar() {
   const isEmpty = items.length === 0
 
   useEffect(() => {
-    console.log(items)
     const subtotal = items.reduce((value: number, item: any) => {
-      console.log(item)
       const itemTotal = item.price * item.quantity
       return itemTotal + value
     }, 0)
@@ -139,7 +138,7 @@ export default function CartSidebar() {
         ) : (
           <>
             <Header>
-              <Typography variant="h4">Your bag ( {items.length} )</Typography>
+              <Typography variant="h4">Your bag</Typography>
             </Header>
             <ItemList>
               <AnimatePresence initial={false}>
@@ -194,8 +193,9 @@ export default function CartSidebar() {
                   </Typography>
                 </SummaryListItem>
               </SummaryList>
-
-              <RoundedBtn btype="large">Check out</RoundedBtn>
+              <Link href="/checkout" as="/checkout">
+                <RoundedBtn btype="large">Check out</RoundedBtn>
+              </Link>
             </Bottom>
           </>
         )}

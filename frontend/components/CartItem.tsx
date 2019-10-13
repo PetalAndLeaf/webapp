@@ -52,8 +52,8 @@ const Quantity = styled.p`
   font-family: ${styles.typography.button.fontFamily};
   font-size: 14px;
   margin: 0;
-  margin-left: 8px;
-  margin-right: 8px;
+  /* margin-left: 8px;
+  margin-right: 8px; */
 `
 const QuantityControl = styled.button`
   width: 16px;
@@ -74,6 +74,12 @@ const QuantityControl = styled.button`
     width: 12px;
     height: 12px;
   }
+  &:first-child {
+    margin-right: 8px;
+  }
+  &:last-child {
+    margin-left: 8px;
+  }
 `
 
 const Price = styled.p`
@@ -87,40 +93,52 @@ const Price = styled.p`
 
 interface propsValue {
   data: any
+  editable?: boolean
 }
-export default function CartItem({ data }: propsValue) {
+export default function CartItem({ data, editable = true }: propsValue) {
   const dispatch = useDispatch()
   return (
     <Root
       id={data.sku}
       variants={RootVariants}
-      initial='hiddne'
-      animate='visible'
+      initial="hiddne"
+      animate="visible"
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       positionTransition={true}
     >
       <ImageWrap>
-        <img src='/static/cover-p26.png' alt='item image' />
+        <img src="/static/cover-p26.png" alt="item image" />
       </ImageWrap>
       <InfoWrap>
-        <Typography variant='h6'>{data.name}</Typography>
-        <Typography variant='caption'>{data.size}</Typography>
+        <Typography variant="h6">{data.name}</Typography>
+        <Typography variant="caption">{data.size}</Typography>
         <QuantityWrap>
-          <QuantityControl onClick={() => dispatch(decreaseQuantity(data.sku))}>
-            <FeatherIcon icon='minus' />
-          </QuantityControl>
+          {editable && (
+            <QuantityControl
+              onClick={() => dispatch(decreaseQuantity(data.sku))}
+            >
+              <FeatherIcon icon="minus" />
+            </QuantityControl>
+          )}
+
           <Quantity>{data.quantity}</Quantity>
-          <QuantityControl onClick={() => dispatch(increaseQuantity(data.sku))}>
-            <FeatherIcon icon='plus' />
-          </QuantityControl>
+          {editable && (
+            <QuantityControl
+              onClick={() => dispatch(increaseQuantity(data.sku))}
+            >
+              <FeatherIcon icon="plus" />
+            </QuantityControl>
+          )}
         </QuantityWrap>
       </InfoWrap>
       <Price>{`$${data.price * data.quantity}`}</Price>
-      <IconBtn
-        icon='delete'
-        style={{ position: 'absolute', top: 8, right: 8 }}
-        onClick={() => dispatch(setQuantity(data.sku, 0))}
-      />
+      {editable && (
+        <IconBtn
+          icon="delete"
+          style={{ position: 'absolute', top: 8, right: 8 }}
+          onClick={() => dispatch(setQuantity(data.sku, 0))}
+        />
+      )}
     </Root>
   )
 }
