@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import FeatherIcon from './FeatherIcon'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   toggleSidebar,
-  openFlyout,
+  // openFlyout,
   closeFlyout,
   clearFlyoutTimeout
 } from '../store/cart/action'
@@ -34,8 +34,10 @@ const BtnWrap = styled.button`
 `
 const CartNumber = styled.div`
   position: absolute;
-  width: 20px;
+  min-width: 20px;
   height: 20px;
+  padding-left: 4px;
+  padding-right: 4px;
   border-radius: 12px;
   background-color: ${styles.palette.primary.main};
   color: ${styles.palette.text.primary};
@@ -53,14 +55,22 @@ export default function CartBtn() {
   const items = useSelector((state: any) => state.cart.items)
   const isFlyoutOpen = useSelector((state: any) => state.cart.isFlyoutOpen)
   const flyoutTimeout = useSelector((state: any) => state.cart.flyoutTimeout)
+  const [totalItems, setTotalItems] = useState(0)
 
+  useEffect(() => {
+    const totalItems = items.reduce(
+      (total: number, item: any) => item.quantity + total,
+      0
+    )
+    setTotalItems(totalItems)
+  }, [items])
   const handleMouseEnter = () => {
     if (flyoutTimeout !== undefined) {
       dispatch(clearFlyoutTimeout())
     }
-    if (!isFlyoutOpen) {
-      dispatch(openFlyout())
-    }
+    // if (!isFlyoutOpen) {
+    //   dispatch(openFlyout())
+    // }
   }
   return (
     <Root
@@ -73,7 +83,7 @@ export default function CartBtn() {
         }}
       >
         <FeatherIcon icon="shoppingbag" />
-        {items.length > 0 && <CartNumber>{items.length}</CartNumber>}
+        {totalItems !== 0 && <CartNumber>{totalItems}</CartNumber>}
       </BtnWrap>
       <AnimatePresence>{isFlyoutOpen && <CartFlyout />}</AnimatePresence>
     </Root>

@@ -88,7 +88,7 @@ export default function CartFlyout() {
         stiffness: 100
       }}
     >
-      {items.length === 0 ? (
+      {isEmpty ? (
         <Typography
           variant="body1"
           style={{
