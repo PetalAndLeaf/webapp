@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import FeatherIcon from './FeatherIcon'
@@ -36,16 +36,20 @@ interface propsValue {
   moreProps?: any
 }
 
-export default function IconBtn({
-  onClick,
-  icon,
-  btype = '',
-  style,
-  moreProps
-}: propsValue) {
-  return (
-    <Root onClick={onClick} btype={btype} {...moreProps} style={style}>
-      <FeatherIcon icon={icon} />
-    </Root>
-  )
-}
+const IconBtn = forwardRef(
+  ({ onClick, icon, btype = '', style, moreProps }: propsValue, ref: any) => {
+    return (
+      <Root
+        onClick={onClick}
+        btype={btype}
+        {...moreProps}
+        style={style}
+        ref={ref}
+      >
+        <FeatherIcon icon={icon} />
+      </Root>
+    )
+  }
+)
+
+export default IconBtn

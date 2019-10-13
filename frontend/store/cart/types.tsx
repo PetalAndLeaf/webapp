@@ -12,6 +12,10 @@ export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR'
 export interface ToggleSidebarAction {
   type: typeof TOGGLE_SIDEBAR
 }
+export const CLOSE_SIDEBAR = 'CLOSE_SIDEBAR'
+export interface CloseSidebarAction {
+  type: typeof CLOSE_SIDEBAR
+}
 
 export const TOGGLE_FLYOUT = 'TOGGLE_FLYOUT'
 export const OPEN_FLYOUT = 'OPEN_FLYOUT'
@@ -53,6 +57,7 @@ export interface UpdateQuantity {
 /**************************************************************/
 export type cartActionTypes =
   | ToggleSidebarAction
+  | CloseSidebarAction
   | ToggleFlyoutAction
   | OpenFlyoutAction
   | CloseFlyoutAction

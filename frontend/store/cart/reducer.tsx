@@ -1,6 +1,7 @@
 import {
   TOGGLE_FLYOUT,
   TOGGLE_SIDEBAR,
+  CLOSE_SIDEBAR,
   cartState,
   cartActionTypes,
   OPEN_FLYOUT,
@@ -61,6 +62,12 @@ export function cartReducer(
       return {
         ...state,
         isSidebarOpen: !state.isSidebarOpen
+      }
+    }
+    case CLOSE_SIDEBAR: {
+      return {
+        ...state,
+        isSidebarOpen: false
       }
     }
     case OPEN_FLYOUT: {

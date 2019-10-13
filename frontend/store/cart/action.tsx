@@ -6,12 +6,18 @@ import {
   SET_FLYOUT_TIMEOUT,
   CLEAR_FLYOUT_TIMEOUT,
   UPDATE_QUANTITY,
-  SET_QUANTITY
+  SET_QUANTITY,
+  CLOSE_SIDEBAR
 } from './types'
 
 export function toggleSidebar() {
   return {
     type: TOGGLE_SIDEBAR
+  }
+}
+export function closeSidebar() {
+  return {
+    type: CLOSE_SIDEBAR
   }
 }
 export function toggleFlyout() {

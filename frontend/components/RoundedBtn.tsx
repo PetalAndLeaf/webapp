@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import { Typography } from '@material-ui/core'
@@ -33,32 +33,40 @@ interface propsValue {
   moreProps?: any
 }
 
-export default function RoundedBtn({
-  onClick,
-  btype,
-  children,
-  className,
-  disabled,
-  style,
-  moreProps
-}: propsValue) {
-  return (
-    <Root
-      onClick={onClick}
-      btype={btype}
-      className={className}
-      {...moreProps}
-      disabled={disabled}
-      style={style}
-    >
-      <Typography
-        variant="button"
-        style={{
-          textTransform: 'none'
-        }}
+const RoundedBtn = forwardRef(
+  (
+    {
+      onClick,
+      btype,
+      children,
+      className,
+      disabled,
+      style,
+      moreProps
+    }: propsValue,
+    ref: any
+  ) => {
+    return (
+      <Root
+        onClick={onClick}
+        btype={btype}
+        className={className}
+        {...moreProps}
+        disabled={disabled}
+        style={style}
+        ref={ref}
       >
-        {children}
-      </Typography>
-    </Root>
-  )
-}
+        <Typography
+          variant="button"
+          style={{
+            textTransform: 'none'
+          }}
+        >
+          {children}
+        </Typography>
+      </Root>
+    )
+  }
+)
+
+export default RoundedBtn
