@@ -12,6 +12,7 @@ import InputField from '../components/InputField'
 import { styles } from '../styles/theme'
 import states from '../static/states_hash.json'
 import { AsYouType, parsePhoneNumberFromString } from 'libphonenumber-js'
+import { setConfig, setFooter } from '../store/content/action'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -200,8 +201,6 @@ export default function Checkout() {
       if (address[item] === '') isValid = false
     })
 
-    // console.log('errorMsg: ', errorMsg)
-    // console.log('isValid : ', isValid)
     setAddress({
       ...address,
       errors: {
@@ -546,4 +545,15 @@ export default function Checkout() {
       </Main>
     </Container>
   )
+}
+
+Checkout.getInitialProps = async function(ctx: any) {
+  const { store, isServer } = ctx
+  if (isServer) {
+    await store.dispatch(setConfig())
+    await store.dispatch(setFooter())
+  }
+  return {
+    isServer
+  }
 }
