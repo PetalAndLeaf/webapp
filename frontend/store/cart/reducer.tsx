@@ -13,7 +13,7 @@ import {
 
 const initial: cartState = {
   isFlyoutOpen: false,
-  isSidebarOpen: true,
+  isSidebarOpen: false,
   flyoutTimeout: undefined,
   items: [
     // {
@@ -121,22 +121,6 @@ export function cartReducer(
       }
     }
 
-    // case REMOVE_ITEM: {
-    //   const removeItem = action.itemID
-    //   const items = state.items
-    //   const result = items.slice()
-    //   items.forEach((item, i) => {
-    //     if (item.sku === removeItem) {
-    //       result.splice(i, 1)
-    //       return
-    //     }
-    //   })
-
-    //   return {
-    //     ...state,
-    //     items: result
-    //   }
-    // }
     case UPDATE_QUANTITY: {
       const itemID = action.itemID
       const delta = action.delta

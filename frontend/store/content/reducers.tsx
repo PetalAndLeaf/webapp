@@ -9,8 +9,8 @@ import {
 } from './types'
 
 export const initial: contentState = {
-  siteConfig: {},
-  footer: {},
+  siteConfig: null,
+  footer: null,
   productList: null,
   product: null,
   story: null
