@@ -166,7 +166,7 @@ export default function CartSidebar() {
                     variant="caption"
                     style={{ textAlign: 'center', marginBottom: 16 }}
                   >
-                    Free one-day shipping when your order is over $45
+                    Free one-day shipping on orders over $45
                   </Typography>
                 </motion.div>
                 {/* )} */}
