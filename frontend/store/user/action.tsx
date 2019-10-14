@@ -20,7 +20,7 @@ export function LogInAction(email: string, password: string): ThunkAction {
     dispatch({ type: LOGIN_REQUEST })
     try {
       const res = await signInWithEmailAndPassword(email, password)
-      console.log('loggined')
+      // console.log('loggined, user: ', JSON.stringify(res.user))
       dispatch({
         type: LOGIN_SUCCESS,
         user: res.user
@@ -49,15 +49,13 @@ export function SignUpAction(email: string, password: string): ThunkAction {
     dispatch({ type: SIGN_UP_REQUEST })
     try {
       const res = await signUpWithEmailAndPassword(email, password)
-      console.log('sign up', res)
+      // console.log('sign up', JSON.stringify(res.user))
       dispatch({
-        type: SIGN_UP_SUCCESS
+        type: SIGN_UP_SUCCESS,
+        user: res.user
       })
     } catch (err) {
       console.log('sign up fail: ', err.code)
-      // auth/email-already-in-use
-      // auth/invalid-email
-      // auth/weak-password
       dispatch({ type: SIGN_UP_FAIL, err: err.code })
     }
   }

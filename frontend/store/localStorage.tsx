@@ -34,3 +34,9 @@ export const syncStoreLocal = (store: any) => {
     }, 1000)
   )
 }
+
+//unsycn the app by clear localstorage
+//redux store will be reset by refresh or close tab
+export const unsyncStoreLocal = () => {
+  localStorage.clear()
+}

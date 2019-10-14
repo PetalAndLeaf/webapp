@@ -3,14 +3,12 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { loadState } from './localStorage'
 
-import { sessionReducer } from './session/reducers'
 import { userReducer } from './user/reducers'
 import { contentReducer } from './content/reducers'
 import { cartReducer } from './cart/reducer'
 import { isEmpty } from 'lodash'
 
 const rootReducer = combineReducers({
-  session: sessionReducer,
   user: userReducer,
   content: contentReducer,
   cart: cartReducer

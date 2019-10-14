@@ -59,7 +59,9 @@ export function userReducer(
       console.log('user created')
       return {
         ...state,
-        signingup: false
+        signingup: false,
+        isLoggedin: true,
+        currentUser: action.user
       }
     case SIGN_UP_FAIL:
       console.log('creat user fail')
