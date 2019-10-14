@@ -73,6 +73,18 @@ class MyDocument extends Document {
               width: 20px;
               height: 20px;
             }
+            .StripeElement.StripeElement {
+              height: 48px;
+              padding: 10px 12px;
+
+              background-color: white;
+              border: 1px solid #e0e0e0;
+              border-radius: 4px;
+            }
+            input:focus,
+            .StripeElement--focus.StripeElement--focus {
+              border: 1px solid #fed450;
+            }
           `}</style>
         </body>
       </html>
