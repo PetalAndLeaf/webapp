@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleSidebar } from '../store/cart/action'
 import RoundedBtn from './RoundedBtn'
 import CartItem from './CartItem'
-import Link from 'next/link'
+import Router from 'next/router'
 // import CheckoutForm from "./CheckoutForm";
 
 const Mask = styled(motion.div)`
@@ -111,6 +111,11 @@ export default function CartSidebar() {
     setSubtotal(subtotal)
   }, [items])
 
+  const handelCheckoutClick = () => {
+    dispatch(toggleSidebar())
+    Router.push('/checkout')
+  }
+
   return (
     <>
       <Mask
@@ -171,7 +176,6 @@ export default function CartSidebar() {
                 </motion.div>
                 {/* )} */}
               </AnimatePresence>
-
               <SummaryList>
                 <SummaryListItem>
                   <Typography variant="h6">Subtotal</Typography>
@@ -193,9 +197,9 @@ export default function CartSidebar() {
                   </Typography>
                 </SummaryListItem>
               </SummaryList>
-              <Link href="/checkout" as="/checkout">
-                <RoundedBtn btype="large">Check out</RoundedBtn>
-              </Link>
+              <RoundedBtn btype="large" onClick={handelCheckoutClick}>
+                Check out
+              </RoundedBtn>
             </Bottom>
           </>
         )}
