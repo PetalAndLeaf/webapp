@@ -108,7 +108,7 @@ const Section = styled.div`
 `
 const SectionHeader = styled(motion.header)`
   padding-top: 24px;
-  padding-bottom: 24px;
+  margin-bottom: 24px;
   display: flex;
   cursor: default;
 `
@@ -153,6 +153,18 @@ export default function Checkout() {
   const [subtotal, setSubtotal] = useState(0)
   const [expanded, setExpanded] = useState<false | string>('email')
 
+  const handleEmailOnChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    //TODO: add this logic to login box
+    const value = e.target.value
+    const isValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
+    setEmail({
+      error: isValid ? '' : email.error,
+      isValid: isValid ? true : false,
+      value: value
+    })
+  }
   const handleAddressOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -260,31 +272,17 @@ export default function Checkout() {
                       }}
                     >
                       <InputField
-                        onChange={(e: any) => {
-                          //TODO: add this logic to login box
-                          const value = e.target.value
-                          const isValid = value.match(
-                            /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
-                          )
-
-                          setEmail({
-                            error: isValid ? '' : email.error,
-                            isValid: isValid,
-                            value: value
-                          })
-                        }}
+                        name='email'
                         value={email.value}
                         placeholder='Email'
+                        error={email.error}
+                        onChange={handleEmailOnChange}
                         onBlur={() => {
                           !email.isValid &&
                             setEmail({ ...email, error: 'Invalid email' })
                         }}
                       />
-                      {email.error !== '' && (
-                        <Typography variant='caption' color='error'>
-                          {email.error}
-                        </Typography>
-                      )}
+
                       <Typography
                         variant='caption'
                         style={{ display: 'block' }}
@@ -294,7 +292,7 @@ export default function Checkout() {
                         {/* Already have an account?<TextBtn >Login</TextBtn> */}
                       </Typography>
                       <RoundedBtn
-                        onClick={() => setExpanded('address')}
+                        onClick={() => email.isValid && setExpanded('address')}
                         style={{ marginTop: 16 }}
                         disabled={!email.isValid}
                       >
@@ -324,7 +322,7 @@ export default function Checkout() {
                 <IconBtn
                   icon='edit'
                   onClick={() => setExpanded('email')}
-                  style={{ position: 'absolute', right: 24, top: 24 }}
+                  style={{ position: 'absolute', right: 16, top: 16 }}
                 />
               )}
             </Section>
@@ -427,7 +425,7 @@ export default function Checkout() {
                       </Grid>
                     </Grid>
                     <RoundedBtn
-                      onClick={() => setExpanded('payment')}
+                      onClick={() => address.isValid && setExpanded('payment')}
                       style={{ marginTop: 16 }}
                       disabled={!address.isValid}
                     >
@@ -463,11 +461,11 @@ export default function Checkout() {
                   </motion.div>
                 )}
               </SectionContent>
-              {expanded !== 'address' && (
+              {expanded !== 'address' && address.isValid && (
                 <IconBtn
                   icon='edit'
                   onClick={() => setExpanded('address')}
-                  style={{ position: 'absolute', right: 24, top: 24 }}
+                  style={{ position: 'absolute', right: 16, top: 16 }}
                 />
               )}
             </Section>
@@ -506,7 +504,7 @@ export default function Checkout() {
                 <IconBtn
                   icon='edit'
                   onClick={() => setExpanded('payment')}
-                  style={{ position: 'absolute', right: 24, top: 24 }}
+                  style={{ position: 'absolute', right: 16, top: 16 }}
                 />
               )}
             </Section>
