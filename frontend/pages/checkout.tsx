@@ -17,6 +17,7 @@ import { setConfig, setFooter } from '../store/content/action'
 import { Dictionary } from '../utils/types'
 import { Elements } from 'react-stripe-elements'
 import CheckoutForm from '../components/CheckoutForm'
+import Router from 'next/router'
 // import TextBtn from '../components/TextBtn'
 // import { closeSidebar } from '../store/cart/action'
 
@@ -119,11 +120,26 @@ const SectionContent = styled(motion.section)``
 export default function Checkout() {
   const items = useSelector((state: any) => state.cart.items)
   // const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
+
+  const currentUser = useSelector((state: any) => state.user.currentUser)
+  const [subtotal, setSubtotal] = useState(0)
+  const [expanded, setExpanded] = useState<false | string>('email')
   const [email, setEmail] = useState({
     value: '',
     isValid: false,
     error: ''
   })
+
+  useEffect(() => {
+    if (currentUser !== null) {
+      setEmail({
+        ...email,
+        value: currentUser.email,
+        isValid: true
+      })
+      setExpanded('address')
+    }
+  }, [])
 
   // Define a dic type so we could get the value of an object
   // with this format: object[key]
@@ -154,9 +170,6 @@ export default function Checkout() {
     isValid: false,
     last4: ''
   })
-
-  const [subtotal, setSubtotal] = useState(0)
-  const [expanded, setExpanded] = useState<false | string>('email')
 
   const handleEmailOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -578,6 +591,15 @@ export default function Checkout() {
                     email.isValid && address.isValid && payment.isValid
                       ? false
                       : true
+                  }
+                  onClick={() =>
+                    //TODO: assigned to rj@
+                    //need a result from dispatched checkout action
+                    //before able to push router
+                    email.isValid &&
+                    address.isValid &&
+                    payment.isValid &&
+                    Router.push('/checkout/result')
                   }
                 >
                   Place order

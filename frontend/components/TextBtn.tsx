@@ -16,9 +16,14 @@ const StyledLink = styled.a`
 
 interface propsValue {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  style?: any
   children: any
 }
 
-export default function TextBtn({ onClick, children }: propsValue) {
-  return <StyledLink onClick={onClick}>{children}</StyledLink>
+export default function TextBtn({ onClick, children, style }: propsValue) {
+  return (
+    <StyledLink onClick={onClick} {...style}>
+      {children}
+    </StyledLink>
+  )
 }
