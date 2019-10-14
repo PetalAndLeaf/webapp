@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import { initStore } from '../store/store'
 import { syncStoreLocal } from '../store/localStorage'
+import { onAuthStatusChange } from '../store/user/action'
 
 interface AppProps {
   store: any
@@ -37,8 +38,11 @@ class MyApp extends App<AppProps> {
       jssStyles.parentNode.removeChild(jssStyles)
     }
 
+    const { store } = this.props
     //sync local storage with redux store
-    syncStoreLocal(this.props.store)
+    syncStoreLocal(store)
+    //trach user auth status
+    onAuthStatusChange(store)
 
     this.setState({
       siteConfig: this.props.pageProps.siteConfig,

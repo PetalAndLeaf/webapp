@@ -7,7 +7,8 @@ import {
   SIGN_OUT,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
-  SIGN_UP_FAIL
+  SIGN_UP_FAIL,
+  AUTH_STATUS_CHANGE
 } from './types'
 
 const initialState: userState = {
@@ -23,6 +24,12 @@ export function userReducer(
   action: userActionTypes
 ): userState {
   switch (action.type) {
+    case AUTH_STATUS_CHANGE:
+      return {
+        ...state,
+        currentUser: action.status,
+        isLoggedin: action.status === null ? false : true
+      }
     /*****************   LOGIN    ***********************/
     case LOGIN_REQUEST:
       console.log('request login request')
@@ -35,15 +42,12 @@ export function userReducer(
       console.log('login succuess')
       return {
         ...state,
-        logging: false,
-        isLoggedin: true,
-        currentUser: action.user
+        logging: false
       }
     case LOGIN_FAIL:
       console.log('login fail')
       return {
         ...state,
-        isLoggedin: false,
         logging: false,
         err: action.err
       }
@@ -59,9 +63,7 @@ export function userReducer(
       console.log('user created')
       return {
         ...state,
-        signingup: false,
-        isLoggedin: true,
-        currentUser: action.user
+        signingup: false
       }
     case SIGN_UP_FAIL:
       console.log('creat user fail')
@@ -75,8 +77,6 @@ export function userReducer(
       console.info('signed out')
       return {
         ...state,
-        isLoggedin: false,
-        currentUser: null,
         err: null
       }
     default:
