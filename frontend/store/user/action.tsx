@@ -37,7 +37,6 @@ export function SignOutAction(): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       const res = signOut()
-      console.log('signed out ', res)
       if (!isEmpty(res)) dispatch({ type: SIGN_OUT })
       else {
         console.error('err logging out')
