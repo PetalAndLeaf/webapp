@@ -24,7 +24,12 @@ export interface LoginFailAction {
   type: typeof LOGIN_FAIL
   err: string
 }
-/**********************************************************/
+/***********************AUTH  STATUS ****************************/
+export const AUTH_STATUS_CHANGE = 'AUTH_STATUS_CHANGE'
+export interface AuthStatusChangeAction {
+  type: typeof AUTH_STATUS_CHANGE
+  status: any
+}
 
 /********* ********   SIGN OUT   TYPES ***********************/
 export const SIGN_OUT = 'SIGN_OUT'
@@ -58,4 +63,8 @@ export type SignUpTypes =
   | SignUpSuccessAction
   | SignUpFailAction
 
-export type userActionTypes = LogInTypes | SignUpTypes | SignOutAction
+export type userActionTypes =
+  | AuthStatusChangeAction
+  | LogInTypes
+  | SignUpTypes
+  | SignOutAction
