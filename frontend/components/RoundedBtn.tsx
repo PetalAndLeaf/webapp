@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import { Typography } from '@material-ui/core'
 
-const Root = styled.button`
+const Root = styled.a`
+  display: inline-block;
   height: ${(props: any) => (props.btype === 'large' ? '48px' : '36px')};
   background: ${(props: any) =>
     props.disabled ? styles.palette.grey[400] : styles.palette.primary.main};
@@ -57,7 +58,7 @@ const RoundedBtn = forwardRef(
         ref={ref}
       >
         <Typography
-          variant="button"
+          variant='button'
           style={{
             textTransform: 'none'
           }}

@@ -28,7 +28,8 @@ export function userReducer(
       console.log('request login request')
       return {
         ...state,
-        logging: true
+        logging: true,
+        err: null
       }
     case LOGIN_SUCCESS:
       console.log('login succuess')
@@ -51,7 +52,8 @@ export function userReducer(
       console.log('request create new user')
       return {
         ...state,
-        signingup: true
+        signingup: true,
+        err: null
       }
     case SIGN_UP_SUCCESS:
       console.log('user created')
@@ -63,7 +65,8 @@ export function userReducer(
       console.log('creat user fail')
       return {
         ...state,
-        signingup: false
+        signingup: false,
+        err: action.err
       }
     /*****************   SIGN OUT   ***********************/
     case SIGN_OUT:
@@ -71,7 +74,8 @@ export function userReducer(
       return {
         ...state,
         isLoggedin: false,
-        currentUser: null
+        currentUser: null,
+        err: null
       }
     default:
       return state

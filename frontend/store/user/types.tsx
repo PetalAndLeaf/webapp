@@ -41,9 +41,11 @@ export interface SignUpReuestAction {
 }
 export interface SignUpSuccessAction {
   type: typeof SIGN_UP_SUCCESS
+  user: any
 }
 export interface SignUpFailAction {
   type: typeof SIGN_UP_FAIL
+  err: string
 }
 /**********************************************************/
 

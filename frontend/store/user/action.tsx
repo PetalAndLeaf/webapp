@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { ThunkAction } from '../typeDef'
+import { ThunkAction } from '../../utils/types'
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -27,7 +27,7 @@ export function LogInAction(email: string, password: string): ThunkAction {
       })
     } catch (err) {
       console.log('login fail: ', err.code)
-      dispatch({ type: LOGIN_FAIL, err: err })
+      dispatch({ type: LOGIN_FAIL, err: err.code })
     }
   }
 }
@@ -54,7 +54,7 @@ export function SignUpAction(email: string, password: string): ThunkAction {
         type: SIGN_UP_SUCCESS
       })
     } catch (err) {
-      console.log('sign up fail: ', err)
+      console.log('sign up fail: ', err.code)
       // auth/email-already-in-use
       // auth/invalid-email
       // auth/weak-password

@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { ThunkAction } from '../typeDef'
+import { ThunkAction } from '../../utils/types'
 
 import {
   SET_CONFIG,

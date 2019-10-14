@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Typography, Button } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { LogInAction, SignOutAction, SignUpAction } from '../store/user/action'
+import { LogInAction, SignUpAction } from '../store/user/action'
 import { motion } from 'framer-motion'
 import InputField from './InputField'
-// import RoundedBtn from './RoundedBtn'
+import TextBtn from './TextBtn'
+import RoundedBtn from './RoundedBtn'
+import { Dictionary } from '../utils/types'
 
 const Root = styled(motion.div)`
   width: 600px;
-  padding: 24px;
+  padding: 32px 24px;
 `
 
 const Header = styled.div`
@@ -20,14 +22,67 @@ const Header = styled.div`
   text-align: center;
 `
 
-function Login() {
-  const dispatch = useDispatch()
-  const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
+const Form = styled.form`
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  margin: 32px auto;
+`
 
-  // console.log('isLoggedin: ', isLoggedin)
+const ErrorBanner = styled.div`
+  width: 320px;
+  text-align: center;
+  margin-bottom: 16px;
+`
+
+interface propsValue {
+  initMode?: string
+  onSuccess?: Function
+}
+
+const errorMessages: Dictionary = {
+  'auth/user-not-found': 'Your email or password is incorrect. Try again.',
+  'auth/invalid-email': 'Invalid email',
+  'auth/wrong-password': 'Your email or password is incorrect. Try again.',
+  'auth/email-already-in-use':
+    'Looks like you already have an account. Please log in instead.',
+  'auth/weak-password': 'Your password has to be at least 6 characters.'
+}
+function Login({ initMode = 'login', onSuccess }: propsValue) {
+  const dispatch = useDispatch()
+  const authError = useSelector((state: any) => state.user.err)
+  const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
+  const [mode, setMode] = useState(initMode)
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
-  // const [isLoggedIn, setisLoggedIn] = useState(false)
+  const [errMsg, setErrMsg] = useState('')
+
+  useEffect(() => {
+    if (isLoggedin && onSuccess) {
+      onSuccess()
+    }
+    if (authError !== null) {
+      console.log('Login dialog : ', authError)
+      const newErroMsg = errorMessages[authError] || 'Something went wrong'
+      setErrMsg(newErroMsg)
+    } else {
+      setErrMsg('')
+    }
+  }, [isLoggedin, authError])
+
+  const handleModeChange = (mode: string) => {
+    setErrMsg('')
+    setMode(mode)
+  }
+
+  const handleSubmitClick = () => {
+    setErrMsg('')
+    if (mode === 'login') {
+      dispatch(LogInAction(email, pwd))
+    } else {
+      dispatch(SignUpAction(email, pwd))
+    }
+  }
 
   return (
     <Root
@@ -39,41 +94,71 @@ function Login() {
           opacity: 0
         }
       }}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
+      initial='hidden'
+      animate='visible'
+      exit='hidden'
     >
       <Header>
-        <Typography variant="h4">Log in</Typography>
+        <Typography variant='h4' style={{ marginBottom: 8 }}>
+          {mode === 'login' ? 'Welcome back' : 'Welcome'}
+        </Typography>
+        <Typography variant='h6' color='textSecondary'>
+          {mode === 'login'
+            ? 'Log in with your email and password'
+            : 'Create an account to start shopping'}
+        </Typography>
       </Header>
-      {isLoggedin ? (
-        <>
-          <p>Logged in</p>
-          <Button onClick={() => dispatch(SignOutAction())}>Sign Out</Button>
-        </>
-      ) : (
-        <form style={{ maxWidth: 320 }}>
-          <InputField
-            type="email"
-            label="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <InputField
-            type="password"
-            label="Password"
-            value={pwd}
-            onChange={e => setPwd(e.target.value)}
-          />
-          <Button onClick={() => dispatch(LogInAction(email, pwd))}>
-            Login
-          </Button>
 
-          <Button onClick={() => dispatch(SignUpAction(email, pwd))}>
-            Sign Up
-          </Button>
-        </form>
-      )}
+      <Form>
+        {errMsg !== '' && (
+          <ErrorBanner>
+            <Typography variant='body1' color='error'>
+              {errMsg}
+            </Typography>
+          </ErrorBanner>
+        )}
+        <InputField
+          type='email'
+          label='Email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <InputField
+          type='password'
+          label='Password'
+          value={pwd}
+          onChange={e => setPwd(e.target.value)}
+        />
+
+        <RoundedBtn style={{ marginTop: 8 }} onClick={handleSubmitClick}>
+          {mode === 'login' ? 'Log in' : 'Sign up'}
+        </RoundedBtn>
+
+        <Typography
+          variant='caption'
+          style={{ textAlign: 'center', marginTop: 16 }}
+        >
+          {mode === 'login'
+            ? "Don't have an account? "
+            : 'Already have an account? '}
+          <TextBtn
+            onClick={() =>
+              handleModeChange(mode === 'login' ? 'signup' : 'login')
+            }
+          >
+            {mode === 'login' ? 'Sign up' : 'Log in'}
+          </TextBtn>
+        </Typography>
+        {mode === 'login' && (
+          <Typography
+            variant='caption'
+            style={{ textAlign: 'center', marginTop: 8 }}
+          >
+            Forgot password? &nbsp;
+            <TextBtn>Reset</TextBtn>
+          </Typography>
+        )}
+      </Form>
     </Root>
   )
 }

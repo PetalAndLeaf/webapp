@@ -13,7 +13,9 @@ import { styles } from '../styles/theme'
 import states from '../static/states_hash.json'
 import { AsYouType, parsePhoneNumberFromString } from 'libphonenumber-js'
 import { setConfig, setFooter } from '../store/content/action'
-import Login from '../components/Login'
+// import Login from '../components/Login'
+import { Dictionary } from '../utils/types'
+// import TextBtn from '../components/TextBtn'
 // import { closeSidebar } from '../store/cart/action'
 
 const Container = styled(motion.div)`
@@ -114,7 +116,7 @@ const SectionContent = styled(motion.section)``
 
 export default function Checkout() {
   const items = useSelector((state: any) => state.cart.items)
-  const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
+  // const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
   const [email, setEmail] = useState({
     value: '',
     isValid: false,
@@ -123,7 +125,7 @@ export default function Checkout() {
 
   // Define a dic type so we could get the value of an object
   // with this format: object[key]
-  type Dictionary = { [index: string]: any }
+
   const initAddressError: Dictionary = {
     fullname: '',
     line1: '',
@@ -219,270 +221,91 @@ export default function Checkout() {
     }, 0)
     setSubtotal(subtotal)
   }, [items])
+  return (
+    <Container
+      variants={ContainerVariants}
+      animate='visible'
+      initial='hidden'
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+    >
+      <Header>
+        <Link href='/'>
+          <Logo src='/static/logo.svg' />
+        </Link>
+      </Header>
+      <Main>
+        <Grid container spacing={4}>
+          <Left item xs={12} sm={7}>
+            <Section>
+              <SectionHeader>
+                <FeatherIcon icon='user' />
+                <Typography variant='h5' style={{ marginLeft: 8 }}>
+                  Your email
+                </Typography>
+              </SectionHeader>
+              <SectionContent>
+                <AnimatePresence initial={false}>
+                  {expanded === 'email' ? (
+                    <motion.div
+                      initial='collapsed'
+                      animate='open'
+                      exit='collapsed'
+                      variants={{
+                        open: { opacity: 1, height: 'auto' },
+                        collapsed: { opacity: 0, height: 0 }
+                      }}
+                      transition={{
+                        duration: 0.3,
+                        ease: 'easeIn'
+                      }}
+                    >
+                      <InputField
+                        onChange={(e: any) => {
+                          //TODO: add this logic to login box
+                          const value = e.target.value
+                          const isValid = value.match(
+                            /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
+                          )
 
-  if (isLoggedin) {
-    return (
-      <Container
-        variants={ContainerVariants}
-        animate="visible"
-        initial="hidden"
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        <Header>
-          <Link href="/">
-            <Logo src="/static/logo.svg" />
-          </Link>
-        </Header>
-        <Main>
-          <Grid container spacing={4}>
-            <Left item xs={12} sm={7}>
-              <Section>
-                <SectionHeader>
-                  <FeatherIcon icon="user" />
-                  <Typography variant="h5" style={{ marginLeft: 8 }}>
-                    Your email
-                  </Typography>
-                </SectionHeader>
-                <SectionContent>
-                  <AnimatePresence initial={false}>
-                    {expanded === 'email' ? (
-                      <motion.div
-                        initial="collapsed"
-                        animate="open"
-                        exit="collapsed"
-                        variants={{
-                          open: { opacity: 1, height: 'auto' },
-                          collapsed: { opacity: 0, height: 0 }
+                          setEmail({
+                            error: isValid ? '' : email.error,
+                            isValid: isValid,
+                            value: value
+                          })
                         }}
-                        transition={{
-                          duration: 0.3,
-                          ease: 'easeIn'
+                        value={email.value}
+                        placeholder='Email'
+                        onBlur={() => {
+                          !email.isValid &&
+                            setEmail({ ...email, error: 'Invalid email' })
                         }}
-                      >
-                        <InputField
-                          onChange={(e: any) => {
-                            const value = e.target.value
-                            const isValid = value.match(
-                              /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
-                            )
-
-                            setEmail({
-                              error: isValid ? '' : email.error,
-                              isValid: isValid,
-                              value: value
-                            })
-                          }}
-                          value={email.value}
-                          placeholder="Email"
-                          onBlur={() => {
-                            !email.isValid &&
-                              setEmail({ ...email, error: 'Invalid email' })
-                          }}
-                        />
-                        {email.error !== '' && (
-                          <Typography variant="caption" color="error">
-                            {email.error}
-                          </Typography>
-                        )}
-                        <Typography
-                          variant="caption"
-                          style={{ display: 'block' }}
-                        >
-                          You'll receive receipts and notifications at this
-                          email address.
-                          {/* Already have an account? Login */}
+                      />
+                      {email.error !== '' && (
+                        <Typography variant='caption' color='error'>
+                          {email.error}
                         </Typography>
-                        <RoundedBtn
-                          onClick={() => setExpanded('address')}
-                          style={{ marginTop: 16 }}
-                          disabled={!email.isValid}
-                        >
-                          Continue
-                        </RoundedBtn>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        initial="collapsed"
-                        animate="open"
-                        exit="collapsed"
-                        variants={{
-                          open: { opacity: 1, height: 'auto' },
-                          collapsed: { opacity: 0, height: 0 }
-                        }}
-                        transition={{
-                          duration: 0.3,
-                          ease: 'easeIn'
-                        }}
-                      >
-                        <Typography variant="body2">{email.value}</Typography>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </SectionContent>
-                {expanded !== 'email' && (
-                  <IconBtn
-                    icon="edit"
-                    onClick={() => setExpanded('email')}
-                    style={{ position: 'absolute', right: 24, top: 24 }}
-                  />
-                )}
-              </Section>
-              <Section>
-                <SectionHeader>
-                  <FeatherIcon icon="location" />
-                  <Typography variant="h5" style={{ marginLeft: 8 }}>
-                    Shipping address
-                  </Typography>
-                </SectionHeader>
-                <SectionContent>
-                  {expanded === 'address' ? (
-                    <motion.div
-                      initial="collapsed"
-                      animate="open"
-                      exit="collapsed"
-                      variants={{
-                        open: { opacity: 1, height: 'auto' },
-                        collapsed: { opacity: 0, height: 0 }
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        ease: 'easeIn'
-                      }}
-                    >
-                      <InputField
-                        name="fullname"
-                        label="Full Name"
-                        value={address.fullname}
-                        placeholder="First and Last Name"
-                        error={address.errors.fullname}
-                        onChange={handleAddressOnChange}
-                        onBlur={handleAddressOnBlur}
-                      />
-                      <InputField
-                        name="line1"
-                        label="Address line 1"
-                        value={address.line1}
-                        placeholder="1000 Main St"
-                        error={address.errors.line1}
-                        onChange={handleAddressOnChange}
-                        onBlur={handleAddressOnBlur}
-                      />
-                      <InputField
-                        name="line2"
-                        label="Address line 2"
-                        value={address.line2}
-                        placeholder="Apt. 1234"
-                        onChange={handleAddressOnChange}
-                        optional
-                      />
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                          <InputField
-                            name="city"
-                            label="City"
-                            value={address.city}
-                            placeholder="San Jose"
-                            error={address.errors.city}
-                            onChange={handleAddressOnChange}
-                            onBlur={handleAddressOnBlur}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <InputField
-                            name="state"
-                            label="State"
-                            value={address.state}
-                            onChange={handleAddressOnChange}
-                            onBlur={handleAddressOnBlur}
-                            type="select"
-                            options={Object.keys(states)}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                          <InputField
-                            name="zipcode"
-                            label="Zip code"
-                            value={address.zipcode}
-                            placeholder="00000"
-                            error={address.errors.zipcode}
-                            onChange={handleAddressOnChange}
-                            onBlur={handleAddressOnBlur}
-                            type="number"
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <InputField
-                            name="phone"
-                            label="Phone number"
-                            value={address.formattedPhone}
-                            error={address.errors.phone}
-                            placeholder="(123) 456-7890"
-                            onChange={handlePhoneOnChange}
-                            onBlur={e => handleAddressOnBlur(e, 'empty|phone')}
-                            type="tel"
-                          />
-                        </Grid>
-                      </Grid>
-                      <RoundedBtn
-                        onClick={() => setExpanded('payment')}
-                        style={{ marginTop: 16 }}
-                        disabled={!address.isValid}
-                      >
-                        Continue
-                      </RoundedBtn>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      initial="collapsed"
-                      animate="open"
-                      exit="collapsed"
-                      variants={{
-                        open: { opacity: 1, height: 'auto' },
-                        collapsed: { opacity: 0, height: 0 }
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        ease: 'easeIn'
-                      }}
-                    >
-                      {address.isValid && (
-                        <>
-                          <Typography variant="body2">
-                            {address.fullname}
-                          </Typography>
-                          <Typography variant="body2">{`${address.line1}, ${address.line2}`}</Typography>
-                          <Typography variant="body2">{`${address.city}, ${address.state} ${address.zipcode}`}</Typography>
-                          <Typography variant="body2">
-                            {address.formattedPhone}
-                          </Typography>
-                        </>
                       )}
+                      <Typography
+                        variant='caption'
+                        style={{ display: 'block' }}
+                      >
+                        You'll receive receipts and notifications at this email
+                        address.
+                        {/* Already have an account?<TextBtn >Login</TextBtn> */}
+                      </Typography>
+                      <RoundedBtn
+                        onClick={() => setExpanded('address')}
+                        style={{ marginTop: 16 }}
+                        disabled={!email.isValid}
+                      >
+                        Continue
+                      </RoundedBtn>
                     </motion.div>
-                  )}
-                </SectionContent>
-                {expanded !== 'address' && (
-                  <IconBtn
-                    icon="edit"
-                    onClick={() => setExpanded('address')}
-                    style={{ position: 'absolute', right: 24, top: 24 }}
-                  />
-                )}
-              </Section>
-              <Section>
-                <SectionHeader>
-                  <FeatherIcon icon="card" />
-                  <Typography variant="h5" style={{ marginLeft: 8 }}>
-                    Payment
-                  </Typography>
-                </SectionHeader>
-                <SectionContent>
-                  {expanded === 'payment' ? (
+                  ) : (
                     <motion.div
-                      initial="collapsed"
-                      animate="open"
-                      exit="collapsed"
+                      initial='collapsed'
+                      animate='open'
+                      exit='collapsed'
                       variants={{
                         open: { opacity: 1, height: 'auto' },
                         collapsed: { opacity: 0, height: 0 }
@@ -492,71 +315,246 @@ export default function Checkout() {
                         ease: 'easeIn'
                       }}
                     >
-                      <p>open</p>
-                      <RoundedBtn onClick={() => setExpanded(false)}>
-                        Continue
-                      </RoundedBtn>
+                      <Typography variant='body2'>{email.value}</Typography>
                     </motion.div>
-                  ) : (
-                    <p>closed</p>
                   )}
-                </SectionContent>
-                {expanded !== 'payment' && (
-                  <IconBtn
-                    icon="edit"
-                    onClick={() => setExpanded('payment')}
-                    style={{ position: 'absolute', right: 24, top: 24 }}
-                  />
+                </AnimatePresence>
+              </SectionContent>
+              {expanded !== 'email' && (
+                <IconBtn
+                  icon='edit'
+                  onClick={() => setExpanded('email')}
+                  style={{ position: 'absolute', right: 24, top: 24 }}
+                />
+              )}
+            </Section>
+            <Section>
+              <SectionHeader>
+                <FeatherIcon icon='location' />
+                <Typography variant='h5' style={{ marginLeft: 8 }}>
+                  Shipping address
+                </Typography>
+              </SectionHeader>
+              <SectionContent>
+                {expanded === 'address' ? (
+                  <motion.div
+                    initial='collapsed'
+                    animate='open'
+                    exit='collapsed'
+                    variants={{
+                      open: { opacity: 1, height: 'auto' },
+                      collapsed: { opacity: 0, height: 0 }
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      ease: 'easeIn'
+                    }}
+                  >
+                    <InputField
+                      name='fullname'
+                      label='Full Name'
+                      value={address.fullname}
+                      placeholder='First and Last Name'
+                      error={address.errors.fullname}
+                      onChange={handleAddressOnChange}
+                      onBlur={handleAddressOnBlur}
+                    />
+                    <InputField
+                      name='line1'
+                      label='Address line 1'
+                      value={address.line1}
+                      placeholder='1000 Main St'
+                      error={address.errors.line1}
+                      onChange={handleAddressOnChange}
+                      onBlur={handleAddressOnBlur}
+                    />
+                    <InputField
+                      name='line2'
+                      label='Address line 2'
+                      value={address.line2}
+                      placeholder='Apt. 1234'
+                      onChange={handleAddressOnChange}
+                      optional
+                    />
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <InputField
+                          name='city'
+                          label='City'
+                          value={address.city}
+                          placeholder='San Jose'
+                          error={address.errors.city}
+                          onChange={handleAddressOnChange}
+                          onBlur={handleAddressOnBlur}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputField
+                          name='state'
+                          label='State'
+                          value={address.state}
+                          onChange={handleAddressOnChange}
+                          onBlur={handleAddressOnBlur}
+                          type='select'
+                          options={Object.keys(states)}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <InputField
+                          name='zipcode'
+                          label='Zip code'
+                          value={address.zipcode}
+                          placeholder='00000'
+                          error={address.errors.zipcode}
+                          onChange={handleAddressOnChange}
+                          onBlur={handleAddressOnBlur}
+                          type='number'
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputField
+                          name='phone'
+                          label='Phone number'
+                          value={address.formattedPhone}
+                          error={address.errors.phone}
+                          placeholder='(123) 456-7890'
+                          onChange={handlePhoneOnChange}
+                          onBlur={e => handleAddressOnBlur(e, 'empty|phone')}
+                          type='tel'
+                        />
+                      </Grid>
+                    </Grid>
+                    <RoundedBtn
+                      onClick={() => setExpanded('payment')}
+                      style={{ marginTop: 16 }}
+                      disabled={!address.isValid}
+                    >
+                      Continue
+                    </RoundedBtn>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial='collapsed'
+                    animate='open'
+                    exit='collapsed'
+                    variants={{
+                      open: { opacity: 1, height: 'auto' },
+                      collapsed: { opacity: 0, height: 0 }
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      ease: 'easeIn'
+                    }}
+                  >
+                    {address.isValid && (
+                      <>
+                        <Typography variant='body2'>
+                          {address.fullname}
+                        </Typography>
+                        <Typography variant='body2'>{`${address.line1}, ${address.line2}`}</Typography>
+                        <Typography variant='body2'>{`${address.city}, ${address.state} ${address.zipcode}`}</Typography>
+                        <Typography variant='body2'>
+                          {address.formattedPhone}
+                        </Typography>
+                      </>
+                    )}
+                  </motion.div>
                 )}
-              </Section>
-            </Left>
-            <Right item xs={12} sm={5}>
-              <SummaryCard>
-                <SummaryHeader>
-                  <Typography variant="h5">Order Summary</Typography>
-                </SummaryHeader>
-                <ItemList>
-                  {items.map((item: any, i: number) => {
-                    return (
-                      <CartItem data={item} key={item + i} editable={false} />
-                    )
-                  })}
-                </ItemList>
-                <Bottom>
-                  <SummaryList>
-                    <SummaryListItem>
-                      <Typography variant="h6">Subtotal</Typography>
-                      <Typography
-                        variant="button"
-                        color="textSecondary"
-                      >{`$${subtotal}`}</Typography>
-                    </SummaryListItem>
-                    <SummaryListItem>
-                      <Typography variant="h6">Shipping</Typography>
-                      <Typography variant="button" color="textSecondary">
-                        {subtotal >= 45 ? '$0' : '$8'}
-                      </Typography>
-                    </SummaryListItem>
-                    <SummaryListItem>
-                      <Typography variant="h5">Total</Typography>
-                      <Typography variant="button" style={{ fontSize: 18 }}>
-                        {`$${subtotal + (subtotal >= 45 ? 0 : 8)}`}
-                      </Typography>
-                    </SummaryListItem>
-                  </SummaryList>
-                  <RoundedBtn btype="large" disabled>
-                    Place order
-                  </RoundedBtn>
-                </Bottom>
-              </SummaryCard>
-            </Right>
-          </Grid>
-        </Main>
-      </Container>
-    )
-  } else {
-    return <Login />
-  }
+              </SectionContent>
+              {expanded !== 'address' && (
+                <IconBtn
+                  icon='edit'
+                  onClick={() => setExpanded('address')}
+                  style={{ position: 'absolute', right: 24, top: 24 }}
+                />
+              )}
+            </Section>
+            <Section>
+              <SectionHeader>
+                <FeatherIcon icon='card' />
+                <Typography variant='h5' style={{ marginLeft: 8 }}>
+                  Payment
+                </Typography>
+              </SectionHeader>
+              <SectionContent>
+                {expanded === 'payment' ? (
+                  <motion.div
+                    initial='collapsed'
+                    animate='open'
+                    exit='collapsed'
+                    variants={{
+                      open: { opacity: 1, height: 'auto' },
+                      collapsed: { opacity: 0, height: 0 }
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      ease: 'easeIn'
+                    }}
+                  >
+                    <p>open</p>
+                    <RoundedBtn onClick={() => setExpanded(false)}>
+                      Continue
+                    </RoundedBtn>
+                  </motion.div>
+                ) : (
+                  <p>closed</p>
+                )}
+              </SectionContent>
+              {expanded !== 'payment' && (
+                <IconBtn
+                  icon='edit'
+                  onClick={() => setExpanded('payment')}
+                  style={{ position: 'absolute', right: 24, top: 24 }}
+                />
+              )}
+            </Section>
+          </Left>
+          <Right item xs={12} sm={5}>
+            <SummaryCard>
+              <SummaryHeader>
+                <Typography variant='h5'>Order Summary</Typography>
+              </SummaryHeader>
+              <ItemList>
+                {items.map((item: any, i: number) => {
+                  return (
+                    <CartItem data={item} key={item + i} editable={false} />
+                  )
+                })}
+              </ItemList>
+              <Bottom>
+                <SummaryList>
+                  <SummaryListItem>
+                    <Typography variant='h6'>Subtotal</Typography>
+                    <Typography
+                      variant='button'
+                      color='textSecondary'
+                    >{`$${subtotal}`}</Typography>
+                  </SummaryListItem>
+                  <SummaryListItem>
+                    <Typography variant='h6'>Shipping</Typography>
+                    <Typography variant='button' color='textSecondary'>
+                      {subtotal >= 45 ? '$0' : '$8'}
+                    </Typography>
+                  </SummaryListItem>
+                  <SummaryListItem>
+                    <Typography variant='h5'>Total</Typography>
+                    <Typography variant='button' style={{ fontSize: 18 }}>
+                      {`$${subtotal + (subtotal >= 45 ? 0 : 8)}`}
+                    </Typography>
+                  </SummaryListItem>
+                </SummaryList>
+                <RoundedBtn btype='large' disabled>
+                  Place order
+                </RoundedBtn>
+              </Bottom>
+            </SummaryCard>
+          </Right>
+        </Grid>
+      </Main>
+    </Container>
+  )
 }
 
 Checkout.getInitialProps = async function(ctx: any) {
