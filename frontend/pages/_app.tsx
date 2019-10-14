@@ -8,6 +8,7 @@ import theme from '../styles/theme'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import { initStore } from '../store/store'
+import { syncStoreLocal } from '../store/localStorage'
 
 interface AppProps {
   store: any
@@ -35,6 +36,9 @@ class MyApp extends App<AppProps> {
     if (jssStyles !== null && jssStyles.parentNode !== null) {
       jssStyles.parentNode.removeChild(jssStyles)
     }
+
+    //sync local storage with redux store
+    syncStoreLocal(this.props.store)
 
     this.setState({
       siteConfig: this.props.pageProps.siteConfig,
