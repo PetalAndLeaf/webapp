@@ -43,7 +43,7 @@ const Logo = styled.img`
   cursor: pointer;
 `
 const Main = styled.main`
-  margin-top: 144px;
+  margin-top: 224px;
   max-width: 960px;
   margin-left: auto;
   margin-right: auto;
