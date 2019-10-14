@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
 import { ThunkAction } from '../../utils/types'
+import { isEmpty } from 'lodash'
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -36,8 +37,10 @@ export function SignOutAction(): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       const res = signOut()
-      console.log('signed out ', res)
-      dispatch({ type: SIGN_OUT })
+      if (!isEmpty(res)) dispatch({ type: SIGN_OUT })
+      else {
+        console.error('err logging out')
+      }
     } catch (err) {
       console.log('singout fail: ', err.code)
     }

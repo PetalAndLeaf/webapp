@@ -1,4 +1,5 @@
 import { auth } from './fire'
+import { isEmpty } from 'lodash'
 // import { useSelector } from 'react-redux'
 
 /*********************************************************************/
@@ -14,6 +15,13 @@ export const signInWithEmailAndPassword = async (
   password: string
 ): Promise<any> => auth.signInWithEmailAndPassword(email, password)
 
+// Auth Status Tracking
+export const authStatus = () => {
+  auth.onAuthStateChanged(user => {
+    console.log('auth status: ', user)
+    return !isEmpty(user)
+  })
+}
 /*********************************************************************/
 /****Behaviors needs to be signed in First****************************/
 /*****Current User is Set When Login Action success *****************/

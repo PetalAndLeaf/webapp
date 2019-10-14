@@ -72,7 +72,7 @@ export function userReducer(
       }
     /*****************   SIGN OUT   ***********************/
     case SIGN_OUT:
-      console.log('request login request')
+      console.info('signed out')
       return {
         ...state,
         isLoggedin: false,
