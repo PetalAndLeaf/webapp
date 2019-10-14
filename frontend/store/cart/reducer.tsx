@@ -17,20 +17,20 @@ const initial: cartState = {
   isSidebarOpen: false,
   flyoutTimeout: undefined,
   items: [
-    {
-      sku: 'rc30',
-      name: 'Rose cake',
-      size: '30g, 6 counts',
-      quantity: 2,
-      price: 15
-    },
-    {
-      sku: 'rc50',
-      name: 'Rose cake',
-      size: '50g, 6 counts',
-      quantity: 1,
-      price: 18
-    }
+    // {
+    //   sku: 'rc30',
+    //   name: 'Rose cake',
+    //   size: '30g, 6 counts',
+    //   quantity: 2,
+    //   price: 15
+    // },
+    // {
+    //   sku: 'rc50',
+    //   name: 'Rose cake',
+    //   size: '50g, 6 counts',
+    //   quantity: 1,
+    //   price: 18
+    // }
   ]
 }
 

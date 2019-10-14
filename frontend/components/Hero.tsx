@@ -25,9 +25,14 @@ export default function Hero() {
         pariatur culpa sint consequat deserunt consequat duis fugiat velit.
       </Typography>
       <Socials>
-        <IconBtn icon="instagram" btype="solid" />
+        <a href="https://www.instagram.com/thepetalleaf/" target="_blank">
+          <IconBtn icon="instagram" btype="solid" />
+        </a>
+
         <Box width={16} />
-        <IconBtn icon="facebook" btype="solid" />
+        <a href="https://www.facebook.com/thepetalleaf/" target="_blank">
+          <IconBtn icon="facebook" btype="solid" />
+        </a>
       </Socials>
     </Container>
   )
