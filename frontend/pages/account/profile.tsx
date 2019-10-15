@@ -6,6 +6,7 @@ import AccountLayout from '../../layout/AccountLayout'
 import styled from 'styled-components'
 import InputField from '../../components/InputField'
 import RoundedBtn from '../../components/RoundedBtn'
+import TextBtn from '../../components/TextBtn'
 
 const Header = styled.div`
   height: 64px;
@@ -43,11 +44,11 @@ export default function Profile() {
         placeholder="Password"
         onChange={(e: any) => setPwd(e.target.value)}
       />
-      <RoundedBtn style={{ marginTop: 8 }}>Save</RoundedBtn>
+      <RoundedBtn style={{ marginTop: 8, marginRight: 16 }}>Save</RoundedBtn>
       {
         //TODO: Implement account deletion
       }
-      <RoundedBtn style={{ marginTop: 8 }}>Delete account</RoundedBtn>
+      <TextBtn style={{ marginTop: 8 }}>Delete account</TextBtn>
     </AccountLayout>
   )
 }

@@ -31,7 +31,6 @@ export default function Hero() {
         <a href="https://www.instagram.com/thepetalleaf/" target="_blank">
           <IconBtn icon="instagram" btype="solid" />
         </a>
-
         <Box width={16} />
         <a href="https://www.facebook.com/thepetalleaf/" target="_blank">
           <IconBtn icon="facebook" btype="solid" />

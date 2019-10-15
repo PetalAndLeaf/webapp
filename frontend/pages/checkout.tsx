@@ -10,16 +10,12 @@ import FeatherIcon from '../components/FeatherIcon'
 import IconBtn from '../components/IconBtn'
 import InputField from '../components/InputField'
 import { styles } from '../styles/theme'
-import states from '../static/states_hash.json'
-import { AsYouType, parsePhoneNumberFromString } from 'libphonenumber-js'
 import { setConfig, setFooter } from '../store/content/action'
-// import Login from '../components/Login'
 import { Dictionary } from '../utils/types'
 import { Elements } from 'react-stripe-elements'
 import CheckoutForm from '../components/CheckoutForm'
 import Router from 'next/router'
-// import TextBtn from '../components/TextBtn'
-// import { closeSidebar } from '../store/cart/action'
+import AddressForm from '../components/AddressForm'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -65,7 +61,6 @@ const Right = styled(Grid)``
 const SummaryCard = styled(motion.div)`
   background-color: #fff;
   border-radius: 8px;
-  /* box-shadow: 0 15px 32px -10px rgba(29, 28, 27, 0.3); */
   box-shadow: 0 15px 46px -10px rgba(29, 28, 27, 0.3);
 `
 
@@ -117,9 +112,30 @@ const SectionHeader = styled(motion.header)`
 `
 const SectionContent = styled(motion.section)``
 
+const initAddressError: Dictionary = {
+  fullname: '',
+  line1: '',
+  line2: '',
+  city: '',
+  state: '',
+  zipcode: '',
+  phone: ''
+}
+const initAddress: Dictionary = {
+  fullname: '',
+  line1: '',
+  line2: '',
+  city: '',
+  state: '',
+  zipcode: '',
+  phone: '',
+  formattedPhone: '',
+  errors: initAddressError,
+  isValid: false
+}
+
 export default function Checkout() {
   const items = useSelector((state: any) => state.cart.items)
-  // const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
 
   const currentUser = useSelector((state: any) => state.user.currentUser)
   const [subtotal, setSubtotal] = useState(0)
@@ -128,6 +144,11 @@ export default function Checkout() {
     value: '',
     isValid: false,
     error: ''
+  })
+  const [address, setAddress] = useState(initAddress)
+  const [payment, setPayment] = useState({
+    isValid: false,
+    last4: ''
   })
 
   useEffect(() => {
@@ -140,36 +161,13 @@ export default function Checkout() {
       setExpanded('address')
     }
   }, [])
-
-  // Define a dic type so we could get the value of an object
-  // with this format: object[key]
-
-  const initAddressError: Dictionary = {
-    fullname: '',
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    phone: ''
-  }
-  const initAddress: Dictionary = {
-    fullname: '',
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    phone: '',
-    formattedPhone: '',
-    errors: initAddressError,
-    isValid: false
-  }
-  const [address, setAddress] = useState(initAddress)
-  const [payment, setPayment] = useState({
-    isValid: false,
-    last4: ''
-  })
+  useEffect(() => {
+    const subtotal = items.reduce((value: number, item: any) => {
+      const itemTotal = item.price * item.quantity
+      return itemTotal + value
+    }, 0)
+    setSubtotal(subtotal)
+  }, [items])
 
   const handleEmailOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -183,74 +181,12 @@ export default function Checkout() {
       value: value
     })
   }
-  const handleAddressOnChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const value = e.target.value
-    const name = e.target.name
-    setAddress({
-      ...address,
-      [name]: value,
-      errors: {
-        ...address.errors,
-        [name]: value !== '' ? '' : address.errors[name]
-      }
-    })
-  }
-  const handlePhoneOnChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const currentFormatted = e.target.value
-    const phone = currentFormatted.replace(/[^\d]/g, '')
-    const formatted = new AsYouType('US').input(phone)
-    setAddress({
-      ...address,
-      phone: phone,
-      formattedPhone: formatted,
-      errors: {
-        ...address.errors,
-        phone: phone !== '' ? '' : address.errors.phone
-      }
-    })
-  }
-  const handleAddressOnBlur = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    error: string = 'empty'
-  ) => {
-    const name = e.target.name
-    let errorMsg = ''
-    if (error.includes('empty') && address[name] === '') {
-      errorMsg = 'This is required'
-    }
-    if (error.includes('phone')) {
-      const phone = parsePhoneNumberFromString(address.formattedPhone, 'US')
-      if (phone === undefined || !phone.isValid()) {
-        errorMsg = 'Invalid phone number'
-      }
-    }
-    let isValid: boolean = true
-    if (errorMsg !== '') isValid = false
-    const items = ['fullname', 'line1', 'city', 'state', 'zipcode', 'phone']
-    items.forEach(item => {
-      if (address[item] === '') isValid = false
-    })
 
-    setAddress({
-      ...address,
-      errors: {
-        ...address.errors,
-        [name]: errorMsg
-      },
-      isValid: isValid
-    })
+  const handleAddressSubmit = (newAddress: any) => {
+    setExpanded('payment')
+    setAddress(newAddress)
   }
-  useEffect(() => {
-    const subtotal = items.reduce((value: number, item: any) => {
-      const itemTotal = item.price * item.quantity
-      return itemTotal + value
-    }, 0)
-    setSubtotal(subtotal)
-  }, [items])
+
   return (
     <Container
       variants={ContainerVariants}
@@ -366,89 +302,13 @@ export default function Checkout() {
                       ease: 'easeIn'
                     }}
                   >
-                    <InputField
-                      name="fullname"
-                      label="Full Name"
-                      value={address.fullname}
-                      placeholder="First and Last Name"
-                      error={address.errors.fullname}
-                      onChange={handleAddressOnChange}
-                      onBlur={handleAddressOnBlur}
+                    <AddressForm
+                      initAddress={address}
+                      submitBtn={{
+                        label: 'Continue',
+                        handleClick: handleAddressSubmit
+                      }}
                     />
-                    <InputField
-                      name="line1"
-                      label="Address line 1"
-                      value={address.line1}
-                      placeholder="1000 Main St"
-                      error={address.errors.line1}
-                      onChange={handleAddressOnChange}
-                      onBlur={handleAddressOnBlur}
-                    />
-                    <InputField
-                      name="line2"
-                      label="Address line 2"
-                      value={address.line2}
-                      placeholder="Apt. 1234"
-                      onChange={handleAddressOnChange}
-                      optional
-                    />
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                        <InputField
-                          name="city"
-                          label="City"
-                          value={address.city}
-                          placeholder="San Jose"
-                          error={address.errors.city}
-                          onChange={handleAddressOnChange}
-                          onBlur={handleAddressOnBlur}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <InputField
-                          name="state"
-                          label="State"
-                          value={address.state}
-                          onChange={handleAddressOnChange}
-                          onBlur={handleAddressOnBlur}
-                          type="select"
-                          options={Object.keys(states)}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                        <InputField
-                          name="zipcode"
-                          label="Zip code"
-                          value={address.zipcode}
-                          placeholder="00000"
-                          error={address.errors.zipcode}
-                          onChange={handleAddressOnChange}
-                          onBlur={handleAddressOnBlur}
-                          type="number"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <InputField
-                          name="phone"
-                          label="Phone number"
-                          value={address.formattedPhone}
-                          error={address.errors.phone}
-                          placeholder="(123) 456-7890"
-                          onChange={handlePhoneOnChange}
-                          onBlur={e => handleAddressOnBlur(e, 'empty|phone')}
-                          type="tel"
-                        />
-                      </Grid>
-                    </Grid>
-                    <RoundedBtn
-                      onClick={() => address.isValid && setExpanded('payment')}
-                      style={{ marginTop: 16 }}
-                      disabled={!address.isValid}
-                    >
-                      Continue
-                    </RoundedBtn>
                   </motion.div>
                 ) : (
                   <motion.div

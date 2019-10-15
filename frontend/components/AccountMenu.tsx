@@ -68,11 +68,9 @@ export default function AccountMenu() {
       <Header>
         <Typography variant="h5">Your account</Typography>
       </Header>
-
       <Link href="/account/profile">
         <MenuItem>Account</MenuItem>
       </Link>
-
       <MenuItem onClick={() => dispatch(SignOutAction())}>Log out</MenuItem>
     </Root>
   )

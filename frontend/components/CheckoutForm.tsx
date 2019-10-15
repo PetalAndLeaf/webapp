@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import { Typography } from '@material-ui/core'
 import RoundedBtn from './RoundedBtn'
 
-const Root = styled.form`
+const Container = styled.form`
   margin-bottom: 16px;
 `
 interface propsValue {
@@ -40,8 +40,10 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
     }
   }
 
-  const handleBlur = (e: any) => {
-    if (errMsg === '') setIsValid(true)
+  const handleBlur = () => {
+    if (errMsg === '') {
+      setIsValid(true)
+    }
   }
   const handleFocus = () => {
     console.log('[focus]')
@@ -51,7 +53,7 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
   }
 
   return (
-    <Root>
+    <Container>
       <CardElement
         onBlur={handleBlur}
         onChange={handleChange}
@@ -77,7 +79,7 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
       >
         Continue
       </RoundedBtn>
-    </Root>
+    </Container>
   )
 }
 export default injectStripe(CheckoutForm)
