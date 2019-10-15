@@ -22,7 +22,6 @@ export function LogInAction(email: string, password: string): ThunkAction {
       await signInWithEmailAndPassword(email, password)
       dispatch({
         type: LOGIN_SUCCESS
-        // user: res.user
       })
     } catch (err) {
       console.log('login fail: ', err.code)
@@ -41,8 +40,6 @@ export function SignOutAction(): ThunkAction {
     }
   }
 }
-
-// export const SignOutAction = (): ThunkAction => signOut()
 
 export function SignUpAction(email: string, password: string): ThunkAction {
   return async (dispatch: Dispatch) => {

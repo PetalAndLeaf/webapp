@@ -38,6 +38,7 @@ class MyApp extends App<AppProps> {
       jssStyles.parentNode.removeChild(jssStyles)
     }
 
+    /***************  App preparation ***************/
     const { store } = this.props
     //sync local storage with redux store
     syncStoreLocal(store)
