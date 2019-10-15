@@ -53,7 +53,6 @@ export default function Header({ type }: propsValue) {
   const siteConfig = useSelector((state: any) => state.content.siteConfig)
   const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
-
   useEffect(() => {
     if (isLoggedin && isLoginOpen) {
       setIsLoginOpen(false)
@@ -77,7 +76,7 @@ export default function Header({ type }: propsValue) {
         )}
 
         {siteConfig.isCheckoutAvailable && <CartBtn />}
-        {type !== 'home' && (
+        {type === 'product' && (
           <IconBtn icon="x" onClick={() => Router.push('/')} />
         )}
       </Controls>

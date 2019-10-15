@@ -69,7 +69,7 @@ export default function AccountMenu() {
         <Typography variant="h5">Your account</Typography>
       </Header>
 
-      <Link href="/account">
+      <Link href="/account/profile">
         <MenuItem>Account</MenuItem>
       </Link>
 

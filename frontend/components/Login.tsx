@@ -94,15 +94,15 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
           opacity: 0
         }
       }}
-      initial='hidden'
-      animate='visible'
-      exit='hidden'
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
     >
       <Header>
-        <Typography variant='h4' style={{ marginBottom: 8 }}>
+        <Typography variant="h4" style={{ marginBottom: 8 }}>
           {mode === 'login' ? 'Welcome back' : 'Welcome'}
         </Typography>
-        <Typography variant='h6' color='textSecondary'>
+        <Typography variant="h6" color="textSecondary">
           {mode === 'login'
             ? 'Log in with your email and password'
             : 'Create an account to start shopping'}
@@ -112,20 +112,20 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
       <Form>
         {errMsg !== '' && (
           <ErrorBanner>
-            <Typography variant='body1' color='error'>
+            <Typography variant="body1" color="error">
               {errMsg}
             </Typography>
           </ErrorBanner>
         )}
         <InputField
-          type='email'
-          label='Email'
+          type="email"
+          label="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
         <InputField
-          type='password'
-          label='Password'
+          type="password"
+          label="Password"
           value={pwd}
           onChange={e => setPwd(e.target.value)}
         />
@@ -135,7 +135,7 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
         </RoundedBtn>
 
         <Typography
-          variant='caption'
+          variant="caption"
           style={{ textAlign: 'center', marginTop: 16 }}
         >
           {mode === 'login'
@@ -151,7 +151,7 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
         </Typography>
         {mode === 'login' && (
           <Typography
-            variant='caption'
+            variant="caption"
             style={{ textAlign: 'center', marginTop: 8 }}
           >
             Forgot password? &nbsp;

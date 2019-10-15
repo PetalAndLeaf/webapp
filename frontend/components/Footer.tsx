@@ -31,14 +31,16 @@ const LinkGroup = styled.div`
     } */
   }
 `
-
-export default function Footer() {
+interface propsValue {
+  fading?: boolean
+}
+export default function Footer({ fading = true }: propsValue) {
   const footer = useSelector((state: any) => state.content.footer)
   const links: any[] = footer.links ? footer.links : []
   const date = new Date()
   return (
     <Container
-      initial={{ opacity: 0 }}
+      initial={{ opacity: fading ? 0 : 1 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1 }}
     >

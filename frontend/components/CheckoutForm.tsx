@@ -18,7 +18,6 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
   const [isValid, setIsValid] = useState(false)
 
   const handleChange = (change: any) => {
-    console.log('Change: ', change)
     if (change.error) {
       setErrMsg(change.error.message)
     } else {
@@ -29,8 +28,6 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
     e.preventDefault()
     if (stripe) {
       stripe.createToken().then((payload: any) => {
-        console.log('[token]', payload)
-
         if (payload.error) {
           setErrMsg(payload.error.message)
         } else {
@@ -44,7 +41,6 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
   }
 
   const handleBlur = (e: any) => {
-    console.log('[blur]: ', e)
     if (errMsg === '') setIsValid(true)
   }
   const handleFocus = () => {

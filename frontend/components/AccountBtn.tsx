@@ -30,11 +30,9 @@ export default function AccountBtn() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   const handleMouseEnter = () => {
-    console.log('mouse enter: ')
     setIsMenuOpen(true)
   }
   const handleMouseLeave = () => {
-    console.log('mouse leave: ')
     setIsMenuOpen(false)
   }
   return (
