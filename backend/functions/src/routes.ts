@@ -1,11 +1,5 @@
 import * as express from 'express'
-import * as admin from 'firebase-admin'
-
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  databaseURL: 'https://petalleafweb.firebaseio.com'
-})
-const db = admin.firestore()
+import { db } from './firebase'
 
 const router = express()
 
