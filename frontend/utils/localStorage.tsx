@@ -40,3 +40,18 @@ export const syncStoreLocal = (store: any) => {
 export const unsyncStoreLocal = () => {
   localStorage.clear()
 }
+
+//Sign out state clear, only retain state about cart
+export const signOutLocalStateClear = () => {
+  const current = loadState().state
+  const { items } = current.cart
+  const retainedState = {
+    cart: {
+      isFlyoutOpen: false,
+      isSidebarOpen: false,
+      items: items
+    }
+  }
+  localStorage.clear()
+  saveState(retainedState)
+}

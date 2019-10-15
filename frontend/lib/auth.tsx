@@ -1,7 +1,7 @@
 import { auth } from './fire'
 import { AUTH_STATUS_CHANGE } from '../store/user/types'
-// import { AUTH_STATUS_CHANGE } from '../store/user/types'
-// import { Dispatch } from 'redux'
+import { signOutLocalStateClear } from '../utils/localStorage'
+
 /*********************************************************************/
 // Sign Up
 export const signUpWithEmailAndPassword = async (
@@ -35,7 +35,10 @@ export function onAuthStatusChange(store: any) {
 // Sign out
 // dont define as async or use await,
 // otherwise return would be undefined
-export const signOut = () => auth.signOut()
+export const signOut = () => {
+  signOutLocalStateClear()
+  auth.signOut()
+}
 
 // if (currentUser != null) {
 //   currentUser.providerData.forEach(function(profile) {
