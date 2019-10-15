@@ -44,6 +44,10 @@ export default function Profile() {
         onChange={(e: any) => setPwd(e.target.value)}
       />
       <RoundedBtn style={{ marginTop: 8 }}>Save</RoundedBtn>
+      {
+        //TODO: Implement account deletion
+      }
+      <RoundedBtn style={{ marginTop: 8 }}>Delete account</RoundedBtn>
     </AccountLayout>
   )
 }
