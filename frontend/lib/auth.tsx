@@ -18,10 +18,16 @@ export const signInWithEmailAndPassword = async (
 // Auth Status Tracking
 export function onAuthStatusChange(store: any) {
   auth.onAuthStateChanged((user: any) => {
-    console.log('auth status: ', user)
+    if (user !== null) {
+      console.log('user signed in')
+    } else {
+      console.log('user signed out')
+    }
+    const isLoggedin = user === null ? false : true
     store.dispatch({
       type: AUTH_STATUS_CHANGE,
-      status: user
+      user: user,
+      isLoggedin: isLoggedin
     })
   })
 }

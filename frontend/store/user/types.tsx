@@ -28,7 +28,8 @@ export interface LoginFailAction {
 export const AUTH_STATUS_CHANGE = 'AUTH_STATUS_CHANGE'
 export interface AuthStatusChangeAction {
   type: typeof AUTH_STATUS_CHANGE
-  status: any
+  user: any
+  isLoggedin: boolean
 }
 
 /********* ********   SIGN OUT   TYPES ***********************/

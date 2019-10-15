@@ -27,12 +27,12 @@ export function userReducer(
     case AUTH_STATUS_CHANGE:
       return {
         ...state,
-        currentUser: action.status,
-        isLoggedin: action.status === null ? false : true
+        currentUser: action.user,
+        isLoggedin: action.isLoggedin
       }
     /*****************   LOGIN    ***********************/
     case LOGIN_REQUEST:
-      console.log('request login request')
+      console.log('login request')
       return {
         ...state,
         logging: true,

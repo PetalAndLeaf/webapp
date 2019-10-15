@@ -36,7 +36,6 @@ export function SignOutAction(): ThunkAction {
     try {
       signOut()
       dispatch({ type: SIGN_OUT })
-      //TODO:clear state about user in localStorage
     } catch (err) {
       console.log('singout fail: ', err.code)
     }
