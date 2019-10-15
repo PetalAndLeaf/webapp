@@ -1,4 +1,5 @@
 import { auth } from './fire'
+import { AUTH_STATUS_CHANGE } from '../store/user/types'
 // import { AUTH_STATUS_CHANGE } from '../store/user/types'
 // import { Dispatch } from 'redux'
 /*********************************************************************/
@@ -14,14 +15,16 @@ export const signInWithEmailAndPassword = async (
   password: string
 ): Promise<any> => auth.signInWithEmailAndPassword(email, password)
 
-// const dispatch = useDispatch()
-// auth.onAuthStateChanged(user => {
-//   console.log('auth status: ', user)
-//   dispatch({
-//     type: AUTH_STATUS_CHANGE,
-//     status: user
-//   })
-// })
+// Auth Status Tracking
+export function onAuthStatusChange(store: any) {
+  auth.onAuthStateChanged((user: any) => {
+    console.log('auth status: ', user)
+    store.dispatch({
+      type: AUTH_STATUS_CHANGE,
+      status: user
+    })
+  })
+}
 /*********************************************************************/
 /****Behaviors needs to be signed in First****************************/
 /*****Current User is Set When Login Action success *****************/
