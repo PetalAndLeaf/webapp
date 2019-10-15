@@ -5,34 +5,13 @@ import RoundedBtn from '../components/RoundedBtn'
 import InputField from '../components/InputField'
 import states from '../static/states_hash.json'
 import { AsYouType, parsePhoneNumberFromString } from 'libphonenumber-js'
-import { Dictionary } from '../utils/types'
+import { AddressFormType } from '../utils/types'
 import TextBtn from './TextBtn'
 
 const Container = styled.div`
   max-width: 100%;
 `
 
-const initAddressError: Dictionary = {
-  fullname: '',
-  line1: '',
-  line2: '',
-  city: '',
-  state: '',
-  zipcode: '',
-  phone: ''
-}
-const initAddressTemplate: Dictionary = {
-  fullname: '',
-  line1: '',
-  line2: '',
-  city: '',
-  state: '',
-  zipcode: '',
-  phone: '',
-  formattedPhone: '',
-  errors: initAddressError,
-  isValid: false
-}
 interface propsValue {
   initAddress?: any
   submitBtn?: {
@@ -46,7 +25,7 @@ export default function AddressForm({
   submitBtn,
   handleCancel
 }: propsValue) {
-  const [address, setAddress] = useState(initAddress || initAddressTemplate)
+  const [address, setAddress] = useState(initAddress || new AddressFormType())
 
   const handleAddressOnChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -115,38 +94,38 @@ export default function AddressForm({
   return (
     <Container>
       <InputField
-        name="fullname"
-        label="Full Name"
+        name='fullname'
+        label='Full Name'
         value={address.fullname}
-        placeholder="First and Last Name"
+        placeholder='First and Last Name'
         error={address.errors.fullname}
         onChange={handleAddressOnChange}
         onBlur={handleAddressOnBlur}
       />
       <InputField
-        name="line1"
-        label="Address line 1"
+        name='line1'
+        label='Address line 1'
         value={address.line1}
-        placeholder="1000 Main St"
+        placeholder='1000 Main St'
         error={address.errors.line1}
         onChange={handleAddressOnChange}
         onBlur={handleAddressOnBlur}
       />
       <InputField
-        name="line2"
-        label="Address line 2"
+        name='line2'
+        label='Address line 2'
         value={address.line2}
-        placeholder="Apt. 1234"
+        placeholder='Apt. 1234'
         onChange={handleAddressOnChange}
         optional
       />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <InputField
-            name="city"
-            label="City"
+            name='city'
+            label='City'
             value={address.city}
-            placeholder="San Jose"
+            placeholder='San Jose'
             error={address.errors.city}
             onChange={handleAddressOnChange}
             onBlur={handleAddressOnBlur}
@@ -154,12 +133,12 @@ export default function AddressForm({
         </Grid>
         <Grid item xs={12} sm={6}>
           <InputField
-            name="state"
-            label="State"
+            name='state'
+            label='State'
             value={address.state}
             onChange={handleAddressOnChange}
             onBlur={handleAddressOnBlur}
-            type="select"
+            type='select'
             options={Object.keys(states)}
           />
         </Grid>
@@ -167,26 +146,26 @@ export default function AddressForm({
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <InputField
-            name="zipcode"
-            label="Zip code"
+            name='zipcode'
+            label='Zip code'
             value={address.zipcode}
-            placeholder="00000"
+            placeholder='00000'
             error={address.errors.zipcode}
             onChange={handleAddressOnChange}
             onBlur={handleAddressOnBlur}
-            type="number"
+            type='number'
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <InputField
-            name="phone"
-            label="Phone number"
+            name='phone'
+            label='Phone number'
             value={address.formattedPhone}
             error={address.errors.phone}
-            placeholder="(123) 456-7890"
+            placeholder='(123) 456-7890'
             onChange={handlePhoneOnChange}
             onBlur={e => handleAddressOnBlur(e, 'empty|phone')}
-            type="tel"
+            type='tel'
           />
         </Grid>
       </Grid>

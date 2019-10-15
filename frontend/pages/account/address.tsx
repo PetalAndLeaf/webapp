@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core'
 import AccountLayout from '../../layout/AccountLayout'
 import styled from 'styled-components'
 import RoundedBtn from '../../components/RoundedBtn'
-import { Dictionary } from '../../utils/types'
+import { AddressFormType } from '../../utils/types'
 import { AsYouType } from 'libphonenumber-js'
 import AddressBox from '../../components/AddressBox'
 import AddressForm from '../../components/AddressForm'
@@ -17,16 +17,6 @@ const Header = styled.div`
   align-items: center;
   margin-bottom: 16px;
 `
-
-// interface addressProps {
-//   fullname: string
-//   line1: string
-//   line2: string
-//   city: string
-//   state: string
-//   zipcode: string
-//   phone: string
-// }
 const addressesData = [
   {
     fullname: 'amy pu',
@@ -49,33 +39,12 @@ const addressesData = [
     isDefault: false
   }
 ]
-const initAddressError: Dictionary = {
-  fullname: '',
-  line1: '',
-  line2: '',
-  city: '',
-  state: '',
-  zipcode: '',
-  phone: ''
-}
-const initAddress: Dictionary = {
-  fullname: '',
-  line1: '',
-  line2: '',
-  city: '',
-  state: '',
-  zipcode: '',
-  phone: '',
-  formattedPhone: '',
-  errors: initAddressError,
-  isValid: false
-}
 export default function Address() {
   const currentUser = useSelector((state: any) => state.user.currentUser)
   // 0 - default, 1 - editing, 2 - add new
   const [mode, setMode] = useState(0)
   const [addresses, setAddresses] = useState(addressesData)
-  const [editingAddress, setEditingAddress] = useState(initAddress)
+  const [editingAddress, setEditingAddress] = useState(new AddressFormType())
 
   useEffect(() => {
     if (currentUser && currentUser.addresses) {
@@ -84,13 +53,14 @@ export default function Address() {
   }, [currentUser])
 
   const handleAddClick = () => {
-    setEditingAddress(initAddress)
+    setEditingAddress(new AddressFormType())
     setMode(2)
   }
 
   const handleEditClick = (addr: any) => {
     const formatted = new AsYouType('US').input(addr.phone)
-    const currentAddress: Dictionary = {
+
+    const currentAddress = new AddressFormType({
       fullname: addr.fullname,
       line1: addr.line1,
       line2: addr.line2 || '',
@@ -99,9 +69,8 @@ export default function Address() {
       zipcode: addr.zipcode,
       phone: addr.phone,
       formattedPhone: formatted,
-      errors: initAddressError,
       isValid: false
-    }
+    })
     setEditingAddress(currentAddress)
     setMode(1)
   }
@@ -113,7 +82,7 @@ export default function Address() {
   return (
     <AccountLayout>
       <Header>
-        <Typography variant="h4">
+        <Typography variant='h4'>
           {mode === 1
             ? 'Edit your shipping address'
             : mode === 2

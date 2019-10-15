@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import InputField from './InputField'
 import TextBtn from './TextBtn'
 import RoundedBtn from './RoundedBtn'
-import { Dictionary } from '../utils/types'
+import { errorMsgMap } from '../utils/types'
 
 const Root = styled(motion.div)`
   width: 600px;
@@ -40,14 +40,6 @@ interface propsValue {
   onSuccess?: Function
 }
 
-const errorMessages: Dictionary = {
-  'auth/user-not-found': 'Your email or password is incorrect. Try again.',
-  'auth/invalid-email': 'Invalid email',
-  'auth/wrong-password': 'Your email or password is incorrect. Try again.',
-  'auth/email-already-in-use':
-    'Looks like you already have an account. Please log in instead.',
-  'auth/weak-password': 'Your password has to be at least 6 characters.'
-}
 function Login({ initMode = 'login', onSuccess }: propsValue) {
   const dispatch = useDispatch()
   const authError = useSelector((state: any) => state.user.err)
@@ -63,7 +55,7 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
     }
     if (authError !== null) {
       console.log('Login dialog : ', authError)
-      const newErroMsg = errorMessages[authError] || 'Something went wrong'
+      const newErroMsg = errorMsgMap.get(authError) || 'Something went wrong'
       setErrMsg(newErroMsg)
     } else {
       setErrMsg('')
@@ -94,15 +86,15 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
           opacity: 0
         }
       }}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
+      initial='hidden'
+      animate='visible'
+      exit='hidden'
     >
       <Header>
-        <Typography variant="h4" style={{ marginBottom: 8 }}>
+        <Typography variant='h4' style={{ marginBottom: 8 }}>
           {mode === 'login' ? 'Welcome back' : 'Welcome'}
         </Typography>
-        <Typography variant="h6" color="textSecondary">
+        <Typography variant='h6' color='textSecondary'>
           {mode === 'login'
             ? 'Log in with your email and password'
             : 'Create an account to start shopping'}
@@ -112,20 +104,20 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
       <Form>
         {errMsg !== '' && (
           <ErrorBanner>
-            <Typography variant="body1" color="error">
+            <Typography variant='body1' color='error'>
               {errMsg}
             </Typography>
           </ErrorBanner>
         )}
         <InputField
-          type="email"
-          label="Email"
+          type='email'
+          label='Email'
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
         <InputField
-          type="password"
-          label="Password"
+          type='password'
+          label='Password'
           value={pwd}
           onChange={e => setPwd(e.target.value)}
         />
@@ -135,7 +127,7 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
         </RoundedBtn>
 
         <Typography
-          variant="caption"
+          variant='caption'
           style={{ textAlign: 'center', marginTop: 16 }}
         >
           {mode === 'login'
@@ -151,7 +143,7 @@ function Login({ initMode = 'login', onSuccess }: propsValue) {
         </Typography>
         {mode === 'login' && (
           <Typography
-            variant="caption"
+            variant='caption'
             style={{ textAlign: 'center', marginTop: 8 }}
           >
             Forgot password? &nbsp;
