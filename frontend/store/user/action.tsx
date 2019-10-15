@@ -7,15 +7,13 @@ import {
   SIGN_OUT,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
-  SIGN_UP_FAIL,
-  AUTH_STATUS_CHANGE
+  SIGN_UP_FAIL
 } from './types'
 import {
   signInWithEmailAndPassword,
   signOut,
   signUpWithEmailAndPassword
 } from '../../lib/auth'
-import { auth } from '../../lib/fire'
 
 export function LogInAction(email: string, password: string): ThunkAction {
   return async (dispatch: Dispatch) => {
@@ -59,15 +57,4 @@ export function SignUpAction(email: string, password: string): ThunkAction {
       dispatch({ type: SIGN_UP_FAIL, err: err.code })
     }
   }
-}
-
-// Auth Status Tracking
-export function onAuthStatusChange(store: any) {
-  auth.onAuthStateChanged((user: any) => {
-    console.log('auth status: ', user)
-    store.dispatch({
-      type: AUTH_STATUS_CHANGE,
-      status: user
-    })
-  })
 }
