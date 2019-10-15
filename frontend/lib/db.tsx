@@ -1,12 +1,14 @@
 import { db } from './fire'
+import { SingUpForm, ProfileStructure } from '../utils/types'
 
-export const fetchDoc = async (path: string) => {
+/************************ READ *****************************/
+const fetchDoc = async (path: string) => {
   const docRef = await db.doc(path).get()
   const doc = docRef.data()
   return doc
 }
 
-export const fetchDocs = async (collection: string, orderBy: string = '') => {
+const fetchDocs = async (collection: string, orderBy: string = '') => {
   const docsQuerySnapshot = await db
     .collection(collection)
     .orderBy(orderBy)
@@ -38,4 +40,20 @@ export const fetchProduct = async (id: string) => {
 }
 export const fetchProductStory = async (id: string) => {
   return await fetchDoc(`products/${id}/stories/2019EN`)
+}
+
+/************************ WRITE *****************************/
+const createDoc = async (col: string, docID: string, data: any) => {
+  return await db.doc(`${col}/${docID}`).set(data)
+}
+
+export const createUserProfile = async (userinfo: SingUpForm) => {
+  const { uid, email } = userinfo
+  const profileStructure: ProfileStructure = {
+    email: email,
+    shipping: {},
+    orders: {},
+    payment: {}
+  }
+  return await createDoc('users', uid, profileStructure)
 }
