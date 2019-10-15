@@ -37,7 +37,8 @@ const addressesData = [
     city: 'Santa Clara',
     state: 'CA',
     zipcode: '95054',
-    phone: '4709857243'
+    phone: '4709857243',
+    isDefault: true
   },
   {
     fullname: 'jian pu',
@@ -46,7 +47,8 @@ const addressesData = [
     city: 'Santa Clara',
     state: 'CA',
     zipcode: '95054',
-    phone: '2179745227'
+    phone: '2179745227',
+    isDefault: false
   }
 ]
 const initAddressError: Dictionary = {
@@ -173,10 +175,10 @@ export default function Address() {
   return (
     <AccountLayout>
       <Header>
-        <Typography variant="h4">
+        <Typography variant='h4'>
           {mode === 1
             ? 'Edit your shipping address'
-            : mode === 1
+            : mode === 2
             ? 'Add shipping address'
             : 'Manage your shipping address'}
         </Typography>
@@ -194,38 +196,38 @@ export default function Address() {
       {mode !== 0 && (
         <>
           <InputField
-            name="fullname"
-            label="Full Name"
+            name='fullname'
+            label='Full Name'
             value={editingAddress.fullname}
-            placeholder="First and Last Name"
+            placeholder='First and Last Name'
             error={editingAddress.errors.fullname}
             onChange={handleAddressOnChange}
             onBlur={handleAddressOnBlur}
           />
           <InputField
-            name="line1"
-            label="Address line 1"
+            name='line1'
+            label='Address line 1'
             value={editingAddress.line1}
-            placeholder="1000 Main St"
+            placeholder='1000 Main St'
             error={editingAddress.errors.line1}
             onChange={handleAddressOnChange}
             onBlur={handleAddressOnBlur}
           />
           <InputField
-            name="line2"
-            label="Address line 2"
+            name='line2'
+            label='Address line 2'
             value={editingAddress.line2}
-            placeholder="Apt. 1234"
+            placeholder='Apt. 1234'
             onChange={handleAddressOnChange}
             optional
           />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <InputField
-                name="city"
-                label="City"
+                name='city'
+                label='City'
                 value={editingAddress.city}
-                placeholder="San Jose"
+                placeholder='San Jose'
                 error={editingAddress.errors.city}
                 onChange={handleAddressOnChange}
                 onBlur={handleAddressOnBlur}
@@ -233,12 +235,12 @@ export default function Address() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
-                name="state"
-                label="State"
+                name='state'
+                label='State'
                 value={editingAddress.state}
                 onChange={handleAddressOnChange}
                 onBlur={handleAddressOnBlur}
-                type="select"
+                type='select'
                 options={Object.keys(states)}
               />
             </Grid>
@@ -246,26 +248,26 @@ export default function Address() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <InputField
-                name="zipcode"
-                label="Zip code"
+                name='zipcode'
+                label='Zip code'
                 value={editingAddress.zipcode}
-                placeholder="00000"
+                placeholder='00000'
                 error={editingAddress.errors.zipcode}
                 onChange={handleAddressOnChange}
                 onBlur={handleAddressOnBlur}
-                type="number"
+                type='number'
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
-                name="phone"
-                label="Phone number"
+                name='phone'
+                label='Phone number'
                 value={editingAddress.formattedPhone}
                 error={editingAddress.errors.phone}
-                placeholder="(123) 456-7890"
+                placeholder='(123) 456-7890'
                 onChange={handlePhoneOnChange}
                 onBlur={e => handleAddressOnBlur(e, 'empty|phone')}
-                type="tel"
+                type='tel'
               />
             </Grid>
           </Grid>

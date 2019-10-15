@@ -26,13 +26,8 @@ const Controls = styled.div`
 interface propsValue {
   address: any
   onEdit: Function
-  isDefault?: boolean
 }
-export default function AddressBox({
-  address,
-  onEdit,
-  isDefault = false
-}: propsValue) {
+export default function AddressBox({ address, onEdit }: propsValue) {
   const handleDelete = () => {
     console.log('Delete this address')
   }
@@ -45,18 +40,18 @@ export default function AddressBox({
   }
   return (
     <Root>
-      <Typography variant="body2">{address.fullname}</Typography>
-      <Typography variant="body2">{`${address.line1}, ${address.line2}`}</Typography>
-      <Typography variant="body2">{`${address.city}, ${address.state} ${address.zipcode}`}</Typography>
-      <Typography variant="body2">{address.formattedPhone}</Typography>
-      {isDefault ? (
-        <Typography variant="body2">(Default)</Typography>
+      <Typography variant='body2'>{address.fullname}</Typography>
+      <Typography variant='body2'>{`${address.line1}, ${address.line2}`}</Typography>
+      <Typography variant='body2'>{`${address.city}, ${address.state} ${address.zipcode}`}</Typography>
+      <Typography variant='body2'>{address.formattedPhone}</Typography>
+      {address.isDefault ? (
+        <Typography variant='body2'>(Default)</Typography>
       ) : (
         <TextBtn onClick={handleSetAsDefault}>Set as default</TextBtn>
       )}
       <Controls>
-        <IconBtn icon="edit" onClick={handleEdit} style={{ marginRight: 8 }} />
-        <IconBtn icon="delete" onClick={handleDelete} />
+        <IconBtn icon='edit' onClick={handleEdit} style={{ marginRight: 8 }} />
+        <IconBtn icon='delete' onClick={handleDelete} />
       </Controls>
     </Root>
   )
