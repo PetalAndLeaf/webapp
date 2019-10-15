@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { loadState } from './localStorage'
+import { loadState } from '../utils/localStorage'
 
 import { userReducer } from './user/reducers'
 import { contentReducer } from './content/reducers'

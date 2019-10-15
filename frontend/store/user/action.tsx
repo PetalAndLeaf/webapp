@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { ThunkAction } from '../../utils/types'
+import { ThunkAction, SingUpForm } from '../../utils/types'
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -14,6 +14,7 @@ import {
   signOut,
   signUpWithEmailAndPassword
 } from '../../lib/auth'
+import { createUserProfile } from '../../lib/db'
 
 export function LogInAction(email: string, password: string): ThunkAction {
   return async (dispatch: Dispatch) => {
@@ -35,6 +36,7 @@ export function SignOutAction(): ThunkAction {
     try {
       signOut()
       dispatch({ type: SIGN_OUT })
+      //TODO:clear state about user in localStorage
     } catch (err) {
       console.log('singout fail: ', err.code)
     }
@@ -45,11 +47,20 @@ export function SignUpAction(email: string, password: string): ThunkAction {
   return async (dispatch: Dispatch) => {
     dispatch({ type: SIGN_UP_REQUEST })
     try {
-      await signUpWithEmailAndPassword(email, password)
+      //sign up with email and password
+      const res = await signUpWithEmailAndPassword(email, password)
+      //extract uid from auth res && also make sure it's success before proceed
+      const userInfo: SingUpForm = {
+        uid: res.user.uid,
+        email: email
+      }
+      const ref = await createUserProfile(userInfo)
+      console.log(ref)
       dispatch({
         type: SIGN_UP_SUCCESS
       })
     } catch (err) {
+      console.log(err)
       console.log('sign up fail: ', err.code)
       dispatch({ type: SIGN_UP_FAIL, err: err.code })
     }

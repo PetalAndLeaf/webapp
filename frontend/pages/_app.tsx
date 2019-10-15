@@ -8,7 +8,7 @@ import theme from '../styles/theme'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import { initStore } from '../store/store'
-import { syncStoreLocal } from '../store/localStorage'
+import { syncStoreLocal } from '../utils/localStorage'
 import { onAuthStatusChange } from '../lib/auth'
 
 interface AppProps {
