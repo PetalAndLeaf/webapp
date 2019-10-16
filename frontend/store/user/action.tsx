@@ -53,8 +53,7 @@ export function SignUpAction(email: string, password: string): ThunkAction {
         uid: res.user.uid,
         email: email
       }
-      const ref = await createUserProfile(userInfo)
-      console.log(ref)
+      await createUserProfile(userInfo)
       dispatch({
         type: SIGN_UP_SUCCESS
       })

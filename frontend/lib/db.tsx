@@ -1,5 +1,6 @@
-import { db } from './fire'
-import { SingUpForm, ProfileStructure, AddressFormType } from '../utils/types'
+import { db, fieldDelete } from './fire'
+import { SingUpForm, ProfileStructure } from '../utils/types'
+// import { toPureObjectArray } from '../utils/helper'
 
 /********* *******    NOTICE ON AUTH ******* *************/
 /* ALL  read and write operation assumes that user is signed in
@@ -51,21 +52,66 @@ export const getUserProfile = async (uid: string) => {
   return await fetchDoc(`users/${uid}`)
 }
 
-/************************ WRITE *****************************/
+export function onUserProfileChange(
+  uid: string,
+  onNext: (snapshot: any) => void,
+  onError: (error: any) => void
+) {
+  db.doc(`users/${uid}`).onSnapshot(onNext, onError)
+}
+
+// export userAddressListener = () => {
+
+// }
+
+/*********************** WRITE  BASIC OPERATIONS*******************/
 const writeDoc = async (
   type: string,
   col: string,
   docID: string,
   data: any
 ) => {
-  if (type === 'set') return await db.doc(`${col}/${docID}`).set(data)
-  else return await db.doc(`${col}/${docID}`).update(data)
+  const path = `${col}/${docID}`
+  console.log(path)
+  try {
+    // const docRef = db.doc(`${col}/${docID}`)
+    switch (type) {
+      case 'set':
+        return await db.doc(path).set(data)
+      case 'update':
+        return await db.doc(path).update(data)
+      case 'delete': //delete ENTIRE DOC, NOT A FIELD
+        return await db.doc(path).delete()
+      case 'deleteField': //see firebase reference
+        const removeSytax = {
+          [data]: fieldDelete
+        }
+        return await db.doc(path).update(removeSytax)
+      default:
+        console.log('Incorrect firebase write opertion type')
+    }
+  } catch (err) {
+    console.log('Firebase Write to Doc Err ', err)
+  }
+}
+/******************************************************************/
+
+export const deleteUserField = async (uid: string, fieldToRemove: string) => {
+  try {
+    await writeDoc('deleteField', 'users', uid, fieldToRemove)
+  } catch (err) {
+    console.log('err delete field ', err)
+  }
 }
 
 export const createUserProfile = async (userinfo: SingUpForm) => {
   const { uid, email } = userinfo
   const profile = new ProfileStructure({ email: email })
-  return await writeDoc('set', 'users', uid, profile)
+  try {
+    await writeDoc('set', 'users', uid, profile.toObject())
+  } catch (err) {
+    console.log('Firebase Create Doc Err ', err)
+  }
 }
 
 const updateUserProfileField = async (
@@ -74,19 +120,26 @@ const updateUserProfileField = async (
   data: any
 ) => {
   // demonstrate how to user var as key of object in ES6
+  console.log('field: ', field)
+  console.log('data: ', data)
   const newFieldData = {
     [field]: data
   }
-  return await writeDoc('update', 'users', uid, newFieldData)
+  try {
+    await writeDoc('update', 'users', uid, newFieldData)
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-export const updateUserAddress = async (
-  addrType: string,
-  uid: string,
-  address: AddressFormType
-) => {
-  if (!(addrType === 'shipping' || addrType === 'billing')) {
-    return undefined
+export const updateUserAddress = async (uid: string, addressList: any[]) => {
+  try {
+    return await updateUserProfileField(uid, 'addressList', addressList)
+  } catch (err) {
+    console.log('err updateUserAddress', err)
   }
-  return await updateUserProfileField(uid, 'address', { [addrType]: address })
+}
+
+export const deleteUserAddress = async (uid: string) => {
+  return uid
 }

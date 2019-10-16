@@ -9,6 +9,10 @@ import { AddressFormType } from '../../utils/types'
 import { AsYouType } from 'libphonenumber-js'
 import AddressBox from '../../components/AddressBox'
 import AddressForm from '../../components/AddressForm'
+import { onUserProfileChange, updateUserAddress } from '../../lib/db'
+import { isEmpty } from 'lodash'
+import { AddressToPureObjectArray } from '../../utils/helper'
+// import { toPureObjectArray } from '../../utils/helper'
 
 const Header = styled.div`
   height: 64px;
@@ -17,49 +21,40 @@ const Header = styled.div`
   align-items: center;
   margin-bottom: 16px;
 `
-const addressesData = [
-  {
-    fullname: 'amy pu',
-    line1: '550 Moreland Way',
-    line2: 'Apt 3309',
-    city: 'Santa Clara',
-    state: 'CA',
-    zipcode: '95054',
-    phone: '4709857243',
-    isDefault: true
-  },
-  {
-    fullname: 'jian pu',
-    line1: '550 Moreland Way',
-    line2: 'Apt 3309',
-    city: 'Santa Clara',
-    state: 'CA',
-    zipcode: '95054',
-    phone: '2179745227',
-    isDefault: false
-  }
-]
+
+const DEFAULT = 0
+const EDITTING = 1
+const ADDINGNEW = 2
+
 export default function Address() {
   const currentUser = useSelector((state: any) => state.user.currentUser)
+  const uid = currentUser ? currentUser.uid : ''
+  const [addresses, setAddresses] = useState<AddressFormType[]>([])
+
+  const getAddress = (snapshot: any) => {
+    const addressList = snapshot.data().addressList
+    addressList && setAddresses(addressList)
+  }
+  const getAddrErr = (err: any) => {
+    console.log(err)
+  }
+
   // 0 - default, 1 - editing, 2 - add new
-  const [mode, setMode] = useState(0)
-  const [addresses, setAddresses] = useState(addressesData)
+  const [mode, setMode] = useState(DEFAULT)
   const [editingAddress, setEditingAddress] = useState(new AddressFormType())
+  const [editingIndex, setEditingIndex] = useState(-1)
 
   useEffect(() => {
-    if (currentUser && currentUser.addresses) {
-      setAddresses(currentUser.addresses)
-    }
-  }, [currentUser])
+    onUserProfileChange(uid, getAddress, getAddrErr)
+  }, [])
 
   const handleAddClick = () => {
     setEditingAddress(new AddressFormType())
-    setMode(2)
+    setMode(ADDINGNEW)
   }
 
-  const handleEditClick = (addr: any) => {
+  const handleEditClick = (addr: any, editingIndex: number) => {
     const formatted = new AsYouType('US').input(addr.phone)
-
     const currentAddress = new AddressFormType({
       fullname: addr.fullname,
       line1: addr.line1,
@@ -72,43 +67,72 @@ export default function Address() {
       isValid: false
     })
     setEditingAddress(currentAddress)
-    setMode(1)
+    setMode(EDITTING)
+    setEditingIndex(editingIndex)
   }
 
-  const handleAddressSubmit = (newAddress: any) => {
-    console.log('Updates/New address: ', newAddress)
-    setMode(0)
+  const handleAddressDelete = (addressIndex: number) => {
+    const newAddresses = addresses.slice()
+    newAddresses.splice(addressIndex, 1)
+    updateUserAddress(uid, AddressToPureObjectArray(newAddresses))
+  }
+
+  const handleSetAsDefault = (addressIndex: number) => {
+    const newAddresses = addresses.slice()
+    newAddresses.forEach((addr: AddressFormType, i: number) => {
+      if (i === addressIndex) {
+        addr.isDefault = true
+      } else {
+        addr.isDefault = false
+      }
+    })
+    updateUserAddress(uid, AddressToPureObjectArray(newAddresses))
+  }
+
+  const handleAddressSubmit = (newAddress: AddressFormType) => {
+    const newAddresses = addresses.slice()
+    if (mode === EDITTING) {
+      newAddresses.splice(editingIndex, 1, newAddress)
+    } else if (mode === ADDINGNEW) {
+      newAddresses.push(newAddress)
+    }
+    updateUserAddress(uid, AddressToPureObjectArray(newAddresses))
+    // console.log('Updates/New address: ', newAddress)
+    setMode(DEFAULT)
   }
   return (
     <AccountLayout>
       <Header>
         <Typography variant='h4'>
-          {mode === 1
+          {mode === EDITTING
             ? 'Edit your shipping address'
-            : mode === 2
+            : mode === ADDINGNEW
             ? 'Add shipping address'
             : 'Manage your shipping address'}
         </Typography>
       </Header>
-      {mode === 0 &&
+      {mode === DEFAULT &&
+        !isEmpty(addresses) &&
         (addresses as any).map((addr: any, i: number) => {
           return (
             <AddressBox
               address={addr}
               key={`address-${i}`}
-              onEdit={() => handleEditClick(addr)}
+              onEdit={() => handleEditClick(addr, i)}
+              onDelete={() => handleAddressDelete(i)}
+              onSetAsDefault={() => handleSetAsDefault(i)}
             />
           )
         })}
-      {mode !== 0 && (
+      {mode !== DEFAULT && (
         <AddressForm
           initAddress={editingAddress}
           submitBtn={{ label: 'Save', handleClick: handleAddressSubmit }}
-          handleCancel={() => setMode(0)}
+          handleCancel={() => setMode(DEFAULT)}
         />
       )}
 
-      {mode === 0 && (
+      {mode === DEFAULT && (
         <RoundedBtn onClick={handleAddClick}>Add address</RoundedBtn>
       )}
     </AccountLayout>

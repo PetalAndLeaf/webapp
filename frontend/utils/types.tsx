@@ -9,16 +9,23 @@ export type ThunkAction = ThunkAction<void, AppState, null, Action<string>>
 export type SingUpForm = {
   uid: string
   email: string
-  name?: string
 }
 
 export class ProfileStructure {
   email: string = ''
-  address: any = {}
-  orders: any = {}
+  addressList: AddressFormType[] = []
+  orders: any = []
   payment: any = {}
   constructor(init?: Partial<ProfileStructure>) {
     Object.assign(this, init)
+  }
+  toObject(): object {
+    return {
+      email: this.email,
+      orders: this.orders,
+      payment: this.payment,
+      addressList: this.addressList
+    }
   }
 }
 
@@ -32,10 +39,22 @@ export class AddressFormType {
   phone: string = ''
   formattedPhone: string = ''
   errors?: any = {}
-  isDefault?: boolean
+  isDefault?: boolean = false
   isValid: boolean = false
   constructor(init?: Partial<AddressFormType>) {
     Object.assign(this, init)
+  }
+  toObject(): object {
+    return {
+      fullname: this.fullname,
+      line1: this.line1,
+      line2: this.line2,
+      city: this.city,
+      state: this.state,
+      zipcode: this.zipcode,
+      phone: this.phone,
+      isDefault: this.isDefault
+    }
   }
 }
 

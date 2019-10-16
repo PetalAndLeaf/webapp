@@ -26,10 +26,18 @@ const Controls = styled.div`
 interface propsValue {
   address: any
   onEdit: Function
+  onDelete: Function
+  onSetAsDefault: Function
 }
-export default function AddressBox({ address, onEdit }: propsValue) {
+export default function AddressBox({
+  address,
+  onEdit,
+  onDelete,
+  onSetAsDefault
+}: propsValue) {
   const handleDelete = () => {
     console.log('Delete this address')
+    onDelete()
   }
   const handleEdit = () => {
     console.log('Edit this address')
@@ -37,6 +45,7 @@ export default function AddressBox({ address, onEdit }: propsValue) {
   }
   const handleSetAsDefault = () => {
     console.log('Set this as default')
+    onSetAsDefault()
   }
   return (
     <Root>
