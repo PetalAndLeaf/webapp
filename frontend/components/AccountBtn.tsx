@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import FeatherIcon from './FeatherIcon'
 import AccountMenu from './AccountMenu'
-import { AnimatePresence } from 'framer-motion'
+// import { AnimatePresence } from 'framer-motion'
 
 const Root = styled.div`
   width: 40px;
@@ -38,9 +38,9 @@ export default function AccountBtn() {
   return (
     <Root onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <BtnWrap>
-        <FeatherIcon icon='user' />
+        <FeatherIcon icon="user" />
       </BtnWrap>
-      <AnimatePresence>{isMenuOpen && <AccountMenu />}</AnimatePresence>
+      {isMenuOpen && <AccountMenu />}
     </Root>
   )
 }

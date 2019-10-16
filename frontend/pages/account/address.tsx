@@ -45,7 +45,8 @@ export default function Address() {
   const [editingIndex, setEditingIndex] = useState(-1)
 
   useEffect(() => {
-    onUserProfileChange(uid, getAddress, getAddrErr)
+    const profileListener = onUserProfileChange(uid, getAddress, getAddrErr)
+    return () => profileListener()
   }, [])
 
   const handleAddClick = () => {
@@ -108,7 +109,7 @@ export default function Address() {
   return (
     <AccountLayout>
       <Header>
-        <Typography variant='h4'>
+        <Typography variant="h4">
           {mode === EDITTING
             ? 'Edit your shipping address'
             : mode === ADDINGNEW

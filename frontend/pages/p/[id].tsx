@@ -1,7 +1,6 @@
 import React from 'react'
 import ProductLayout from '../../layout/ProductLayout'
 import styled from 'styled-components'
-import CardImage from '../../components/CardImage'
 import { motion, Variants } from 'framer-motion'
 import { useRouter } from 'next/router'
 import RoseCakeStory from '../../components/RoseCakeStory'
@@ -12,6 +11,7 @@ import {
   getProductStory
 } from '../../store/content/action'
 import { useSelector } from 'react-redux'
+import ProductImages from '../../components/ProductImages'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -20,13 +20,14 @@ const Container = styled(motion.div)`
   margin-right: 48px;
   margin-bottom: 72px;
   /* margin-top: 112px; */
-  background-color: #e6e7e1;
-  border-radius: 20px;
+  /* background-color: #e6e7e1; */
+  /* border-radius: 20px; */
   overflow: hidden;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  padding-bottom: 200px;
+  /* padding-bottom: 200px; */
 `
 
 const ContainerVariants: Variants = {
@@ -64,7 +65,6 @@ export default function Product() {
   const { id } = router.query
   const product = useSelector((state: any) => state.content.product)
   const story = useSelector((state: any) => state.content.story)
-
   const data = {
     name: product.name,
     rating: 4.7,
@@ -90,21 +90,9 @@ export default function Product() {
         initial="hidden"
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        {id === 'rose-cake' ? (
+        <ProductImages images={product.images} />
+        {id === 'rose-cake' && (
           <RoseCakeStory product={product} story={story} />
-        ) : (
-          <div style={{ width: '60%' }}>
-            <CardImage data={product.images} />
-            <motion.div
-              style={{ padding: 32 }}
-              animate={{ opacity: 1 }}
-              initial={{ opacity: 0 }}
-              transition={{ transition: 1, delay: 0.5 }}
-            >
-              <h1>{story.hero.title}</h1>
-              <p>{story.hero.subtitle}</p>
-            </motion.div>
-          </div>
         )}
       </Container>
     </ProductLayout>
