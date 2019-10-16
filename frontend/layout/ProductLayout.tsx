@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { motion } from 'framer-motion'
-import ProductInfo from '../components/ProductInfo'
+import ProductInfo from '../components/Product/ProductInfo'
 
 const Root = styled.div`
   max-width: 100%;

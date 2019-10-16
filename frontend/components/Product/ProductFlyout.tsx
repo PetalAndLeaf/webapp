@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
 import { Typography } from '@material-ui/core'
-import CartItem from './CartItem'
+import CartItem from '../Cart/CartItem'
 
 const Root = styled(motion.div)`
   width: 320px;
@@ -53,12 +53,12 @@ export default function ProductFlyout({ item }: propsValue) {
   return (
     <Root
       variants={rootVariants}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
+      initial='hidden'
+      animate='visible'
+      exit='hidden'
     >
       <Header>
-        <Typography variant="h5">Added to your bag</Typography>
+        <Typography variant='h5'>Added to your bag</Typography>
       </Header>
       <CartItem data={item} editable={false} />
     </Root>

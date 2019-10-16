@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import FeatherIcon from './FeatherIcon'
-import { styles } from '../styles/theme'
+import FeatherIcon from '../FeatherIcon'
+import { styles } from '../../styles/theme'
 
 const Root = styled.div`
   width: 100%;

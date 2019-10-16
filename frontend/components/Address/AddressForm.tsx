@@ -1,12 +1,12 @@
 import React, { useState, ChangeEvent } from 'react'
 import styled from 'styled-components'
 import { Grid } from '@material-ui/core'
-import RoundedBtn from '../components/RoundedBtn'
-import InputField from '../components/InputField'
-import states from '../static/states_hash.json'
+import RoundedBtn from '../Button/RoundedBtn'
+import InputField from '../InputField'
+import states from '../../static/states_hash.json'
 import { AsYouType, parsePhoneNumberFromString } from 'libphonenumber-js'
-import { AddressFormType } from '../utils/types'
-import TextBtn from './TextBtn'
+import { AddressFormType } from '../../utils/types'
+import TextBtn from '../Button/TextBtn'
 
 const Container = styled.div`
   max-width: 100%;

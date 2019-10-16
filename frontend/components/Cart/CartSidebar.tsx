@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion, Variants, AnimatePresence } from 'framer-motion'
 import { Typography } from '@material-ui/core'
-import IconBtn from './IconBtn'
+import IconBtn from '../Button/IconBtn'
 // import { styles } from '../styles/theme'
 // import { Elements } from 'react-stripe-elements'
 // import CheckoutForm from './CheckoutForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleSidebar } from '../store/cart/action'
-import RoundedBtn from './RoundedBtn'
+import { toggleSidebar } from '../../store/cart/action'
+import RoundedBtn from '../Button/RoundedBtn'
 import CartItem from './CartItem'
 import Router from 'next/router'
 // import CheckoutForm from "./CheckoutForm";
@@ -120,20 +120,20 @@ export default function CartSidebar() {
     <>
       <Mask
         variants={maskVariants}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
+        initial='hidden'
+        animate='visible'
+        exit='hidden'
       />
       <Sidebar
         variants={sidebarVariants}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
+        initial='hidden'
+        animate='visible'
+        exit='hidden'
         style={{ justifyContent: `${isEmpty ? 'center' : 'space-between'}` }}
       >
         {isEmpty ? (
           <Typography
-            variant="body1"
+            variant='body1'
             style={{
               textAlign: 'center'
             }}
@@ -143,7 +143,7 @@ export default function CartSidebar() {
         ) : (
           <>
             <Header>
-              <Typography variant="h4">Your bag</Typography>
+              <Typography variant='h4'>Your bag</Typography>
             </Header>
             <ItemList>
               <AnimatePresence initial={false}>
@@ -168,7 +168,7 @@ export default function CartSidebar() {
                   }}
                 >
                   <Typography
-                    variant="caption"
+                    variant='caption'
                     style={{ textAlign: 'center', marginBottom: 16 }}
                   >
                     Free one-day shipping on orders over $45
@@ -178,26 +178,26 @@ export default function CartSidebar() {
               </AnimatePresence>
               <SummaryList>
                 <SummaryListItem>
-                  <Typography variant="h6">Subtotal</Typography>
+                  <Typography variant='h6'>Subtotal</Typography>
                   <Typography
-                    variant="button"
-                    color="textSecondary"
+                    variant='button'
+                    color='textSecondary'
                   >{`$${subtotal}`}</Typography>
                 </SummaryListItem>
                 <SummaryListItem>
-                  <Typography variant="h6">Shipping</Typography>
-                  <Typography variant="button" color="textSecondary">
+                  <Typography variant='h6'>Shipping</Typography>
+                  <Typography variant='button' color='textSecondary'>
                     {subtotal >= 45 ? '$0' : '$8'}
                   </Typography>
                 </SummaryListItem>
                 <SummaryListItem>
-                  <Typography variant="h5">Total</Typography>
-                  <Typography variant="button" style={{ fontSize: 18 }}>
+                  <Typography variant='h5'>Total</Typography>
+                  <Typography variant='button' style={{ fontSize: 18 }}>
                     {`$${subtotal + (subtotal >= 45 ? 0 : 8)}`}
                   </Typography>
                 </SummaryListItem>
               </SummaryList>
-              <RoundedBtn btype="large" onClick={handelCheckoutClick}>
+              <RoundedBtn btype='large' onClick={handelCheckoutClick}>
                 Check out
               </RoundedBtn>
             </Bottom>
@@ -205,7 +205,7 @@ export default function CartSidebar() {
         )}
 
         <IconBtn
-          icon="x"
+          icon='x'
           onClick={() => dispatch(toggleSidebar())}
           style={{ position: 'absolute', right: 8, top: 8 }}
         />

@@ -7,9 +7,9 @@ import { styles } from '../../styles/theme'
 import FeatherIcon from '../../components/FeatherIcon'
 import { setConfig, setFooter } from '../../store/content/action'
 import { Typography } from '@material-ui/core'
-import RoundedBtn from '../../components/RoundedBtn'
+import RoundedBtn from '../../components/Button/RoundedBtn'
 import Router from 'next/router'
-import TextBtn from '../../components/TextBtn'
+import TextBtn from '../../components/Button/TextBtn'
 
 const Container = styled(motion.div)`
   max-width: 100%;

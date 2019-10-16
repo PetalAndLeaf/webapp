@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { styles } from '../styles/theme'
-import FeatherIcon from './FeatherIcon'
+import { styles } from '../../styles/theme'
+import FeatherIcon from '../FeatherIcon'
 import AccountMenu from './AccountMenu'
 // import { AnimatePresence } from 'framer-motion'
 
@@ -38,7 +38,7 @@ export default function AccountBtn() {
   return (
     <Root onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <BtnWrap>
-        <FeatherIcon icon="user" />
+        <FeatherIcon icon='user' />
       </BtnWrap>
       {isMenuOpen && <AccountMenu />}
     </Root>

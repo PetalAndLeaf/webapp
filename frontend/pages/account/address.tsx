@@ -4,11 +4,11 @@ import { setConfig, setFooter } from '../../store/content/action'
 import { Typography } from '@material-ui/core'
 import AccountLayout from '../../layout/AccountLayout'
 import styled from 'styled-components'
-import RoundedBtn from '../../components/RoundedBtn'
+import RoundedBtn from '../../components/Button/RoundedBtn'
 import { AddressFormType } from '../../utils/types'
 import { AsYouType } from 'libphonenumber-js'
-import AddressBox from '../../components/AddressBox'
-import AddressForm from '../../components/AddressForm'
+import AddressBox from '../../components/Address/AddressBox'
+import AddressForm from '../../components/Address/AddressForm'
 import { onUserProfileChange, updateUserAddress } from '../../lib/db'
 import { isEmpty } from 'lodash'
 import { AddressToPureObjectArray } from '../../utils/helper'
@@ -109,7 +109,7 @@ export default function Address() {
   return (
     <AccountLayout>
       <Header>
-        <Typography variant="h4">
+        <Typography variant='h4'>
           {mode === EDITTING
             ? 'Edit your shipping address'
             : mode === ADDINGNEW

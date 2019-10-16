@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Grid } from '@material-ui/core'
-import AccountNav from '../components/AccountNav'
+import AccountNav from '../components/Account/AccountNav'
 import Card from '../components/Card'
 
 const Root = styled.div`
@@ -29,7 +29,7 @@ interface propsValue {
 export default function AccountLayout({ children }: propsValue) {
   return (
     <Root>
-      <Header type="account" />
+      <Header type='account' />
       <Main>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={4}>

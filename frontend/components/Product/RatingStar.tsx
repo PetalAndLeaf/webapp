@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import FeatherIcon from './FeatherIcon'
+import FeatherIcon from '../FeatherIcon'
 import { motion } from 'framer-motion'
-import { styles } from '../styles/theme'
+import { styles } from '../../styles/theme'
 
 const Container = styled(motion.div)`
   display: flex;
@@ -33,58 +33,58 @@ export default function RatingStar({ rating }: propsValue) {
     <Container>
       <Base>
         <FeatherIcon
-          icon="star"
+          icon='star'
           style={{ color: styles.palette.primary.main }}
         />
         <FeatherIcon
-          icon="star"
+          icon='star'
           style={{ color: styles.palette.primary.main }}
         />
         <FeatherIcon
-          icon="star"
+          icon='star'
           style={{ color: styles.palette.primary.main }}
         />
         <FeatherIcon
-          icon="star"
+          icon='star'
           style={{ color: styles.palette.primary.main }}
         />
         <FeatherIcon
-          icon="star"
+          icon='star'
           style={{ color: styles.palette.primary.main }}
         />
       </Base>
       <Mask style={{ width: width }}>
         <Fill>
           <FeatherIcon
-            icon="star"
+            icon='star'
             style={{
               color: styles.palette.primary.main,
               fill: styles.palette.primary.main
             }}
           />
           <FeatherIcon
-            icon="star"
+            icon='star'
             style={{
               color: styles.palette.primary.main,
               fill: styles.palette.primary.main
             }}
           />
           <FeatherIcon
-            icon="star"
+            icon='star'
             style={{
               color: styles.palette.primary.main,
               fill: styles.palette.primary.main
             }}
           />
           <FeatherIcon
-            icon="star"
+            icon='star'
             style={{
               color: styles.palette.primary.main,
               fill: styles.palette.primary.main
             }}
           />
           <FeatherIcon
-            icon="star"
+            icon='star'
             style={{
               color: styles.palette.primary.main,
               fill: styles.palette.primary.main

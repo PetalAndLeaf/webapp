@@ -11,7 +11,7 @@ import {
   getProductStory
 } from '../../store/content/action'
 import { useSelector } from 'react-redux'
-import ProductImages from '../../components/ProductImages'
+import ProductImages from '../../components/Product/ProductImages'
 
 const Container = styled(motion.div)`
   max-width: 100%;
@@ -86,8 +86,8 @@ export default function Product() {
     <ProductLayout data={data}>
       <Container
         variants={ContainerVariants}
-        animate="visible"
-        initial="hidden"
+        animate='visible'
+        initial='hidden'
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <ProductImages images={product.images} />

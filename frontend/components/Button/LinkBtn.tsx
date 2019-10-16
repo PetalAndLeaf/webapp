@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { styles } from '../styles/theme'
+import { styles } from '../../styles/theme'
+import Link from 'next/link'
 
 const StyledLink = styled.a`
   font-family: ${styles.typography.button.fontFamily};
@@ -15,15 +16,16 @@ const StyledLink = styled.a`
 `
 
 interface propsValue {
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  style?: any
+  href: string
+  as?: string
   children: any
 }
 
-export default function TextBtn({ onClick, children, style }: propsValue) {
+export default function LinkBtn({ href, as = '', children }: propsValue) {
+  if (as === '') as = href
   return (
-    <StyledLink onClick={onClick} style={style}>
-      {children}
-    </StyledLink>
+    <Link href={href} as={as}>
+      <StyledLink>{children}</StyledLink>
+    </Link>
   )
 }

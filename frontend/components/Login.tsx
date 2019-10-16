@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LogInAction, SignUpAction } from '../store/user/action'
 import { motion } from 'framer-motion'
 import InputField from './InputField'
-import TextBtn from './TextBtn'
-import RoundedBtn from './RoundedBtn'
+import TextBtn from './Button/TextBtn'
+import RoundedBtn from './Button/RoundedBtn'
 import { errorMsgMap } from '../utils/types'
 
 const Root = styled(motion.div)`

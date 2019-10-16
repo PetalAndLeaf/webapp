@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { Typography } from '@material-ui/core'
-import { styles } from '../styles/theme'
-import IconBtn from './IconBtn'
-import TextBtn from './TextBtn'
+import { styles } from '../../styles/theme'
+import IconBtn from '../Button/IconBtn'
+import TextBtn from '../Button/TextBtn'
 
 const Root = styled(motion.div)`
   width: 100%;
