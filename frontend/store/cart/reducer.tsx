@@ -31,7 +31,8 @@ const initial: cartState = {
     //   quantity: 1,
     //   price: 18
     // }
-  ]
+  ],
+  productFlyout: undefined
 }
 
 //TODO: replace with real data
@@ -73,13 +74,13 @@ export function cartReducer(
     case OPEN_FLYOUT: {
       return {
         ...state,
-        isFlyoutOpen: true
+        productFlyout: action.product
       }
     }
     case CLOSE_FLYOUT: {
       return {
         ...state,
-        isFlyoutOpen: false
+        productFlyout: undefined
       }
     }
     case SET_FLYOUT_TIMEOUT: {

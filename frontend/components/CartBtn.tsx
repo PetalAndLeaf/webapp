@@ -3,14 +3,9 @@ import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import FeatherIcon from './FeatherIcon'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  toggleSidebar,
-  // openFlyout,
-  closeFlyout,
-  clearFlyoutTimeout
-} from '../store/cart/action'
+import { toggleSidebar } from '../store/cart/action'
 import { AnimatePresence } from 'framer-motion'
-import CartFlyout from './CartFlyout'
+import ProductFlyout from './ProductFlyout'
 
 const Root = styled.div`
   width: 40px;
@@ -53,10 +48,8 @@ const CartNumber = styled.div`
 export default function CartBtn() {
   const dispatch = useDispatch()
   const items = useSelector((state: any) => state.cart.items)
-  const isFlyoutOpen = useSelector((state: any) => state.cart.isFlyoutOpen)
-  const flyoutTimeout = useSelector((state: any) => state.cart.flyoutTimeout)
+  const productFlyout = useSelector((state: any) => state.cart.productFlyout)
   const [totalItems, setTotalItems] = useState(0)
-
   useEffect(() => {
     const totalItems = items.reduce(
       (total: number, item: any) => item.quantity + total,
@@ -64,19 +57,9 @@ export default function CartBtn() {
     )
     setTotalItems(totalItems)
   }, [items])
-  const handleMouseEnter = () => {
-    if (flyoutTimeout !== undefined) {
-      dispatch(clearFlyoutTimeout())
-    }
-    // if (!isFlyoutOpen) {
-    //   dispatch(openFlyout())
-    // }
-  }
+
   return (
-    <Root
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={() => dispatch(closeFlyout())}
-    >
+    <Root>
       <BtnWrap
         onClick={() => {
           dispatch(toggleSidebar())
@@ -85,7 +68,9 @@ export default function CartBtn() {
         <FeatherIcon icon="shoppingbag" />
         {totalItems !== 0 && <CartNumber>{totalItems}</CartNumber>}
       </BtnWrap>
-      <AnimatePresence>{isFlyoutOpen && <CartFlyout />}</AnimatePresence>
+      <AnimatePresence>
+        {productFlyout !== undefined && <ProductFlyout item={productFlyout} />}
+      </AnimatePresence>
     </Root>
   )
 }

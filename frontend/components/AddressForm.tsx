@@ -45,11 +45,8 @@ export default function AddressForm({
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const currentFormatted = e.target.value
-    console.log('currentFormatted: ', currentFormatted)
     const phone = currentFormatted.replace(/[^\d]/g, '')
-    console.log('phone: ', phone)
     const formatted = new AsYouType('US').input(phone)
-    console.log('formatted: ', formatted)
     setAddress({
       ...address,
       phone: phone,
