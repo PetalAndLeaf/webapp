@@ -8,15 +8,15 @@ const Container = styled(motion.div)`
   width: 100%;
   overflow: hidden;
 `
-const HeroContainer = styled(motion.div)`
-  width: 100%;
-  text-align: center;
-`
-const HeroImage = styled.img`
-  margin-top: 32px;
-  max-width: 100%;
-  max-height: 480px;
-`
+// const HeroContainer = styled(motion.div)`
+//   width: 100%;
+//   text-align: center;
+// `
+// const HeroImage = styled.img`
+//   margin-top: 32px;
+//   max-width: 100%;
+//   max-height: 480px;
+// `
 const HighlightsContainer = styled(Grid)`
   max-width: 1280px;
   /* display: flex;
@@ -46,6 +46,7 @@ const RoseHighlight = styled.div`
 `
 const RoseImage = styled.img`
   max-width: 80%;
+  height: auto;
 `
 
 const IngradientsContainer = styled.div`
@@ -81,24 +82,9 @@ interface propsValue {
   story: any
 }
 export default function RoseCakeStory({ story }: propsValue) {
-  const { hero, highlights, rose, ingradients } = story
+  const { highlights, rose, ingradients } = story
   return (
     <Container>
-      <HeroContainer>
-        <HeroImage src={`/static/${hero.image}`} alt="rose-cake" />
-        <Typography variant="h3">{hero.title}</Typography>
-        <Typography
-          variant="body2"
-          style={{
-            maxWidth: 320,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: 32
-          }}
-        >
-          {hero.subtitle}
-        </Typography>
-      </HeroContainer>
       <HighlightsContainer container>
         {highlights.map((h: any, i: number) => {
           return (
