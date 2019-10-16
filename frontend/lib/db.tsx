@@ -57,7 +57,7 @@ export function onUserProfileChange(
   onNext: (snapshot: any) => void,
   onError: (error: any) => void
 ) {
-  db.doc(`users/${uid}`).onSnapshot(onNext, onError)
+  return db.doc(`users/${uid}`).onSnapshot(onNext, onError)
 }
 
 // export userAddressListener = () => {
