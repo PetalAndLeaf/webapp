@@ -67,11 +67,15 @@ const Option = styled.button`
 const sizes = [
   {
     size: '30g',
-    sku: 'rc30'
+    sku: 'rc30',
+    price: 15,
+    name: 'Rose Cake'
   },
   {
     size: '50g',
-    sku: 'rc50'
+    sku: 'rc50',
+    price: 18,
+    name: 'Rose Cake'
   }
 ]
 
@@ -83,7 +87,17 @@ export default function AddToBagBtn() {
       dispatch(clearFlyoutTimeout())
     }
     dispatch(increaseQuantity(sku))
-    dispatch(openFlyout())
+    const item = sizes.filter((s: any) => {
+      return s.sku === sku
+    })[0]
+
+    dispatch(
+      openFlyout({
+        ...item,
+        size: `${item.size}, 6 counts`,
+        quantity: 1
+      })
+    )
     const timeout = setTimeout(() => dispatch(closeFlyout()), 2000)
     dispatch(setFlyoutTimeout(timeout))
   }

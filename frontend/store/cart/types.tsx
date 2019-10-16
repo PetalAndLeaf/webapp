@@ -4,6 +4,7 @@ export interface cartState {
   isSidebarOpen: boolean
   isFlyoutOpen: boolean
   flyoutTimeout: number | undefined
+  productFlyout: Object | undefined
 }
 
 /**************************************************************/
@@ -25,6 +26,7 @@ export interface ToggleFlyoutAction {
 }
 export interface OpenFlyoutAction {
   type: typeof OPEN_FLYOUT
+  product: Object
 }
 export interface CloseFlyoutAction {
   type: typeof CLOSE_FLYOUT

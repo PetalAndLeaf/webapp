@@ -25,9 +25,10 @@ export function toggleFlyout() {
     type: TOGGLE_FLYOUT
   }
 }
-export function openFlyout() {
+export function openFlyout(product: Object) {
   return {
-    type: OPEN_FLYOUT
+    type: OPEN_FLYOUT,
+    product: product
   }
 }
 export function closeFlyout() {
@@ -59,6 +60,14 @@ export function increaseQuantity(itemID: string) {
     type: UPDATE_QUANTITY,
     itemID: itemID,
     delta: 1
+  }
+}
+
+export function increaseQuantityBy(itemID: string, delta: number) {
+  return {
+    type: UPDATE_QUANTITY,
+    itemID: itemID,
+    delta: delta
   }
 }
 // Decrease the quantity of an existing item by 1

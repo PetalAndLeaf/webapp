@@ -16,7 +16,8 @@ import {
   MapPin,
   CreditCard,
   Edit3,
-  Box
+  Box,
+  Star
 } from 'react-feather'
 
 interface propsValue {
@@ -61,6 +62,8 @@ export default function FeatherIcon({ icon, style }: propsValue) {
         return <Edit3 className="icon" style={style} />
       case 'box':
         return <Box className="icon" style={style} />
+      case 'star':
+        return <Star className="icon" style={style} />
       default:
         return <Smile className="icon" style={style} />
     }

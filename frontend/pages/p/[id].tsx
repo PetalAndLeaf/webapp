@@ -1,6 +1,5 @@
 import React from 'react'
-import FullWidthLayout from '../../layout/FullWidthLayout'
-// import PageNotFound from '../pageNotFound'
+import ProductLayout from '../../layout/ProductLayout'
 import styled from 'styled-components'
 import CardImage from '../../components/CardImage'
 import { motion, Variants } from 'framer-motion'
@@ -20,7 +19,7 @@ const Container = styled(motion.div)`
   margin-left: 48px;
   margin-right: 48px;
   margin-bottom: 72px;
-  margin-top: 112px;
+  /* margin-top: 112px; */
   background-color: #e6e7e1;
   border-radius: 20px;
   overflow: hidden;
@@ -66,8 +65,25 @@ export default function Product() {
   const product = useSelector((state: any) => state.content.product)
   const story = useSelector((state: any) => state.content.story)
 
+  const data = {
+    name: product.name,
+    rating: 4.7,
+    reviews: 552,
+    sizes: [
+      {
+        size: '30g x 6 counts',
+        price: 15,
+        sku: 'rc30'
+      },
+      {
+        size: '50g x 6 counts',
+        price: 18,
+        sku: 'rc50'
+      }
+    ]
+  }
   return (
-    <FullWidthLayout>
+    <ProductLayout data={data}>
       <Container
         variants={ContainerVariants}
         animate="visible"
@@ -91,7 +107,7 @@ export default function Product() {
           </div>
         )}
       </Container>
-    </FullWidthLayout>
+    </ProductLayout>
   )
 }
 

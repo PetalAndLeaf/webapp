@@ -22,7 +22,7 @@ interface propsValue {
 
 export default function TextBtn({ onClick, children, style }: propsValue) {
   return (
-    <StyledLink onClick={onClick} {...style}>
+    <StyledLink onClick={onClick} style={style}>
       {children}
     </StyledLink>
   )
