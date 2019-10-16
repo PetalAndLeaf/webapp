@@ -12,7 +12,7 @@ import AddressForm from '../../components/AddressForm'
 import { onUserProfileChange, updateUserAddress } from '../../lib/db'
 import { isEmpty } from 'lodash'
 import { AddressToPureObjectArray } from '../../utils/helper'
-// import { toPureObjectArray } from '../../utils/helper'
+import Router from 'next/router'
 
 const Header = styled.div`
   height: 64px;
@@ -86,6 +86,9 @@ export default function Address() {
         addr.isDefault = false
       }
     })
+    const defaultAddress = newAddresses[addressIndex]
+    newAddresses.splice(addressIndex, 1)
+    newAddresses.unshift(defaultAddress)
     updateUserAddress(uid, AddressToPureObjectArray(newAddresses))
   }
 
@@ -99,6 +102,8 @@ export default function Address() {
     updateUserAddress(uid, AddressToPureObjectArray(newAddresses))
     // console.log('Updates/New address: ', newAddress)
     setMode(DEFAULT)
+    setEditingIndex(-1)
+    setEditingAddress(new AddressFormType())
   }
   return (
     <AccountLayout>
@@ -141,7 +146,15 @@ export default function Address() {
 
 Address.getInitialProps = async function(ctx: any) {
   const { store, isServer } = ctx
-  // store.dispatch(closeSidebar())
+  const { isLoggedin } = store.getState().user
+  if (!isLoggedin) {
+    if (isServer) {
+      ctx.res.writeHead(302, { Location: `/` })
+      ctx.res.end()
+    } else {
+      Router.push('/')
+    }
+  }
   if (isServer) {
     await store.dispatch(setConfig())
     await store.dispatch(setFooter())

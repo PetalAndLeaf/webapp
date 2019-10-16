@@ -39,7 +39,7 @@ const StickyPanel = styled(motion.div)<StickyPanelProps>`
   top: ${(props: any) => (props.stickToBottom ? 'auto' : '160px')};
   bottom: ${(props: any) => (props.stickToBottom ? '72px' : 'auto')};
 
-  width: 30%;
+  width: ${(props: any) => (props.stickToBottom ? '100%' : '30%')};
 `
 
 interface propsValue {
@@ -83,7 +83,7 @@ export default function ProductLayout({ children, data }: propsValue) {
 
   return (
     <Root>
-      <Header type="product" />
+      <Header type='product' />
       <Main>
         <Story ref={storyRef}>{children}</Story>
         <Aside>

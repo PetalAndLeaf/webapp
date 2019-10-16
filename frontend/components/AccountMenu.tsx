@@ -6,6 +6,7 @@ import { styles } from '../styles/theme'
 import { useDispatch } from 'react-redux'
 import { SignOutAction } from '../store/user/action'
 import Link from 'next/link'
+import Router from 'next/router'
 
 const Root = styled(motion.div)`
   width: 200px;
@@ -61,17 +62,24 @@ export default function AccountMenu() {
   return (
     <Root
       variants={rootVariants}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
+      initial='hidden'
+      animate='visible'
+      exit='hidden'
     >
       <Header>
-        <Typography variant="h5">Your account</Typography>
+        <Typography variant='h5'>Your account</Typography>
       </Header>
-      <Link href="/account/profile">
+      <Link href='/account/profile'>
         <MenuItem>Account</MenuItem>
       </Link>
-      <MenuItem onClick={() => dispatch(SignOutAction())}>Log out</MenuItem>
+      <MenuItem
+        onClick={() => {
+          dispatch(SignOutAction())
+          Router.push('/')
+        }}
+      >
+        Log out
+      </MenuItem>
     </Root>
   )
 }

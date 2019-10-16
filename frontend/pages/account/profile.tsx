@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import InputField from '../../components/InputField'
 import RoundedBtn from '../../components/RoundedBtn'
 import TextBtn from '../../components/TextBtn'
+import Router from 'next/router'
 
 const Header = styled.div`
   height: 64px;
@@ -25,23 +26,24 @@ export default function Profile() {
       setEmail(currentUser.email)
     }
   }, [])
+
   return (
     <AccountLayout>
       <Header>
-        <Typography variant="h4">Edit your account information</Typography>
+        <Typography variant='h4'>Edit your account information</Typography>
       </Header>
       <InputField
-        label="Email"
-        type="email"
+        label='Email'
+        type='email'
         value={email}
-        placeholder="Email"
+        placeholder='Email'
         onChange={(e: any) => setEmail(e.target.value)}
       />
       <InputField
-        label="Password"
+        label='Password'
         value={pwd}
-        type="password"
-        placeholder="Password"
+        type='password'
+        placeholder='Password'
         onChange={(e: any) => setPwd(e.target.value)}
       />
       <RoundedBtn style={{ marginTop: 8, marginRight: 16 }}>Save</RoundedBtn>
@@ -56,6 +58,15 @@ export default function Profile() {
 Profile.getInitialProps = async function(ctx: any) {
   const { store, isServer } = ctx
   // store.dispatch(closeSidebar())
+  const { isLoggedin } = store.getState().user
+  if (!isLoggedin) {
+    if (isServer) {
+      ctx.res.writeHead(302, { Location: `/` })
+      ctx.res.end()
+    } else {
+      Router.push('/')
+    }
+  }
   if (isServer) {
     await store.dispatch(setConfig())
     await store.dispatch(setFooter())

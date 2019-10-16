@@ -38,7 +38,7 @@ export default function AccountBtn() {
   return (
     <Root onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <BtnWrap>
-        <FeatherIcon icon="user" />
+        <FeatherIcon icon='user' />
       </BtnWrap>
       <AnimatePresence>{isMenuOpen && <AccountMenu />}</AnimatePresence>
     </Root>
