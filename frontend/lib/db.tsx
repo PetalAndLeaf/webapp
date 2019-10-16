@@ -1,5 +1,10 @@
 import { db } from './fire'
-import { SingUpForm, ProfileStructure } from '../utils/types'
+import { SingUpForm, ProfileStructure, AddressFormType } from '../utils/types'
+
+/********* *******    NOTICE ON AUTH ******* *************/
+/* ALL  read and write operation assumes that user is signed in
+ ** this check is done in 1) action createors at client
+ ** and 2) firestore rule in database */
 
 /************************ READ *****************************/
 const fetchDoc = async (path: string) => {
@@ -42,18 +47,46 @@ export const fetchProductStory = async (id: string) => {
   return await fetchDoc(`products/${id}/stories/2019EN`)
 }
 
+export const getUserProfile = async (uid: string) => {
+  return await fetchDoc(`users/${uid}`)
+}
+
 /************************ WRITE *****************************/
-const createDoc = async (col: string, docID: string, data: any) => {
-  return await db.doc(`${col}/${docID}`).set(data)
+const writeDoc = async (
+  type: string,
+  col: string,
+  docID: string,
+  data: any
+) => {
+  if (type === 'set') return await db.doc(`${col}/${docID}`).set(data)
+  else return await db.doc(`${col}/${docID}`).update(data)
 }
 
 export const createUserProfile = async (userinfo: SingUpForm) => {
   const { uid, email } = userinfo
-  const profileStructure: ProfileStructure = {
-    email: email,
-    shipping: {},
-    orders: {},
-    payment: {}
+  const profile = new ProfileStructure({ email: email })
+  return await writeDoc('set', 'users', uid, profile)
+}
+
+const updateUserProfileField = async (
+  uid: string,
+  field: string,
+  data: any
+) => {
+  // demonstrate how to user var as key of object in ES6
+  const newFieldData = {
+    [field]: data
   }
-  return await createDoc('users', uid, profileStructure)
+  return await writeDoc('update', 'users', uid, newFieldData)
+}
+
+export const updateUserAddress = async (
+  addrType: string,
+  uid: string,
+  address: AddressFormType
+) => {
+  if (!(addrType === 'shipping' || addrType === 'billing')) {
+    return undefined
+  }
+  return await updateUserProfileField(uid, 'address', { [addrType]: address })
 }
