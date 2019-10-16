@@ -1,17 +1,19 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { loadState } from '../utils/localStorage'
-
-import { userReducer } from './user/reducers'
-import { contentReducer } from './content/reducers'
-import { cartReducer } from './cart/reducer'
 import { isEmpty } from 'lodash'
+
+import { loadState } from '../utils/localStorage'
+import { userReducer } from './user/reducer'
+import { contentReducer } from './content/reducer'
+import { cartReducer } from './cart/reducer'
+import { transactionReducer } from './transaction/reducer'
 
 const rootReducer = combineReducers({
   user: userReducer,
   content: contentReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  transaction: transactionReducer
 })
 
 export type AppState = ReturnType<typeof rootReducer>

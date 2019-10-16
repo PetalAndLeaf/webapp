@@ -52,6 +52,10 @@ export const getUserProfile = async (uid: string) => {
   return await fetchDoc(`users/${uid}`)
 }
 
+// Listener for User Profile Data
+// return unsubscriobe function
+// pass as return in useEffect hook to
+// unsubscriobe when component unmount
 export function onUserProfileChange(
   uid: string,
   onNext: (snapshot: any) => void,
@@ -132,6 +136,7 @@ const updateUserProfileField = async (
   }
 }
 
+//including update already exist and delete from the list.
 export const updateUserAddress = async (uid: string, addressList: any[]) => {
   try {
     return await updateUserProfileField(uid, 'addressList', addressList)

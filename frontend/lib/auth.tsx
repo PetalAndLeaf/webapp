@@ -1,5 +1,5 @@
 import { auth } from './fire'
-import { AUTH_STATUS_CHANGE } from '../store/user/types'
+import { AUTH_STATUS_CHANGE } from '../store/user/type'
 import { signOutLocalStateClear } from '../utils/localStorage'
 
 /*********************************************************************/

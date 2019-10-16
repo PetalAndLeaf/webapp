@@ -10,7 +10,7 @@ import {
   CLEAR_FLYOUT_TIMEOUT,
   UPDATE_QUANTITY,
   SET_QUANTITY
-} from './types'
+} from './type'
 
 const initial: cartState = {
   isFlyoutOpen: false,

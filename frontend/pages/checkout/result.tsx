@@ -78,41 +78,41 @@ export default function Result() {
   return (
     <Container
       variants={ContainerVariants}
-      animate="visible"
-      initial="hidden"
+      animate='visible'
+      initial='hidden'
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       <Header>
-        <Link href="/">
-          <Logo src="/static/logo.svg" />
+        <Link href='/'>
+          <Logo src='/static/logo.svg' />
         </Link>
       </Header>
       <Main>
         <SmileyIcon>
-          <FeatherIcon icon="smile" style={{ width: 48, height: 48 }} />
+          <FeatherIcon icon='smile' style={{ width: 48, height: 48 }} />
         </SmileyIcon>
         <Title>
-          <Typography variant="h4">Thanks for your order</Typography>
+          <Typography variant='h4'>Thanks for your order</Typography>
           <Typography
-            variant="body2"
-            color="textPrimary"
+            variant='body2'
+            color='textPrimary'
             style={{ marginTop: 16 }}
           >
             We’ll send you a confirmation email and shipping updates to
           </Typography>
-          <Typography variant="body2">
+          <Typography variant='body2'>
             {currentUser && currentUser.email}
           </Typography>
         </Title>
         <Section>
-          <Typography variant="h6">Order number</Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography variant='h6'>Order number</Typography>
+          <Typography variant='body2' color='textSecondary'>
             {getOrderNumber()}
           </Typography>
         </Section>
         <Section>
-          <Typography variant="h6">Delivery to</Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography variant='h6'>Delivery to</Typography>
+          <Typography variant='body2' color='textSecondary'>
             {(currentUser && currentUser.address) ||
               `amy pu \n 550 Moreland Way, Apt 3309 \n anta Clara, CA 95054`}
           </Typography>

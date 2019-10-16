@@ -8,7 +8,7 @@ import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAIL
-} from './types'
+} from './type'
 import {
   signInWithEmailAndPassword,
   signOut,
