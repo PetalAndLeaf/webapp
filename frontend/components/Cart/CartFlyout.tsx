@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { motion, Variants, AnimatePresence } from 'framer-motion'
 import { Typography } from '@material-ui/core'
-import { styles } from '../styles/theme'
-import RoundedBtn from './RoundedBtn'
+import { styles } from '../../styles/theme'
+import RoundedBtn from '../Button/RoundedBtn'
 import { useSelector, useDispatch } from 'react-redux'
 import CartItem from './CartItem'
-import { closeFlyout, toggleSidebar } from '../store/cart/action'
+import { closeFlyout, toggleSidebar } from '../../store/cart/action'
 
 const Root = styled(motion.div)`
   width: 360px;
@@ -78,9 +78,9 @@ export default function CartFlyout() {
   return (
     <Root
       variants={rootVariants}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
+      initial='hidden'
+      animate='visible'
+      exit='hidden'
       style={{ justifyContent: `${isEmpty ? 'center' : 'space-between'}` }}
       layoutTransition={{
         type: 'spring',
@@ -90,7 +90,7 @@ export default function CartFlyout() {
     >
       {isEmpty ? (
         <Typography
-          variant="body1"
+          variant='body1'
           style={{
             textAlign: 'center'
           }}
@@ -100,7 +100,7 @@ export default function CartFlyout() {
       ) : (
         <>
           <Header>
-            <Typography variant="h5">Your bag</Typography>
+            <Typography variant='h5'>Your bag</Typography>
           </Header>
 
           <ItemList>
@@ -112,12 +112,12 @@ export default function CartFlyout() {
           </ItemList>
           <Bottom>
             <Typography
-              variant="caption"
+              variant='caption'
               style={{ textAlign: 'center', marginBottom: 16 }}
             >
               Free one-day shipping when your order is over $45
             </Typography>
-            <RoundedBtn btype="large" onClick={handleCheckoutBtnClick}>
+            <RoundedBtn btype='large' onClick={handleCheckoutBtnClick}>
               Continue to check out
             </RoundedBtn>
           </Bottom>

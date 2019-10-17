@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { styles } from '../styles/theme'
-import IconBtn from './IconBtn'
+import IconBtn from './Button/IconBtn'
 import Router from 'next/router'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
-import CartSidebar from './CartSidebar'
+import CartSidebar from './Cart/CartSidebar'
 import { AnimatePresence } from 'framer-motion'
-import CartBtn from './CartBtn'
-import TextBtn from './TextBtn'
+import CartBtn from './Cart/CartBtn'
+import TextBtn from './Button/TextBtn'
 import Dialog from '@material-ui/core/Dialog'
 import Login from './Login'
-import AccountBtn from './AccountBtn'
+import AccountBtn from './Account/AccountBtn'
 // import { SignOutAction } from '../store/user/action'
 
 const Container = styled.header`
@@ -63,8 +63,8 @@ export default function Header({ type }: propsValue) {
     <Container>
       <div>
         {type !== 'home' && (
-          <Link href="/">
-            <Logo src="../static/logo.svg" />
+          <Link href='/'>
+            <Logo src='../static/logo.svg' />
           </Link>
         )}
       </div>
@@ -77,15 +77,15 @@ export default function Header({ type }: propsValue) {
 
         {siteConfig.isCheckoutAvailable && <CartBtn />}
         {type === 'product' && (
-          <IconBtn icon="x" onClick={() => Router.push('/')} />
+          <IconBtn icon='x' onClick={() => Router.push('/')} />
         )}
       </Controls>
       <AnimatePresence>
-        {isSidebarOpen && <CartSidebar key="CartSidebar" />}
-        <Dialog open={isLoginOpen} key="loginDialog">
-          <Login onSuccess={() => setIsLoginOpen(false)} initMode="signup" />
+        {isSidebarOpen && <CartSidebar key='CartSidebar' />}
+        <Dialog open={isLoginOpen} key='loginDialog'>
+          <Login onSuccess={() => setIsLoginOpen(false)} initMode='signup' />
           <IconBtn
-            icon="x"
+            icon='x'
             onClick={() => setIsLoginOpen(false)}
             style={{ position: 'absolute', right: 8, top: 8 }}
           />

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { styles } from '../styles/theme'
+import { styles } from '../../styles/theme'
 import { Typography } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -9,7 +9,7 @@ import {
   clearFlyoutTimeout,
   setFlyoutTimeout,
   increaseQuantity
-} from '../store/cart/action'
+} from '../../store/cart/action'
 
 const Root = styled.div`
   display: inline-block;
@@ -103,12 +103,12 @@ export default function AddToBagBtn() {
   }
   return (
     <Root>
-      <OptionsWrap className="optionsWrap">
+      <OptionsWrap className='optionsWrap'>
         {sizes.map((s, i) => {
           return (
             <Option key={s.sku + i} onClick={() => handleAddItem(s.sku)}>
               <Typography
-                variant="button"
+                variant='button'
                 style={{
                   textTransform: 'none'
                 }}
@@ -120,8 +120,8 @@ export default function AddToBagBtn() {
         })}
       </OptionsWrap>
       <Typography
-        className="btnText"
-        variant="button"
+        className='btnText'
+        variant='button'
         style={{
           textTransform: 'none'
         }}

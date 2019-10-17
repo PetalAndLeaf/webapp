@@ -9,7 +9,7 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAIL,
   AUTH_STATUS_CHANGE
-} from './types'
+} from './type'
 
 const initialState: userState = {
   logging: false,

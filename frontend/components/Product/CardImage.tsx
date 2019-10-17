@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-import CakesPath from './CakesPath'
+import CakesPath from '../CakesPath'
 
 const Container = styled(motion.div)`
   overflow: hidden;
@@ -31,7 +31,7 @@ export default function CardImage({ data }: propsValue) {
           transform: 'translateY(-50%)'
         }}
       >
-        <CakesPath width="100%" />
+        <CakesPath width='100%' />
       </div>
     </Container>
   )

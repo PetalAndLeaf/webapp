@@ -2,6 +2,12 @@ import { ThunkAction } from 'redux-thunk'
 import { Action } from 'redux'
 import { AppState } from '../store/store'
 
+//Solve problems related to property does not exist in window
+// 1) import this. 2) "declare let window: CustomWindow" below import
+export interface CustomWindow extends Window {
+  Stripe: any
+}
+
 /*****************   Redux thunk    ***********************/
 export type ThunkAction = ThunkAction<void, AppState, null, Action<string>>
 

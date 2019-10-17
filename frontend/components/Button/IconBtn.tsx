@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import styled from 'styled-components'
-import { styles } from '../styles/theme'
-import FeatherIcon from './FeatherIcon'
+import { styles } from '../../styles/theme'
+import FeatherIcon from '../FeatherIcon'
 
 const Root = styled.button`
   width: 40px;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { styles } from '../styles/theme'
-import FeatherIcon from './FeatherIcon'
+import { styles } from '../../styles/theme'
+import FeatherIcon from '../FeatherIcon'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleSidebar } from '../store/cart/action'
+import { toggleSidebar } from '../../store/cart/action'
 import { AnimatePresence } from 'framer-motion'
-import ProductFlyout from './ProductFlyout'
+import ProductFlyout from '../Product/ProductFlyout'
 
 const Root = styled.div`
   width: 40px;
@@ -65,7 +65,7 @@ export default function CartBtn() {
           dispatch(toggleSidebar())
         }}
       >
-        <FeatherIcon icon="shoppingbag" />
+        <FeatherIcon icon='shoppingbag' />
         {totalItems !== 0 && <CartNumber>{totalItems}</CartNumber>}
       </BtnWrap>
       <AnimatePresence>

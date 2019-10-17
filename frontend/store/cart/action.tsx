@@ -8,7 +8,7 @@ import {
   UPDATE_QUANTITY,
   SET_QUANTITY,
   CLOSE_SIDEBAR
-} from './types'
+} from './type'
 
 export function toggleSidebar() {
   return {

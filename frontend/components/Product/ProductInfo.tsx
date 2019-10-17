@@ -3,20 +3,20 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import RatingStar from './RatingStar'
 import { Typography, Divider, Box } from '@material-ui/core'
-import TextBtn from './TextBtn'
-import { styles } from '../styles/theme'
-import SizeBtn from './SizeBtn'
-import FeatherIcon from './FeatherIcon'
-import RoundedBtn from './RoundedBtn'
+import TextBtn from '../Button/TextBtn'
+import { styles } from '../../styles/theme'
+import SizeBtn from '../Button/SizeBtn'
+import FeatherIcon from '../FeatherIcon'
+import RoundedBtn from '../Button/RoundedBtn'
 import { useDispatch, useSelector } from 'react-redux'
-import IconBtn from './IconBtn'
+import IconBtn from '../Button/IconBtn'
 import {
   increaseQuantityBy,
   clearFlyoutTimeout,
   openFlyout,
   closeFlyout,
   setFlyoutTimeout
-} from '../store/cart/action'
+} from '../../store/cart/action'
 
 const Container = styled(motion.div)`
   max-width: 400px;
@@ -130,7 +130,7 @@ export default function ProductInfo({ data }: propsValue) {
   }
   return (
     <Container>
-      <Typography variant="h4">{data.name}</Typography>
+      <Typography variant='h4'>{data.name}</Typography>
       <RatingReview>
         <RatingStar rating={data.rating} />
         <TextBtn style={{ marginLeft: 8 }}>{data.reviews} reviews</TextBtn>
@@ -139,7 +139,7 @@ export default function ProductInfo({ data }: propsValue) {
       {sizes[sizeIndex].size !== '' && (
         <SizeSelect>
           <Typography
-            variant="h6"
+            variant='h6'
             style={{ textTransform: 'uppercase', marginBottom: 8 }}
           >
             SIZE:{' '}
@@ -162,7 +162,7 @@ export default function ProductInfo({ data }: propsValue) {
         </SizeSelect>
       )}
       <Typography
-        variant="caption"
+        variant='caption'
         style={{ textAlign: 'center', marginBottom: 16, marginTop: 32 }}
       >
         Free one-day shipping on orders over $45
@@ -170,12 +170,12 @@ export default function ProductInfo({ data }: propsValue) {
       <ControlWrap>
         <QuantityWrap>
           <QuantityControl onClick={() => updateQuanty(-1)}>
-            <FeatherIcon icon="minus" />
+            <FeatherIcon icon='minus' />
           </QuantityControl>
 
           <Quantity>{quantity}</Quantity>
           <QuantityControl onClick={() => updateQuanty(1)}>
-            <FeatherIcon icon="plus" />
+            <FeatherIcon icon='plus' />
           </QuantityControl>
         </QuantityWrap>
         <RoundedBtn
@@ -192,16 +192,16 @@ export default function ProductInfo({ data }: propsValue) {
       </ControlWrap>
       <Divider />
       <Share>
-        <Typography variant="h6" style={{ textTransform: 'uppercase' }}>
+        <Typography variant='h6' style={{ textTransform: 'uppercase' }}>
           Share
         </Typography>
         <Box width={24} />
-        <a href="https://www.instagram.com/thepetalleaf/" target="_blank">
-          <IconBtn icon="instagram" />
+        <a href='https://www.instagram.com/thepetalleaf/' target='_blank'>
+          <IconBtn icon='instagram' />
         </a>
         <Box width={4} />
-        <a href="https://www.facebook.com/thepetalleaf/" target="_blank">
-          <IconBtn icon="facebook" />
+        <a href='https://www.facebook.com/thepetalleaf/' target='_blank'>
+          <IconBtn icon='facebook' />
         </a>
       </Share>
     </Container>

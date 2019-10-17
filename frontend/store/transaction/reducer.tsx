@@ -6,7 +6,7 @@ import {
   GET_PRODUCTLIST,
   GET_PRODCUT,
   GET_PRODUCTSTORY
-} from './types'
+} from './type'
 
 export const initial: contentState = {
   siteConfig: null,
@@ -16,7 +16,7 @@ export const initial: contentState = {
   story: null
 }
 
-export function contentReducer(
+export function transactionReducer(
   state = initial,
   action: contentActionTypes
 ): contentState {

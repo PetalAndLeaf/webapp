@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { styles } from '../styles/theme'
 import React, { useState } from 'react'
 import { Typography } from '@material-ui/core'
-import RoundedBtn from './RoundedBtn'
+import RoundedBtn from './Button/RoundedBtn'
 
 const Container = styled.form`
   margin-bottom: 16px;
@@ -69,7 +69,7 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
           }
         }}
       />
-      <Typography variant="body2" color="error">
+      <Typography variant='body2' color='error'>
         {errMsg}
       </Typography>
       <RoundedBtn

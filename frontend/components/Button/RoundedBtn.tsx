@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import styled from 'styled-components'
-import { styles } from '../styles/theme'
+import { styles } from '../../styles/theme'
 import { Typography } from '@material-ui/core'
 import { motion } from 'framer-motion'
 
@@ -59,7 +59,7 @@ const RoundedBtn = forwardRef(
         ref={ref}
       >
         <Typography
-          variant="button"
+          variant='button'
           style={{
             textTransform: 'none'
           }}

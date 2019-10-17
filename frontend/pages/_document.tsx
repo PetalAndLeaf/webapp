@@ -41,20 +41,19 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <html lang="en">
+      <html lang='en'>
         <Head>
-          <meta charSet="utf-8" />
+          <meta charSet='utf-8' />
           <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+            name='viewport'
+            content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no'
           />
           {/* PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name='theme-color' content={theme.palette.primary.main} />
           <link
-            href="https://fonts.googleapis.com/css?family=Lato:400,700|Quicksand:400,600|Fira+Code:400,600&display=swap"
-            rel="stylesheet"
+            href='https://fonts.googleapis.com/css?family=Lato:400,700|Quicksand:400,600|Fira+Code:400,600&display=swap'
+            rel='stylesheet'
           ></link>
-          <script src="https://js.stripe.com/v3/" async></script>
         </Head>
         <body>
           <Main />

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { setConfig, setFooter } from '../../store/content/action'
+import { setConfig, setFooter } from '../store/content/action'
 import { Typography } from '@material-ui/core'
-import AccountLayout from '../../layout/AccountLayout'
+import AccountLayout from '../layout/AccountLayout'
 import styled from 'styled-components'
-import InputField from '../../components/InputField'
-import RoundedBtn from '../../components/Button/RoundedBtn'
-import TextBtn from '../../components/Button/TextBtn'
+import InputField from '../components/InputField'
+import RoundedBtn from '../components/Button/RoundedBtn'
+import TextBtn from '../components/Button/TextBtn'
 import Router from 'next/router'
 
 const Header = styled.div`

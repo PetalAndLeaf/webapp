@@ -3,7 +3,7 @@ import App from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { StripeProvider } from 'react-stripe-elements'
+import AsyncStripeProvider from '../stripe/asyncStripeProvider'
 import theme from '../styles/theme'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
@@ -47,10 +47,7 @@ class MyApp extends App<AppProps> {
 
     this.setState({
       siteConfig: this.props.pageProps.siteConfig,
-      footer: this.props.pageProps.footer,
-      stripe: (window as any).Stripe(
-        'pk_test_QfQzDbJELK5gRsHplgEPSiCC00N6OZr9fZ'
-      )
+      footer: this.props.pageProps.footer
     })
   }
 
@@ -65,9 +62,11 @@ class MyApp extends App<AppProps> {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Provider store={store}>
-            <StripeProvider stripe={this.state.stripe}>
+            <AsyncStripeProvider
+              apiKey={'pk_test_QfQzDbJELK5gRsHplgEPSiCC00N6OZr9fZ'}
+            >
               <Component {...pageProps} />
-            </StripeProvider>
+            </AsyncStripeProvider>
           </Provider>
         </ThemeProvider>
       </React.Fragment>

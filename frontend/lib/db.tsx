@@ -52,6 +52,11 @@ export const getUserProfile = async (uid: string) => {
   return await fetchDoc(`users/${uid}`)
 }
 
+// Listener for User Profile Data
+// return unsubscriobe function
+// pass as return in useEffect hook to
+// unsubscriobe when component unmount
+// For Account/Address USE
 export function onUserProfileChange(
   uid: string,
   onNext: (snapshot: any) => void,
@@ -60,8 +65,15 @@ export function onUserProfileChange(
   return db.doc(`users/${uid}`).onSnapshot(onNext, onError)
 }
 
-// export userAddressListener = () => {
-
+// const getAddress = (snapshot: any) => {
+//   const addressList = snapshot.data().addressList
+//   addressList && setAddresses(addressList)
+// }
+// const getAddrErr = (err: any) => {
+//   console.log(err)
+// }
+// export const userAddressListener = (uid: string, getUserAddr: Function) => {
+//   onUserProfileChange(uid, getAddress, getAddrErr)
 // }
 
 /*********************** WRITE  BASIC OPERATIONS*******************/
@@ -72,7 +84,6 @@ const writeDoc = async (
   data: any
 ) => {
   const path = `${col}/${docID}`
-  console.log(path)
   try {
     // const docRef = db.doc(`${col}/${docID}`)
     switch (type) {
@@ -120,8 +131,7 @@ const updateUserProfileField = async (
   data: any
 ) => {
   // demonstrate how to user var as key of object in ES6
-  console.log('field: ', field)
-  console.log('data: ', data)
+  console.log(`update: {${JSON.stringify(field)} : ${JSON.stringify(data)} }`)
   const newFieldData = {
     [field]: data
   }
@@ -132,6 +142,7 @@ const updateUserProfileField = async (
   }
 }
 
+//including update already exist and delete from the list.
 export const updateUserAddress = async (uid: string, addressList: any[]) => {
   try {
     return await updateUserProfileField(uid, 'addressList', addressList)

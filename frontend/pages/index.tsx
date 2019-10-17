@@ -1,6 +1,6 @@
 import React from 'react'
 import SplitLayout from '../layout/SplitLayout'
-import ProuductCard from '../components/ProductCard'
+import ProuductCard from '../components/Product/ProductCard'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
 import { useSelector } from 'react-redux'

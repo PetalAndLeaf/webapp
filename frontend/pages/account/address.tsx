@@ -4,11 +4,11 @@ import { setConfig, setFooter } from '../../store/content/action'
 import { Typography } from '@material-ui/core'
 import AccountLayout from '../../layout/AccountLayout'
 import styled from 'styled-components'
-import RoundedBtn from '../../components/RoundedBtn'
+import RoundedBtn from '../../components/Button/RoundedBtn'
 import { AddressFormType } from '../../utils/types'
 import { AsYouType } from 'libphonenumber-js'
-import AddressBox from '../../components/AddressBox'
-import AddressForm from '../../components/AddressForm'
+import AddressBox from '../../components/Address/AddressBox'
+import AddressForm from '../../components/Address/AddressForm'
 import { onUserProfileChange, updateUserAddress } from '../../lib/db'
 import { isEmpty } from 'lodash'
 import { AddressToPureObjectArray } from '../../utils/helper'
@@ -46,7 +46,7 @@ export default function Address() {
 
   useEffect(() => {
     const profileListener = onUserProfileChange(uid, getAddress, getAddrErr)
-    return () => profileListener()
+    return () => profileListener() //unsubscribe when unmount
   }, [])
 
   const handleAddClick = () => {
@@ -98,6 +98,11 @@ export default function Address() {
     if (mode === EDITTING) {
       newAddresses.splice(editingIndex, 1, newAddress)
     } else if (mode === ADDINGNEW) {
+      //if first/only add addr, auto set as default
+      //addr list garantee 1 default addr
+      if (isEmpty(newAddresses)) {
+        newAddress.isDefault = true
+      }
       newAddresses.push(newAddress)
     }
     updateUserAddress(uid, AddressToPureObjectArray(newAddresses))
@@ -109,7 +114,7 @@ export default function Address() {
   return (
     <AccountLayout>
       <Header>
-        <Typography variant="h4">
+        <Typography variant='h4'>
           {mode === EDITTING
             ? 'Edit your shipping address'
             : mode === ADDINGNEW
