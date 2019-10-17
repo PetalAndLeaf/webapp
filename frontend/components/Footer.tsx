@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { styles } from '../styles/theme'
 import { Typography } from '@material-ui/core'
 import { useSelector } from 'react-redux'
+import footerData from '../static/data/footer.json'
 
 const Container = styled(motion.div)`
   /* width: 100%; */
@@ -35,8 +36,8 @@ interface propsValue {
   fading?: boolean
 }
 export default function Footer({ fading = true }: propsValue) {
-  const footer = useSelector((state: any) => state.content.footer)
-  const links: any[] = footer.links ? footer.links : []
+  const language: string = useSelector((state: any) => state.content.language)
+  const links = language ? footerData['EN'].links : footerData['EN'].links
   const date = new Date()
   return (
     <Container
@@ -47,7 +48,7 @@ export default function Footer({ fading = true }: propsValue) {
       <LinkGroup>
         {links.map((l, i) => {
           return (
-            <Fragment key={l + i}>
+            <Fragment key={`footer-link-${i}`}>
               {i !== 0 && '   |'}
               <a href={l.url} target="_blank">
                 <Typography

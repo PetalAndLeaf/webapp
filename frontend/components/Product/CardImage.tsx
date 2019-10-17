@@ -21,7 +21,7 @@ interface propsValue {
 export default function CardImage({ data }: propsValue) {
   return (
     <Container>
-      <Image src={`/static/${data[0]}`} alt={data[0]} />
+      <Image src={`/static/images/${data[0]}`} alt={data[0]} />
       <div
         style={{
           position: 'absolute',
@@ -31,7 +31,7 @@ export default function CardImage({ data }: propsValue) {
           transform: 'translateY(-50%)'
         }}
       >
-        <CakesPath width='100%' />
+        <CakesPath width="100%" />
       </div>
     </Container>
   )

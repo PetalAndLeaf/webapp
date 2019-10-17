@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { setConfig, setFooter } from '../store/content/action'
 import { Typography } from '@material-ui/core'
 import AccountLayout from '../layout/AccountLayout'
 import styled from 'styled-components'
@@ -30,20 +29,20 @@ export default function Profile() {
   return (
     <AccountLayout>
       <Header>
-        <Typography variant='h4'>Edit your account information</Typography>
+        <Typography variant="h4">Edit your account information</Typography>
       </Header>
       <InputField
-        label='Email'
-        type='email'
+        label="Email"
+        type="email"
         value={email}
-        placeholder='Email'
+        placeholder="Email"
         onChange={(e: any) => setEmail(e.target.value)}
       />
       <InputField
-        label='Password'
+        label="Password"
         value={pwd}
-        type='password'
-        placeholder='Password'
+        type="password"
+        placeholder="Password"
         onChange={(e: any) => setPwd(e.target.value)}
       />
       <RoundedBtn style={{ marginTop: 8, marginRight: 16 }}>Save</RoundedBtn>
@@ -66,10 +65,6 @@ Profile.getInitialProps = async function(ctx: any) {
     } else {
       Router.push('/')
     }
-  }
-  if (isServer) {
-    await store.dispatch(setConfig())
-    await store.dispatch(setFooter())
   }
   return {
     isServer

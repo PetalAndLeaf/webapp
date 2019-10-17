@@ -39,6 +39,7 @@ export default function Card({ children, style }: propsValue) {
       animate="visible"
       exit="hidden"
       {...style}
+      layoutTransition={{ duration: 0.3, ease: 'easeInOut' }}
     >
       {children}
     </Container>

@@ -1,0 +1,19 @@
+{
+  "EN": {
+    "links": [
+      {
+        "name": "Terms of Use",
+        "url": "https://app.termly.io/document/terms-of-use-for-ecommerce/8b04952f-3b78-4d53-92b9-982ad07f5978"
+      },
+      {
+        "name": "Customer Service",
+        "url": "https://www.google.com"
+      },
+      {
+        "name": "FAQs",
+        "url": "https://www.google.com"
+      },
+      { "name": "Contact Us", "url": "https://www.google.com" }
+    ]
+  }
+}

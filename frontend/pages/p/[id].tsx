@@ -4,12 +4,7 @@ import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
 import { useRouter } from 'next/router'
 import RoseCakeStory from '../../components/RoseCakeStory'
-import {
-  setConfig,
-  setFooter,
-  getProduct,
-  getProductStory
-} from '../../store/content/action'
+import { getProduct, getProductStory } from '../../store/content/action'
 import { useSelector } from 'react-redux'
 import ProductImages from '../../components/Product/ProductImages'
 
@@ -86,8 +81,8 @@ export default function Product() {
     <ProductLayout data={data}>
       <Container
         variants={ContainerVariants}
-        animate='visible'
-        initial='hidden'
+        animate="visible"
+        initial="hidden"
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <ProductImages images={product.images} />
@@ -103,10 +98,6 @@ Product.getInitialProps = async function(ctx: any) {
   const { store, query, isServer } = ctx
   const id = query.id
   const currentState = store.getState()
-  if (isServer) {
-    await store.dispatch(setConfig())
-    await store.dispatch(setFooter())
-  }
   if (currentState.content.product === null) {
     await store.dispatch(getProduct(id))
     await store.dispatch(getProductStory(id))

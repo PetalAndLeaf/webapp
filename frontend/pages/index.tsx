@@ -4,7 +4,7 @@ import ProuductCard from '../components/Product/ProductCard'
 import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
 import { useSelector } from 'react-redux'
-import { setConfig, setFooter, getProductList } from '../store/content/action'
+import { getProductList } from '../store/content/action'
 
 const ProductList = styled(motion.div)`
   max-width: 880px;
@@ -31,11 +31,10 @@ const listVariants: Variants = {
 }
 
 function Index() {
-  const siteConfig = useSelector((state: any) => state.content.siteConfig)
   const productList = useSelector((state: any) => state.content.productList)
 
   return (
-    <SplitLayout hideHeader={siteConfig.hideHomeHeader}>
+    <SplitLayout>
       <ProductList variants={listVariants}>
         {productList.map((product: any, i: number) => {
           return <ProuductCard key={product + i} data={product} />
@@ -48,10 +47,6 @@ function Index() {
 Index.getInitialProps = async function(ctx: any) {
   const { store, isServer } = ctx
   const currentState = store.getState()
-  if (isServer) {
-    await store.dispatch(setConfig())
-    await store.dispatch(setFooter())
-  }
   if (currentState.content.productList === null) {
     await store.dispatch(getProductList())
   }

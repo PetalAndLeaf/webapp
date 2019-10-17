@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { setConfig, setFooter } from '../../store/content/action'
 import { Typography } from '@material-ui/core'
 import AccountLayout from '../../layout/AccountLayout'
 import styled from 'styled-components'
@@ -114,7 +113,7 @@ export default function Address() {
   return (
     <AccountLayout>
       <Header>
-        <Typography variant='h4'>
+        <Typography variant="h4">
           {mode === EDITTING
             ? 'Edit your shipping address'
             : mode === ADDINGNEW
@@ -160,10 +159,6 @@ Address.getInitialProps = async function(ctx: any) {
     } else {
       Router.push('/')
     }
-  }
-  if (isServer) {
-    await store.dispatch(setConfig())
-    await store.dispatch(setFooter())
   }
   return {
     isServer

@@ -27,14 +27,6 @@ const fetchDocs = async (collection: string, orderBy: string = '') => {
   return docs
 }
 
-// Common data shared
-export const fetchSiteConfig = async () => {
-  return await fetchDoc('configs/site')
-}
-export const fetchFooter = async () => {
-  return await fetchDoc('footer/EN')
-}
-
 // Home page data
 export const fetchProductList = async () => {
   return await fetchDocs('products', 'order')

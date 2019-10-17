@@ -89,7 +89,7 @@ export default function RoseCakeStory({ story }: propsValue) {
         {highlights.map((h: any, i: number) => {
           return (
             <Highlight item key={h + i} xs={12} sm={4}>
-              <img src={`/static/${h.icon}`} alt={h.icon} />
+              <img src={`/static/images/${h.icon}`} alt={h.icon} />
               <Typography variant="body1" style={{ maxWidth: 280 }}>
                 {h.text.split('<br>').map((t: string, i: number) => {
                   return i === 0 ? (
@@ -116,7 +116,7 @@ export default function RoseCakeStory({ story }: propsValue) {
           sm={6}
           style={{ display: 'flex', justifyContent: 'center' }}
         >
-          <RoseImage src={`/static/${rose.image}`} alt={rose.image} />
+          <RoseImage src={`/static/images/${rose.image}`} alt={rose.image} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h4">{rose.title}</Typography>
@@ -142,7 +142,7 @@ export default function RoseCakeStory({ story }: propsValue) {
             return (
               <Grid item xs={12} sm={4} key={ing + i}>
                 <img
-                  src={`/static/${ing.image}`}
+                  src={`/static/images/${ing.image}`}
                   alt={ing.image}
                   style={{ height: 200 }}
                 />

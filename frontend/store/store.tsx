@@ -7,13 +7,11 @@ import { loadState } from '../utils/localStorage'
 import { userReducer } from './user/reducer'
 import { contentReducer } from './content/reducer'
 import { cartReducer } from './cart/reducer'
-import { transactionReducer } from './transaction/reducer'
 
 const rootReducer = combineReducers({
   user: userReducer,
   content: contentReducer,
-  cart: cartReducer,
-  transaction: transactionReducer
+  cart: cartReducer
 })
 
 export type AppState = ReturnType<typeof rootReducer>

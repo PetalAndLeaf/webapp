@@ -101,23 +101,23 @@ export default function CartItem({ data, editable = true }: propsValue) {
     <Root
       id={data.sku}
       variants={RootVariants}
-      initial='hiddne'
-      animate='visible'
+      initial="hiddne"
+      animate="visible"
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       positionTransition={true}
     >
       <ImageWrap>
-        <img src='/static/cover-p26.png' alt='item image' />
+        <img src="/static/images/cover-p26.png" alt="item image" />
       </ImageWrap>
       <InfoWrap>
-        <Typography variant='h6'>{data.name}</Typography>
-        <Typography variant='caption'>{data.size}</Typography>
+        <Typography variant="h6">{data.name}</Typography>
+        <Typography variant="caption">{data.size}</Typography>
         <QuantityWrap>
           {editable && (
             <QuantityControl
               onClick={() => dispatch(decreaseQuantity(data.sku))}
             >
-              <FeatherIcon icon='minus' />
+              <FeatherIcon icon="minus" />
             </QuantityControl>
           )}
 
@@ -126,7 +126,7 @@ export default function CartItem({ data, editable = true }: propsValue) {
             <QuantityControl
               onClick={() => dispatch(increaseQuantity(data.sku))}
             >
-              <FeatherIcon icon='plus' />
+              <FeatherIcon icon="plus" />
             </QuantityControl>
           )}
         </QuantityWrap>
@@ -134,7 +134,7 @@ export default function CartItem({ data, editable = true }: propsValue) {
       <Price>{`$${data.price * data.quantity}`}</Price>
       {editable && (
         <IconBtn
-          icon='delete'
+          icon="delete"
           style={{ position: 'absolute', top: 8, right: 8 }}
           onClick={() => dispatch(setQuantity(data.sku, 0))}
         />

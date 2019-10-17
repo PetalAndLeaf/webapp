@@ -1,48 +1,10 @@
 import { Dispatch } from 'redux'
 import { ThunkAction } from '../../utils/types'
 
-import {
-  SET_CONFIG,
-  SET_FOOTER,
-  GET_PRODUCTLIST,
-  GET_PRODCUT,
-  GET_PRODUCTSTORY
-} from './type'
-import {
-  fetchSiteConfig,
-  fetchFooter,
-  fetchProductList,
-  fetchProduct,
-  fetchProductStory
-} from '../../lib/db'
+import { GET_PRODUCTLIST, GET_PRODCUT, GET_PRODUCTSTORY } from './type'
+import { fetchProductList, fetchProduct, fetchProductStory } from '../../lib/db'
 
 /**************************************************************/
-
-export function setConfig(): ThunkAction {
-  return async (dispatch: Dispatch) => {
-    try {
-      return dispatch({
-        type: SET_CONFIG,
-        data: await fetchSiteConfig()
-      })
-    } catch (error) {
-      console.error('Error fetch global config' + error)
-    }
-  }
-}
-
-export function setFooter(): ThunkAction {
-  return async (dispatch: Dispatch) => {
-    try {
-      return dispatch({
-        type: SET_FOOTER,
-        data: await fetchFooter()
-      })
-    } catch (error) {
-      console.error('Error fetch footer' + error)
-    }
-  }
-}
 
 export function getProductList(): ThunkAction {
   return async (dispatch: Dispatch) => {

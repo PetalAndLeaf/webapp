@@ -10,7 +10,6 @@ import FeatherIcon from '../components/FeatherIcon'
 import IconBtn from '../components/Button/IconBtn'
 import InputField from '../components/InputField'
 import { styles } from '../styles/theme'
-import { setConfig, setFooter } from '../store/content/action'
 import { AddressFormType } from '../utils/types'
 import { Elements } from 'react-stripe-elements'
 import CheckoutForm from '../components/CheckoutForm'
@@ -167,13 +166,13 @@ export default function Checkout() {
   return (
     <Container
       variants={ContainerVariants}
-      animate='visible'
-      initial='hidden'
+      animate="visible"
+      initial="hidden"
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       <Header>
-        <Link href='/'>
-          <Logo src='/static/logo.svg' />
+        <Link href="/">
+          <Logo src="/static/images/logo.svg" />
         </Link>
       </Header>
       <Main>
@@ -181,8 +180,8 @@ export default function Checkout() {
           <Left item xs={12} sm={7}>
             <Section>
               <SectionHeader>
-                <FeatherIcon icon='user' />
-                <Typography variant='h5' style={{ marginLeft: 8 }}>
+                <FeatherIcon icon="user" />
+                <Typography variant="h5" style={{ marginLeft: 8 }}>
                   Your email
                 </Typography>
               </SectionHeader>
@@ -190,9 +189,9 @@ export default function Checkout() {
                 <AnimatePresence initial={false}>
                   {expanded === 'email' ? (
                     <motion.div
-                      initial='collapsed'
-                      animate='open'
-                      exit='collapsed'
+                      initial="collapsed"
+                      animate="open"
+                      exit="collapsed"
                       variants={{
                         open: { opacity: 1, height: 'auto' },
                         collapsed: { opacity: 0, height: 0 }
@@ -203,9 +202,9 @@ export default function Checkout() {
                       }}
                     >
                       <InputField
-                        name='email'
+                        name="email"
                         value={email.value}
-                        placeholder='Email'
+                        placeholder="Email"
                         error={email.error}
                         onChange={handleEmailOnChange}
                         onBlur={() => {
@@ -215,7 +214,7 @@ export default function Checkout() {
                       />
 
                       <Typography
-                        variant='caption'
+                        variant="caption"
                         style={{ display: 'block' }}
                       >
                         You'll receive receipts and notifications at this email
@@ -232,9 +231,9 @@ export default function Checkout() {
                     </motion.div>
                   ) : (
                     <motion.div
-                      initial='collapsed'
-                      animate='open'
-                      exit='collapsed'
+                      initial="collapsed"
+                      animate="open"
+                      exit="collapsed"
                       variants={{
                         open: { opacity: 1, height: 'auto' },
                         collapsed: { opacity: 0, height: 0 }
@@ -244,14 +243,14 @@ export default function Checkout() {
                         ease: 'easeIn'
                       }}
                     >
-                      <Typography variant='body2'>{email.value}</Typography>
+                      <Typography variant="body2">{email.value}</Typography>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </SectionContent>
               {expanded !== 'email' && (
                 <IconBtn
-                  icon='edit'
+                  icon="edit"
                   onClick={() => setExpanded('email')}
                   style={{ position: 'absolute', right: 16, top: 16 }}
                 />
@@ -259,17 +258,17 @@ export default function Checkout() {
             </Section>
             <Section>
               <SectionHeader>
-                <FeatherIcon icon='location' />
-                <Typography variant='h5' style={{ marginLeft: 8 }}>
+                <FeatherIcon icon="location" />
+                <Typography variant="h5" style={{ marginLeft: 8 }}>
                   Shipping address
                 </Typography>
               </SectionHeader>
               <SectionContent>
                 {expanded === 'address' ? (
                   <motion.div
-                    initial='collapsed'
-                    animate='open'
-                    exit='collapsed'
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
                     variants={{
                       open: { opacity: 1, height: 'auto' },
                       collapsed: { opacity: 0, height: 0 }
@@ -289,9 +288,9 @@ export default function Checkout() {
                   </motion.div>
                 ) : (
                   <motion.div
-                    initial='collapsed'
-                    animate='open'
-                    exit='collapsed'
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
                     variants={{
                       open: { opacity: 1, height: 'auto' },
                       collapsed: { opacity: 0, height: 0 }
@@ -303,12 +302,12 @@ export default function Checkout() {
                   >
                     {address.isValid && (
                       <>
-                        <Typography variant='body2'>
+                        <Typography variant="body2">
                           {address.fullname}
                         </Typography>
-                        <Typography variant='body2'>{`${address.line1}, ${address.line2}`}</Typography>
-                        <Typography variant='body2'>{`${address.city}, ${address.state} ${address.zipcode}`}</Typography>
-                        <Typography variant='body2'>
+                        <Typography variant="body2">{`${address.line1}, ${address.line2}`}</Typography>
+                        <Typography variant="body2">{`${address.city}, ${address.state} ${address.zipcode}`}</Typography>
+                        <Typography variant="body2">
                           {address.formattedPhone}
                         </Typography>
                       </>
@@ -318,7 +317,7 @@ export default function Checkout() {
               </SectionContent>
               {expanded !== 'address' && address.isValid && (
                 <IconBtn
-                  icon='edit'
+                  icon="edit"
                   onClick={() => setExpanded('address')}
                   style={{ position: 'absolute', right: 16, top: 16 }}
                 />
@@ -326,17 +325,17 @@ export default function Checkout() {
             </Section>
             <Section>
               <SectionHeader>
-                <FeatherIcon icon='card' />
-                <Typography variant='h5' style={{ marginLeft: 8 }}>
+                <FeatherIcon icon="card" />
+                <Typography variant="h5" style={{ marginLeft: 8 }}>
                   Payment
                 </Typography>
               </SectionHeader>
               <SectionContent>
                 {expanded === 'payment' ? (
                   <motion.div
-                    initial='collapsed'
-                    animate='open'
-                    exit='collapsed'
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
                     variants={{
                       open: { opacity: 1, height: 'auto' },
                       collapsed: { opacity: 0, height: 0 }
@@ -361,9 +360,9 @@ export default function Checkout() {
                   </motion.div>
                 ) : (
                   <motion.div
-                    initial='collapsed'
-                    animate='open'
-                    exit='collapsed'
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
                     variants={{
                       open: { opacity: 1, height: 'auto' },
                       collapsed: { opacity: 0, height: 0 }
@@ -374,14 +373,14 @@ export default function Checkout() {
                     }}
                   >
                     {payment.last4 !== '' && (
-                      <Typography variant='body2'>{`XXXX XXXX XXXX ${payment.last4}`}</Typography>
+                      <Typography variant="body2">{`XXXX XXXX XXXX ${payment.last4}`}</Typography>
                     )}
                   </motion.div>
                 )}
               </SectionContent>
               {expanded !== 'payment' && payment.isValid && (
                 <IconBtn
-                  icon='edit'
+                  icon="edit"
                   onClick={() => setExpanded('payment')}
                   style={{ position: 'absolute', right: 16, top: 16 }}
                 />
@@ -391,7 +390,7 @@ export default function Checkout() {
           <Right item xs={12} sm={5}>
             <SummaryCard>
               <SummaryHeader>
-                <Typography variant='h5'>Order Summary</Typography>
+                <Typography variant="h5">Order Summary</Typography>
               </SummaryHeader>
               <ItemList>
                 {items.map((item: any, i: number) => {
@@ -403,27 +402,27 @@ export default function Checkout() {
               <Bottom>
                 <SummaryList>
                   <SummaryListItem>
-                    <Typography variant='h6'>Subtotal</Typography>
+                    <Typography variant="h6">Subtotal</Typography>
                     <Typography
-                      variant='button'
-                      color='textSecondary'
+                      variant="button"
+                      color="textSecondary"
                     >{`$${subtotal}`}</Typography>
                   </SummaryListItem>
                   <SummaryListItem>
-                    <Typography variant='h6'>Shipping</Typography>
-                    <Typography variant='button' color='textSecondary'>
+                    <Typography variant="h6">Shipping</Typography>
+                    <Typography variant="button" color="textSecondary">
                       {subtotal >= 45 ? '$0' : '$8'}
                     </Typography>
                   </SummaryListItem>
                   <SummaryListItem>
-                    <Typography variant='h5'>Total</Typography>
-                    <Typography variant='button' style={{ fontSize: 18 }}>
+                    <Typography variant="h5">Total</Typography>
+                    <Typography variant="button" style={{ fontSize: 18 }}>
                       {`$${subtotal + (subtotal >= 45 ? 0 : 8)}`}
                     </Typography>
                   </SummaryListItem>
                 </SummaryList>
                 <RoundedBtn
-                  btype='large'
+                  btype="large"
                   disabled={
                     email.isValid && address.isValid && payment.isValid
                       ? false
@@ -448,16 +447,4 @@ export default function Checkout() {
       </Main>
     </Container>
   )
-}
-
-Checkout.getInitialProps = async function(ctx: any) {
-  const { store, isServer } = ctx
-  // store.dispatch(closeSidebar())
-  if (isServer) {
-    await store.dispatch(setConfig())
-    await store.dispatch(setFooter())
-  }
-  return {
-    isServer
-  }
 }

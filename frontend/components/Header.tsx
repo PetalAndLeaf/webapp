@@ -6,12 +6,12 @@ import Router from 'next/router'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import CartSidebar from './Cart/CartSidebar'
-import { AnimatePresence } from 'framer-motion'
 import CartBtn from './Cart/CartBtn'
 import TextBtn from './Button/TextBtn'
 import Dialog from '@material-ui/core/Dialog'
 import Login from './Login'
 import AccountBtn from './Account/AccountBtn'
+import { AnimatePresence } from 'framer-motion'
 // import { SignOutAction } from '../store/user/action'
 
 const Container = styled.header`
@@ -50,7 +50,6 @@ interface propsValue {
 export default function Header({ type }: propsValue) {
   // const dispatch = useDispatch()
   const isSidebarOpen = useSelector((state: any) => state.cart.isSidebarOpen)
-  const siteConfig = useSelector((state: any) => state.content.siteConfig)
   const isLoggedin = useSelector((state: any) => state.user.isLoggedin)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   useEffect(() => {
@@ -63,8 +62,8 @@ export default function Header({ type }: propsValue) {
     <Container>
       <div>
         {type !== 'home' && (
-          <Link href='/'>
-            <Logo src='../static/logo.svg' />
+          <Link href="/">
+            <Logo src="/static/images/logo.svg" />
           </Link>
         )}
       </div>
@@ -75,22 +74,22 @@ export default function Header({ type }: propsValue) {
           <TextBtn onClick={() => setIsLoginOpen(true)}>Sign up</TextBtn>
         )}
 
-        {siteConfig.isCheckoutAvailable && <CartBtn />}
+        <CartBtn />
         {type === 'product' && (
-          <IconBtn icon='x' onClick={() => Router.push('/')} />
+          <IconBtn icon="x" onClick={() => Router.push('/')} />
         )}
       </Controls>
       <AnimatePresence>
-        {isSidebarOpen && <CartSidebar key='CartSidebar' />}
-        <Dialog open={isLoginOpen} key='loginDialog'>
-          <Login onSuccess={() => setIsLoginOpen(false)} initMode='signup' />
-          <IconBtn
-            icon='x'
-            onClick={() => setIsLoginOpen(false)}
-            style={{ position: 'absolute', right: 8, top: 8 }}
-          />
-        </Dialog>
+        {isSidebarOpen && <CartSidebar key="CartSidebar" />}
       </AnimatePresence>
+      <Dialog open={isLoginOpen} key="loginDialog">
+        <Login onSuccess={() => setIsLoginOpen(false)} initMode="signup" />
+        <IconBtn
+          icon="x"
+          onClick={() => setIsLoginOpen(false)}
+          style={{ position: 'absolute', right: 8, top: 8 }}
+        />
+      </Dialog>
     </Container>
   )
 }

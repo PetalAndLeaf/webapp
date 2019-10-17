@@ -1,27 +1,12 @@
 /**************************************************************/
 export interface contentState {
-  siteConfig: any
-  footer: any
   productList: any
   product: any
   story: any
+  language: string
 }
 
 /**************************************************************/
-
-export interface Config {}
-export const SET_CONFIG = 'SET_CONFIG'
-export interface SetConfigAction {
-  type: typeof SET_CONFIG
-  data: Config
-}
-
-export interface Footer {}
-export const SET_FOOTER = 'SET_FOOTER'
-export interface SetFooterAction {
-  type: typeof SET_FOOTER
-  data: Footer
-}
 
 export interface ProductList {}
 export const GET_PRODUCTLIST = 'GET_PRODUCTLIST'
@@ -45,10 +30,9 @@ export interface getProductStoryAction {
 }
 
 /**************************************************************/
-export type SysActionTypes = SetConfigAction | SetFooterAction
 export type ProductActionTypes =
   | GetProductlistAction
   | getProductAction
   | getProductStoryAction
 
-export type contentActionTypes = SysActionTypes | ProductActionTypes
+export type contentActionTypes = ProductActionTypes
