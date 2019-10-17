@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>
 
-export function initStore(initialState: any) {
+export function initStore(initialState?: any) {
   const middlewares = [thunkMiddleware]
   const middleWareEnhancer = applyMiddleware(...middlewares)
 

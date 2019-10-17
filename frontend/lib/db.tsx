@@ -65,6 +65,17 @@ export function onUserProfileChange(
   return db.doc(`users/${uid}`).onSnapshot(onNext, onError)
 }
 
+// const getAddress = (snapshot: any) => {
+//   const addressList = snapshot.data().addressList
+//   addressList && setAddresses(addressList)
+// }
+// const getAddrErr = (err: any) => {
+//   console.log(err)
+// }
+// export const userAddressListener = (uid: string, getUserAddr: Function) => {
+//   onUserProfileChange(uid, getAddress, getAddrErr)
+// }
+
 /*********************** WRITE  BASIC OPERATIONS*******************/
 const writeDoc = async (
   type: string,
