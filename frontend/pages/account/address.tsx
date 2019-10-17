@@ -46,7 +46,7 @@ export default function Address() {
 
   useEffect(() => {
     const profileListener = onUserProfileChange(uid, getAddress, getAddrErr)
-    return () => profileListener()
+    return () => profileListener() //unsubscribe when unmount
   }, [])
 
   const handleAddClick = () => {
@@ -98,6 +98,11 @@ export default function Address() {
     if (mode === EDITTING) {
       newAddresses.splice(editingIndex, 1, newAddress)
     } else if (mode === ADDINGNEW) {
+      //if first/only add addr, auto set as default
+      //addr list garantee 1 default addr
+      if (isEmpty(newAddresses)) {
+        newAddress.isDefault = true
+      }
       newAddresses.push(newAddress)
     }
     updateUserAddress(uid, AddressToPureObjectArray(newAddresses))

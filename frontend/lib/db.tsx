@@ -56,6 +56,7 @@ export const getUserProfile = async (uid: string) => {
 // return unsubscriobe function
 // pass as return in useEffect hook to
 // unsubscriobe when component unmount
+// For Account/Address USE
 export function onUserProfileChange(
   uid: string,
   onNext: (snapshot: any) => void,
@@ -63,10 +64,6 @@ export function onUserProfileChange(
 ) {
   return db.doc(`users/${uid}`).onSnapshot(onNext, onError)
 }
-
-// export userAddressListener = () => {
-
-// }
 
 /*********************** WRITE  BASIC OPERATIONS*******************/
 const writeDoc = async (
@@ -76,7 +73,6 @@ const writeDoc = async (
   data: any
 ) => {
   const path = `${col}/${docID}`
-  console.log(path)
   try {
     // const docRef = db.doc(`${col}/${docID}`)
     switch (type) {
@@ -124,8 +120,7 @@ const updateUserProfileField = async (
   data: any
 ) => {
   // demonstrate how to user var as key of object in ES6
-  console.log('field: ', field)
-  console.log('data: ', data)
+  console.log(`update: {${JSON.stringify(field)} : ${JSON.stringify(data)} }`)
   const newFieldData = {
     [field]: data
   }
