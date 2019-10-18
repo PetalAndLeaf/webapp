@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { motion, Variants } from 'framer-motion'
 import { useSelector } from 'react-redux'
 import { getProductList } from '../store/content/action'
+import { isEmpty } from 'lodash'
 
 const ProductList = styled(motion.div)`
   max-width: 880px;
@@ -32,7 +33,6 @@ const listVariants: Variants = {
 
 function Index() {
   const productList = useSelector((state: any) => state.content.productList)
-
   return (
     <SplitLayout>
       <ProductList variants={listVariants}>
@@ -47,7 +47,7 @@ function Index() {
 Index.getInitialProps = async function(ctx: any) {
   const { store, isServer } = ctx
   const currentState = store.getState()
-  if (currentState.content.productList === null) {
+  if (isEmpty(currentState.content.productList)) {
     await store.dispatch(getProductList())
   }
 

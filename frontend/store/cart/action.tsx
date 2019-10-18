@@ -36,7 +36,7 @@ export function closeFlyout() {
     type: CLOSE_FLYOUT
   }
 }
-export function setFlyoutTimeout(timeout: number) {
+export function setFlyoutTimeout(timeout: any) {
   return {
     type: SET_FLYOUT_TIMEOUT,
     timeout: timeout
