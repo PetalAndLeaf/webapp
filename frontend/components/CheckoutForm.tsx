@@ -5,6 +5,7 @@ import { styles } from '../styles/theme'
 import React, { useState } from 'react'
 import { Typography } from '@material-ui/core'
 import RoundedBtn from './Button/RoundedBtn'
+import fetch from 'isomorphic-unfetch'
 
 const Container = styled.form`
   margin-bottom: 16px;
@@ -16,18 +17,21 @@ interface propsValue {
 function CheckoutForm({ stripe, handleSuccess }: propsValue) {
   const [errMsg, setErrMsg] = useState('')
   const [isValid, setIsValid] = useState(false)
+  const [cardElement, setCardElement] = useState(null)
 
   const handleChange = (change: any) => {
     if (change.error) {
       setErrMsg(change.error.message)
     } else {
       setErrMsg('')
+      setIsValid(true)
     }
   }
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     if (stripe) {
       stripe.createToken().then((payload: any) => {
+        console.log(payload)
         if (payload.error) {
           setErrMsg(payload.error.message)
         } else {
@@ -35,6 +39,32 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
           handleSuccess && handleSuccess(last4)
         }
       })
+      const orderData = {
+        total: 1500
+      }
+      const result = await fetch(
+        'https://us-central1-petalleafweb.cloudfunctions.net/api/create-payment-intent',
+        {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(orderData)
+        }
+      )
+
+      const data = await result.json()
+
+      const { paymentIntent, error } = await stripe.handleCardPayment(
+        data.clientSecret,
+        cardElement
+      )
+
+      if (error) {
+        console.log('Error: ', error)
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        console.log('Succeeded!')
+      }
     } else {
       console.log("Stripe.js hasn't loaded yet.")
     }
@@ -48,8 +78,9 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
   const handleFocus = () => {
     console.log('[focus]')
   }
-  const handleReady = () => {
+  const handleReady = (e: any) => {
     console.log('[ready]')
+    setCardElement(e)
   }
 
   return (
@@ -69,7 +100,7 @@ function CheckoutForm({ stripe, handleSuccess }: propsValue) {
           }
         }}
       />
-      <Typography variant='body2' color='error'>
+      <Typography variant="body2" color="error">
         {errMsg}
       </Typography>
       <RoundedBtn
