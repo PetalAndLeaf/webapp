@@ -7,6 +7,7 @@ node_modules/
 
 # ignore out build
 out/
+build/
 
 # ignore analyze bundle
 bundles/
